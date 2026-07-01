@@ -1,0 +1,46 @@
+const float TENSION_THRESHOLD_PERCENT = 20.0;  // 기준값 대비 20% 이상 증가 시 "긴장"
+const int   SUSTAIN_TIME_MS      = 2000;        // 2초 이상 지속돼야 진짜 긴장으로 판단
+const int   VIBRATION_COOLDOWN_MS = 5000;       // 진동 후 5초간 재발동 방지
+
+float movingAvgBuf[5];
+int   bufIdx = 0;
+unsigned long tensionStartTime = 0;
+bool  isTensing = false;
+unsigned long lastVibrationTime = 0;
+
+float getSmoothedPressure() {
+  float overall = (readSensor(SENSOR_THUMB)
+                  + readSensor(SENSOR_INDEX_MIDDLE)
+                  + readSensor(SENSOR_PALM)) / 3.0;
+
+  movingAvgBuf[bufIdx] = overall;
+  bufIdx = (bufIdx + 1) % 5;
+
+  float sum = 0;
+  for (int i = 0; i < 5; i++) sum += movingAvgBuf[i];
+  return sum / 5.0;
+}
+
+void checkTensionAndVibrate() {
+  float current = getSmoothedPressure();
+  float percentChange = ((current - baseline.overall) / baseline.overall) * 100.0;
+
+  if (percentChange >= TENSION_THRESHOLD_PERCENT) {
+    if (!isTensing) {
+      isTensing = true;
+      tensionStartTime = millis();
+    } else if (millis() - tensionStartTime >= SUSTAIN_TIME_MS
+               && millis() - lastVibrationTime >= VIBRATION_COOLDOWN_MS) {
+      triggerVibration();
+      lastVibrationTime = millis();
+    }
+  } else {
+    isTensing = false;  // 긴장 해제되면 상태 리셋
+  }
+}
+
+void triggerVibration() {
+  digitalWrite(VIBRATION_MOTOR_PIN, HIGH);
+  delay(300);
+  digitalWrite(VIBRATION_MOTOR_PIN, LOW);
+}
