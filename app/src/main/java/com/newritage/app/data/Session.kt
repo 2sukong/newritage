@@ -7,28 +7,17 @@ import androidx.room.PrimaryKey
 data class Session(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-
-    /** yyyy-MM-dd 형식 날짜 */
-    val date: String,
-
-    /** 명상 시간 (초) */
+    val date: String,              // yyyy-MM-dd
+    val sessionIndex: Int = 1,     // 1st, 2nd, ... session of the day
+    val hasThread: Boolean = false, // only first session of day gets a thread
+    val startTime: String = "",    // HH:mm format
+    val endTime: String = "",      // HH:mm format
     val durationSeconds: Int,
-
-    /** 평균 압력 (kPa) */
     val avgPressure: Float,
-
-    /** 최고 압력 (kPa) */
     val maxPressure: Float,
-
-    /** 최저 압력 (kPa) */
     val minPressure: Float,
-
-    /** 오늘의 감정 메모 */
     val emotion: String = "",
-
-    /** 실 색상 (hex, 예: #FF5733) — 하드웨어 미연동 시 랜덤 할당 */
-    val threadColor: String = "#8B9E7B",
-
-    /** 생성 시각 (ms) */
+    val threadColor: String = "",      // hex string, empty if no thread
+    val threadColorName: String = "",  // Korean name
     val createdAt: Long = System.currentTimeMillis()
 )

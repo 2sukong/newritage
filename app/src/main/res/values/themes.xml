@@ -6,13 +6,15 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/primary</item>
         <item name="android:windowBackground">@color/background</item>
-        <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:statusBarColor">#FFFFFF</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <style name="Theme.NewRitage.Splash" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowBackground">@color/onboarding_bg</item>
-        <item name="android:statusBarColor">@color/onboarding_bg</item>
+        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:statusBarColor">#FFFFFF</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <!-- 버튼 스타일: 채워진 초록 -->
@@ -60,7 +62,8 @@
     </style>
 
     <!-- 분석 수치 텍스트 -->
-    <style name="TextStyle.Stat" parent="android:Widget.TextView" />
+    <style name="TextStyle" />
+    <style name="TextStyle.Stat" />
 
     <style name="TextStyle.Stat.Value">
         <item name="android:textSize">20sp</item>

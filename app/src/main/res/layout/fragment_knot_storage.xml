@@ -1,83 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background">
+    android:background="#F8FAF8">
 
-    <TextView
+    <!-- Header -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:text="@string/knot_storage_title"
-        android:textSize="18sp"
-        android:textColor="@color/text_primary"
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:paddingStart="24dp" />
+        android:paddingHorizontal="12dp">
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back"
+            android:contentDescription="뒤로"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="매듭 보관함"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif-medium"/>
+    </FrameLayout>
 
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="2dp"
-        app:cardBackgroundColor="@color/surface">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingHorizontal="24dp"
+            android:paddingTop="24dp">
 
+            <!-- Month Navigator -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="16dp">
-
+                android:layout_marginBottom="24dp">
                 <ImageButton
                     android:id="@+id/btnPrevMonth"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@android:drawable/ic_media_previous"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_arrow_left"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:padding="8dp" />
-
+                    app:tint="@color/text_primary"/>
                 <TextView
-                    android:id="@+id/tvMonthLabel"
-                    android:layout_width="0dp"
+                    android:id="@+id/tvMonthYear"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="16sp"
+                    android:layout_marginHorizontal="32dp"
+                    android:text="2222년 22월"
                     android:textColor="@color/text_primary"
-                    android:textStyle="bold" />
-
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-medium"/>
                 <ImageButton
                     android:id="@+id/btnNextMonth"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@android:drawable/ic_media_next"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_arrow_right"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:padding="8dp" />
+                    app:tint="@color/text_primary"/>
             </LinearLayout>
 
-            <ScrollView
+            <!-- Calendar Frame -->
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content"
+                android:background="@drawable/calendar_frame"
+                android:padding="32dp">
 
                 <GridLayout
                     android:id="@+id/calendarGrid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:columnCount="4" />
-            </ScrollView>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                    android:columnCount="4"
+                    android:useDefaultMargins="false"
+                    android:alignmentMode="alignMargins"/>
+            </FrameLayout>
 
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

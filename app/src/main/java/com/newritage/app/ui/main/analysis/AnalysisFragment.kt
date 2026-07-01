@@ -1,49 +1,27 @@
 package com.newritage.app.ui.main.analysis
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import com.newritage.app.databinding.FragmentAnalysisBinding
+import com.newritage.app.R
 
 class AnalysisFragment : Fragment() {
-
-    private var _binding: FragmentAnalysisBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAnalysisBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater.inflate(R.layout.fragment_analysis, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.rowDailyAnalysis.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(com.newritage.app.R.id.fragmentContainer, DailyAnalysisFragment())
-                .addToBackStack(null)
-                .commit()
-        }
-        binding.rowWeeklyAnalysis.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(com.newritage.app.R.id.fragmentContainer, WeeklyAnalysisFragment())
-                .addToBackStack(null)
-                .commit()
-        }
-        binding.rowMonthlyAnalysis.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(com.newritage.app.R.id.fragmentContainer, MonthlyAnalysisFragment())
-                .addToBackStack(null)
-                .commit()
-        }
+        view.findViewById<LinearLayout>(R.id.rowDaily).setOnClickListener { openSub(DailyAnalysisFragment()) }
+        view.findViewById<LinearLayout>(R.id.rowWeekly).setOnClickListener { openSub(WeeklyAnalysisFragment()) }
+        view.findViewById<LinearLayout>(R.id.rowMonthly).setOnClickListener { openSub(MonthlyAnalysisFragment()) }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun openSub(fragment: Fragment) {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }

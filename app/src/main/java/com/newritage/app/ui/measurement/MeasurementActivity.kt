@@ -1,155 +1,249 @@
 package com.newritage.app.ui.measurement
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
 import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.newritage.app.R
-import com.newritage.app.databinding.ActivityMeasurementBinding
+import com.newritage.app.ui.main.MainActivity
+import com.newritage.app.ui.util.WaveView
 import kotlin.random.Random
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MeasurementActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMeasurementBinding
+    private enum class Screen { WAITING, MEASURING }
+
+    // Views
+    private lateinit var screenWaiting: View
+    private lateinit var screenMeasuring: View
+    private lateinit var waveView: WaveView
+    private lateinit var tvPressureValue: TextView
+    private lateinit var tvSessionTime: TextView
+    private lateinit var tvFeedbackStatus: TextView
+    private lateinit var lineChart: LineChart
+    private lateinit var btnComplete: Button
 
     private val handler = Handler(Looper.getMainLooper())
-    private var measuring = false
+    private var countdownLeft = 10
     private var elapsedSeconds = 0
-    private val pressureReadings = mutableListOf<Float>()
-    private val chartEntries = mutableListOf<Entry>()
+    private var deviationCount = 0       // 안정 상태 이탈 횟수
+
+    private val pressureEntries = mutableListOf<Entry>()
+    private var currentPressure = 32f
+    private val allPressures = mutableListOf<Float>()
+
+    private val startTimeStr by lazy {
+        SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMeasurementBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_measurement)
 
-        setupChart()
-        showGuideDialog()
+        bindViews()
 
-        binding.btnBack.setOnClickListener { finish() }
-        binding.btnStop.setOnClickListener { stopMeasurement() }
-    }
-
-    private fun showGuideDialog() {
-        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_measurement_guide, null)
-        val dialog = AlertDialog.Builder(this)
-            .setView(dialogView)
-            .setCancelable(false)
-            .create()
-
-        dialogView.findViewById<View>(R.id.btnStartGuide).setOnClickListener {
-            dialog.dismiss()
-            startMeasurement()
+        findViewById<ImageButton>(R.id.btnBack).setOnClickListener { finish() }
+        btnComplete.setOnClickListener { finishSession() }
+        
+        findViewById<ImageButton>(R.id.btnStartMeasure).setOnClickListener {
+            findViewById<ImageButton>(R.id.btnStartMeasure).visibility = View.GONE
+            startCountdown()
         }
-        dialog.show()
+
+        // 탭바: 다른 메뉴 누르면 MainActivity로 돌아가서 해당 탭 선택
+        findViewById<BottomNavigationView>(R.id.bottomNav).setOnItemSelectedListener { item ->
+            if (item.itemId == R.id.nav_home) {
+                finish()
+            } else {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("select_tab", item.itemId)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
+                finish()
+            }
+            true
+        }
+
+        val autoStart = intent.getBooleanExtra("auto_start", false)
+        if (autoStart) {
+            showMeasuring()
+        } else {
+            showWaiting()
+        }
     }
+
+    private fun bindViews() {
+        screenWaiting = findViewById(R.id.screenWaiting)
+        screenMeasuring = findViewById(R.id.screenMeasuring)
+        waveView = findViewById(R.id.waveView)
+        tvPressureValue = findViewById(R.id.tvPressureValue)
+        tvSessionTime = findViewById(R.id.tvSessionTime)
+        tvFeedbackStatus = findViewById(R.id.tvFeedbackStatus)
+        lineChart = findViewById(R.id.lineChart)
+        btnComplete = findViewById(R.id.btnSessionComplete)
+    }
+
+    // ── 화면 전환 ──────────────────────────────
+
+    private fun showWaiting() {
+        screenWaiting.visibility = View.VISIBLE
+        screenMeasuring.visibility = View.GONE
+    }
+
+    private fun showMeasuring() {
+        screenWaiting.visibility = View.GONE
+        screenMeasuring.visibility = View.VISIBLE
+        setupChart()
+        startMeasuring()
+    }
+
+    // ── 10초 카운트다운 → 자동 전환 ──────────────
+
+    private fun startCountdown() {
+        handler.post(object : Runnable {
+            override fun run() {
+                if (countdownLeft > 0) {
+                    countdownLeft--
+                    handler.postDelayed(this, 1000L)
+                } else {
+                    showMeasuring()
+                }
+            }
+        })
+    }
+
+    // ── MPAndroidChart 설정 ───────────────────
 
     private fun setupChart() {
-        binding.lineChart.apply {
+        lineChart.apply {
             description.isEnabled = false
-            legend.isEnabled = false
             setTouchEnabled(false)
-            setBackgroundColor(Color.TRANSPARENT)
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
-            xAxis.textColor = Color.parseColor("#5A6B5A")
-            xAxis.setDrawGridLines(false)
-            axisLeft.textColor = Color.parseColor("#5A6B5A")
-            axisLeft.axisMinimum = 0f
-            axisLeft.axisMaximum = 80f
+            legend.isEnabled = false
+            setDrawGridBackground(false)
+
+            xAxis.apply {
+                position = XAxis.XAxisPosition.BOTTOM
+                setDrawGridLines(false)
+                textColor = Color.parseColor("#AAAAAA")
+                axisLineColor = Color.parseColor("#E0E0E0")
+                textSize = 10f
+                valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(v: Float): String {
+                        val m = (v / 60).toInt(); val s = (v % 60).toInt()
+                        return "%02d:%02d".format(m, s)
+                    }
+                }
+                labelCount = 4
+            }
+            axisLeft.apply {
+                axisMinimum = 0f; axisMaximum = 80f
+                textColor = Color.parseColor("#AAAAAA")
+                textSize = 10f
+                gridColor = Color.parseColor("#F0F0F0")
+                axisLineColor = Color.parseColor("#E0E0E0")
+                // 참조선: 높음 / 적정 / 낮음
+                addLimitLine(LimitLine(60f, "높음").apply {
+                    lineColor = Color.parseColor("#F0E0E0")
+                    lineWidth = 0.8f; textColor = Color.parseColor("#AAAAAA")
+                    textSize = 9f; labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
+                })
+                addLimitLine(LimitLine(35f, "적정").apply {
+                    lineColor = Color.parseColor("#E8EDE4")
+                    lineWidth = 0.8f; textColor = Color.parseColor("#8B9E7B")
+                    textSize = 9f; labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
+                })
+                addLimitLine(LimitLine(15f, "낮음").apply {
+                    lineColor = Color.parseColor("#D0D0D0")
+                    lineWidth = 0.8f; textColor = Color.parseColor("#AAAAAA")
+                    textSize = 9f; labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
+                })
+            }
             axisRight.isEnabled = false
         }
     }
 
-    private fun startMeasurement() {
-        measuring = true
-        elapsedSeconds = 0
-        pressureReadings.clear()
-        chartEntries.clear()
-        binding.btnStop.isEnabled = true
-        measureLoop.run()
+    // ── 실시간 압력 시뮬레이션 ─────────────────
+
+    private fun startMeasuring() {
+        handler.post(object : Runnable {
+            override fun run() {
+                elapsedSeconds++
+
+                // 압력 시뮬레이션
+                val noise = (Random.nextFloat() - 0.5f) * 7f
+                currentPressure = (currentPressure + noise).coerceIn(8f, 72f)
+                allPressures.add(currentPressure)
+
+                // 이탈 횟수 카운트 (>50kPa 를 '이탈'로 정의)
+                if (currentPressure > 50f) deviationCount++
+
+                // UI 갱신
+                tvPressureValue.text = "%.0f".format(currentPressure)
+                tvFeedbackStatus.text = feedbackText(currentPressure)
+                tvSessionTime.text = "%02d:%02d".format(elapsedSeconds / 60, elapsedSeconds % 60)
+
+                // 차트 갱신 (최근 60포인트)
+                if (pressureEntries.size >= 60) pressureEntries.removeAt(0)
+                pressureEntries.add(Entry(elapsedSeconds.toFloat(), currentPressure))
+                updateChart()
+
+                handler.postDelayed(this, 1000L)
+            }
+        })
     }
 
-    private val measureLoop = object : Runnable {
-        override fun run() {
-            if (!measuring) return
-            elapsedSeconds++
-
-            // 시뮬레이션 압력 값 생성
-            val prev = pressureReadings.lastOrNull() ?: 30f
-            val noise = (Random.nextFloat() - 0.5f) * 10f
-            val pressure = (prev + noise).coerceIn(5f, 75f)
-            pressureReadings.add(pressure)
-
-            // UI 업데이트
-            val min = elapsedSeconds / 60
-            val sec = elapsedSeconds % 60
-            binding.tvTimer.text = String.format("%02d:%02d", min, sec)
-            binding.tvCurrentPressure.text = String.format("%.1f", pressure)
-
-            // 차트 업데이트
-            chartEntries.add(Entry(elapsedSeconds.toFloat(), pressure))
-            updateChart()
-
-            handler.postDelayed(this, 1000L)
-        }
+    private fun feedbackText(p: Float) = when {
+        p < 25f -> "긴장이 많이 완화되었습니다."
+        p < 45f -> "적절 범위 내의 편안한 압력입니다."
+        else    -> "호흡을 고르게 하고 긴장을 풀어보세요."
     }
 
     private fun updateChart() {
-        val visibleEntries = if (chartEntries.size > 60) {
-            chartEntries.takeLast(60)
-        } else {
-            chartEntries.toList()
-        }
-
-        val dataSet = LineDataSet(visibleEntries, "압력").apply {
-            color = Color.parseColor("#8B9E7B")
-            setDrawCircles(false)
-            lineWidth = 2f
-            setDrawFilled(true)
-            fillColor = Color.parseColor("#8B9E7B")
-            fillAlpha = 50
+        val ds = LineDataSet(ArrayList(pressureEntries), "압력").apply {
+            color = Color.parseColor("#9DB18E"); lineWidth = 1.5f
+            setDrawCircles(false); setDrawValues(false)
             mode = LineDataSet.Mode.CUBIC_BEZIER
+            setDrawFilled(false)
         }
-        binding.lineChart.data = LineData(dataSet)
-        binding.lineChart.notifyDataSetChanged()
-        binding.lineChart.invalidate()
+        lineChart.data = LineData(ds)
+        lineChart.invalidate()
     }
 
-    private fun stopMeasurement() {
-        measuring = false
-        handler.removeCallbacks(measureLoop)
+    // ── 완료 → SessionCompleteActivity ─────────
 
-        if (pressureReadings.isEmpty()) {
-            finish()
-            return
-        }
+    private fun finishSession() {
+        handler.removeCallbacksAndMessages(null)
+        val endTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+        val avg = if (allPressures.isEmpty()) 32f else allPressures.average().toFloat()
+        val max = allPressures.maxOrNull() ?: avg
+        val min = allPressures.minOrNull() ?: avg
 
-        val avgPressure = pressureReadings.average().toFloat()
-        val maxPressure = pressureReadings.max()
-        val minPressure = pressureReadings.min()
-
-        val intent = Intent(this, SessionCompleteActivity::class.java).apply {
+        startActivity(Intent(this, SessionCompleteActivity::class.java).apply {
             putExtra("duration_seconds", elapsedSeconds)
-            putExtra("avg_pressure", avgPressure)
-            putExtra("max_pressure", maxPressure)
-            putExtra("min_pressure", minPressure)
-        }
-        startActivity(intent)
+            putExtra("avg_pressure", avg)
+            putExtra("max_pressure", max)
+            putExtra("min_pressure", min)
+            putExtra("deviation_count", deviationCount)
+            putExtra("start_time", startTimeStr)
+            putExtra("end_time", endTime)
+        })
         finish()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        measuring = false
-        handler.removeCallbacks(measureLoop)
+        handler.removeCallbacksAndMessages(null)
     }
 }

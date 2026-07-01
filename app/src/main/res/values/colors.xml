@@ -1,47 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 주 색상 (세이지 그린) -->
+    <!-- App theme colors -->
     <color name="primary">#8B9E7B</color>
     <color name="primary_dark">#6B7E5B</color>
-    <color name="primary_light">#B5C9A5</color>
-    <color name="primary_bg">#C8D8B8</color>
-
-    <!-- 온보딩/시작 배경 -->
-    <color name="onboarding_bg">#8B9E7B</color>
-    <color name="onboarding_bg_gradient_top">#9BAE8B</color>
-    <color name="onboarding_bg_gradient_bottom">#7B8E6B</color>
-
-    <!-- 배경 -->
-    <color name="background">#F5F5F0</color>
-    <color name="surface">#FFFFFF</color>
-    <color name="card_bg">#FFFFFF</color>
-
-    <!-- 텍스트 -->
-    <color name="text_primary">#2D3A2D</color>
-    <color name="text_secondary">#5A6B5A</color>
-    <color name="text_hint">#9AAA9A</color>
-    <color name="text_white">#FFFFFF</color>
-
-    <!-- 버튼 -->
-    <color name="btn_primary">#8B9E7B</color>
-    <color name="btn_primary_pressed">#6B7E5B</color>
-    <color name="btn_outline_border">#8B9E7B</color>
-    <color name="btn_disabled">#C8C8C8</color>
-
-    <!-- 구분선 -->
+    <color name="primary_light">#A8C09A</color>
+    <color name="background">#FFFFFF</color>
+    <color name="surface">#F3F6EF</color>
+    <color name="surface_variant">#F0F4EE</color>
+    <color name="text_primary">#2C2C2C</color>
+    <color name="text_secondary">#6B6B6B</color>
+    <color name="text_hint">#AAAAAA</color>
     <color name="divider">#E0E0D8</color>
-    <color name="input_border">#C8C8C8</color>
-    <color name="input_border_focused">#8B9E7B</color>
+    <color name="error">#D32F2F</color>
 
-    <!-- 그래프 -->
-    <color name="chart_line">#8B9E7B</color>
-    <color name="chart_fill">#408B9E7B</color>
+    <!-- 낮음 (Low pressure) -->
+    <color name="thread_ok">#8FAD9E</color>         <!-- 옥색 -->
+    <color name="thread_bichui">#5B9070</color>      <!-- 비취색 -->
+    <color name="thread_byeokchung">#7590B0</color>  <!-- 벽청색 -->
+    <color name="thread_jjok">#4A5880</color>        <!-- 쪽색 -->
 
-    <!-- 기타 -->
+    <!-- 보통 (Medium pressure) -->
+    <color name="thread_gaenar">#EDD055</color>      <!-- 개나리색 -->
+    <color name="thread_yuchae">#D4A820</color>      <!-- 유채색 -->
+    <color name="thread_songhwa">#C8C460</color>     <!-- 송화색 -->
+    <color name="thread_beodeul">#8AA050</color>     <!-- 버들색 -->
+
+    <!-- 높음 (High pressure) -->
+    <color name="thread_dongbaek">#C07070</color>    <!-- 동백색 -->
+    <color name="thread_seokryu">#A04558</color>     <!-- 석류색 -->
+    <color name="thread_juhong">#CC6040</color>      <!-- 주홍색 -->
+    <color name="thread_danpung">#C07535</color>     <!-- 단풍색 -->
+
+    <!-- Multi-session graph colors -->
+    <color name="graph_1">#8B9E7B</color>
+    <color name="graph_2">#7B8EAB</color>
+    <color name="graph_3">#AB8B7B</color>
+    <color name="graph_4">#8BAB8B</color>
+    <color name="graph_5">#AB9B7B</color>
+    <color name="btn_primary">#8B9E7B</color>
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
+    <color name="input_border">#CCCCCC</color>
+    <color name="primary_bg">#8B9E7B</color>
     <color name="transparent">#00000000</color>
-    <color name="overlay">#80000000</color>
-    <color name="dot_inactive">#80FFFFFF</color>
-    <color name="dot_active">#FFFFFF</color>
+    <color name="dot_inactive">#DDDDDD</color>
 </resources>

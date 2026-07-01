@@ -1,97 +1,53 @@
 package com.newritage.app.ui.main
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.newritage.app.R
-import com.newritage.app.databinding.ActivityMainBinding
 import com.newritage.app.ui.main.analysis.AnalysisFragment
+import com.newritage.app.ui.main.home.HomeFragment
+import com.newritage.app.ui.main.home.IntroFragment
 import com.newritage.app.ui.main.knot.KnotStorageFragment
-import com.newritage.app.ui.main.record.RecordFragment
 import com.newritage.app.ui.main.thread.ThreadStorageFragment
-import com.newritage.app.ui.measurement.MeasurementActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
-        setupHomeButton()
-        setupBottomNav()
-
-        // 기본: 홈(측정 시작) 화면
+        bottomNav = findViewById(R.id.bottomNavigation)
+        
         if (savedInstanceState == null) {
-            showHome()
+            // 앱 실행 시 첫 화면은 IntroFragment (하단바 숨김)
+            loadFragment(IntroFragment(), showNav = false)
         }
-    }
 
-    private fun setupHomeButton() {
-        binding.btnStartMeditation.setOnClickListener {
-            startActivity(Intent(this, MeasurementActivity::class.java))
-        }
-    }
-
-    private fun setupBottomNav() {
-        binding.bottomNav.setOnItemSelectedListener { item ->
+        bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_record -> {
-                    hideHome()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, RecordFragment())
-                        .commit()
-                    true
-                }
-                R.id.nav_thread -> {
-                    hideHome()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, ThreadStorageFragment())
-                        .commit()
-                    true
-                }
-                R.id.nav_knot -> {
-                    hideHome()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, KnotStorageFragment())
-                        .commit()
-                    true
-                }
-                R.id.nav_analysis -> {
-                    hideHome()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, AnalysisFragment())
-                        .commit()
-                    true
-                }
-                R.id.nav_settings -> {
-                    // 설정 페이지 미구현
-                    true
-                }
+                R.id.nav_home -> { loadFragment(HomeFragment(), showNav = true); true }
+                R.id.nav_thread -> { loadFragment(ThreadStorageFragment(), showNav = true); true }
+                R.id.nav_knot -> { loadFragment(KnotStorageFragment(), showNav = true); true }
+                R.id.nav_analysis -> { loadFragment(AnalysisFragment(), showNav = true); true }
+                R.id.nav_settings -> true
                 else -> false
             }
         }
     }
 
-    private fun showHome() {
-        binding.layoutHome.visibility = android.view.View.VISIBLE
-        binding.fragmentContainer.visibility = android.view.View.GONE
+    fun loadFragment(fragment: Fragment, showNav: Boolean) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
+            
+        bottomNav.visibility = if (showNav) View.VISIBLE else View.GONE
     }
 
-    private fun hideHome() {
-        binding.layoutHome.visibility = android.view.View.GONE
-        binding.fragmentContainer.visibility = android.view.View.VISIBLE
-    }
-
-    /** 홈 탭으로 복귀 */
-    override fun onBackPressed() {
-        if (binding.layoutHome.visibility != android.view.View.VISIBLE) {
-            showHome()
-            binding.bottomNav.menu.findItem(R.id.nav_record)?.isChecked = false
-        } else {
-            super.onBackPressed()
-        }
+    fun navigateToHome() {
+        bottomNav.selectedItemId = R.id.nav_home
     }
 }
