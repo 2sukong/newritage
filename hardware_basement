@@ -1,0 +1,48 @@
+struct BaselineData {
+  float thumb;
+  float indexMiddle;
+  float palm;
+  float overall;
+};
+
+BaselineData baseline;
+
+const unsigned long CALIBRATION_DURATION_MS = 180000;  // 3분
+const unsigned long WARMUP_MS = 15000;                  // 초반 15초는 버림 (자세 잡는 시간)
+const unsigned long SAMPLE_INTERVAL_MS = 500;           // 0.5초마다 측정
+
+void calibrateBaseline() {
+  unsigned long startTime = millis();
+  unsigned long lastSampleTime = 0;
+
+  float sumThumb = 0, sumIM = 0, sumPalm = 0;
+  int sampleCount = 0;
+
+  while (millis() - startTime < CALIBRATION_DURATION_MS) {
+
+    // 0.5초마다 한 번씩만 측정
+    if (millis() - lastSampleTime >= SAMPLE_INTERVAL_MS) {
+      lastSampleTime = millis();
+
+      // 워밍업 구간(초반 15초)은 측정은 하되 평균 계산에서 제외
+      if (millis() - startTime >= WARMUP_MS) {
+        sumThumb += readSensor(SENSOR_THUMB);
+        sumIM    += readSensor(SENSOR_INDEX_MIDDLE);
+        sumPalm  += readSensor(SENSOR_PALM);
+        sampleCount++;
+      }
+
+      // 사용자에게 진행 상황 보여주기 (선택사항)
+      int remainingSec = (CALIBRATION_DURATION_MS - (millis() - startTime)) / 1000;
+      showProgressToUser(remainingSec);  // 화면/LED/소리 등으로 표시
+    }
+  }
+
+  // 워밍업 이후 데이터만으로 평균 계산
+  baseline.thumb       = sumThumb / sampleCount;
+  baseline.indexMiddle = sumIM / sampleCount;
+  baseline.palm        = sumPalm / sampleCount;
+  baseline.overall     = (baseline.thumb + baseline.indexMiddle + baseline.palm) / 3.0;
+
+  saveBaselineToStorage();
+}
