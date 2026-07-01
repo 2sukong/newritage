@@ -1,0 +1,37 @@
+const float TENSION_THRESHOLD_PERCENT = 20.0;
+const int   SUSTAIN_TIME_MS = 2000;
+const int   VIBRATION_COOLDOWN_MS = 5000;
+
+unsigned long tensionStartTime = 0;
+bool  isTensing = false;
+unsigned long lastVibrationTime = 0;
+
+void checkTensionAndVibrate() {
+  // 현재 3개 센서 값을 각각 읽음
+  float currentThumb = readSensor(SENSOR_THUMB);
+  float currentIM    = readSensor(SENSOR_INDEX_MIDDLE);
+  float currentPalm  = readSensor(SENSOR_PALM);
+
+  // 각 부위별로 기준값 대비 변화율(%) 계산
+  float changeThumb = ((currentThumb - baseline.thumb) / baseline.thumb) * 100.0;
+  float changeIM    = ((currentIM - baseline.indexMiddle) / baseline.indexMiddle) * 100.0;
+  float changePalm  = ((currentPalm - baseline.palm) / baseline.palm) * 100.0;
+
+  // 셋 중 하나라도 임계값을 넘으면 "긴장"으로 판단
+  bool isOverThreshold = (changeThumb >= TENSION_THRESHOLD_PERCENT)
+                       || (changeIM    >= TENSION_THRESHOLD_PERCENT)
+                       || (changePalm  >= TENSION_THRESHOLD_PERCENT);
+
+  if (isOverThreshold) {
+    if (!isTensing) {
+      isTensing = true;
+      tensionStartTime = millis();
+    } else if (millis() - tensionStartTime >= SUSTAIN_TIME_MS
+               && millis() - lastVibrationTime >= VIBRATION_COOLDOWN_MS) {
+      triggerVibration();
+      lastVibrationTime = millis();
+    }
+  } else {
+    isTensing = false;
+  }
+}
