@@ -1,0 +1,71 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 원본 데이터: timestamp, thumb, index_middle, palm
+df = pd.read_csv('session_20260701.csv', parse_dates=['timestamp'])
+
+# 전체 긴장도 점수 (부위별 평균, 필요시 가중치 조정 가능)
+df['overall'] = df[['thumb', 'index_middle', 'palm']].mean(axis=1)
+
+def compute_stats(series):
+    return {
+        'max': series.max(),
+        'min': series.min(),
+        'avg': series.mean(),
+        'median': series.median(),
+    }
+
+daily_report = {
+    'overall':      compute_stats(df['overall']),
+    'thumb':        compute_stats(df['thumb']),
+    'index_middle': compute_stats(df['index_middle']),
+    'palm':         compute_stats(df['palm']),
+}
+
+for part, s in daily_report.items():
+    print(f"[{part}] 최고:{s['max']:.1f} 최저:{s['min']:.1f} 평균:{s['avg']:.1f} 중앙값:{s['median']:.1f}")
+
+
+
+
+
+
+<시간대별 전체 긴장도 그래프>
+
+plt.figure(figsize=(10, 4))
+plt.plot(df['timestamp'], df['overall'], color='#3b6ea5', label='전체 긴장도')
+plt.fill_between(df['timestamp'], df['overall'], alpha=0.15, color='#3b6ea5')
+plt.title('시간대별 긴장도 변화')
+plt.xlabel('시간')
+plt.ylabel('긴장도 점수')
+plt.legend()
+plt.tight_layout()
+plt.savefig('daily_tension_graph.png')
+
+
+
+
+
+
+
+# daily_summary_df: date, overall_avg, overall_max, overall_min,
+#                    thumb_avg, index_middle_avg, palm_avg ...
+daily_summary_df['date'] = pd.to_datetime(daily_summary_df['date'])
+
+weekly_summary = daily_summary_df.resample('W', on='date').agg({
+    'overall_avg': 'mean',
+    'overall_max': 'max',
+    'overall_min': 'min',
+    'thumb_avg': 'mean',
+    'index_middle_avg': 'mean',
+    'palm_avg': 'mean',
+})
+
+monthly_summary = daily_summary_df.resample('M', on='date').agg({
+    'overall_avg': 'mean',
+    'overall_max': 'max',
+    'overall_min': 'min',
+    'thumb_avg': 'mean',
+    'index_middle_avg': 'mean',
+    'palm_avg': 'mean',
+})
