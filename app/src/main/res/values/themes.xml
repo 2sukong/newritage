@@ -61,6 +61,14 @@
         <item name="android:elevation">0dp</item>
     </style>
 
+    <style name="ShapeAppearance.LargeComponent.TopRounded" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">32dp</item>
+        <item name="cornerSizeTopRight">32dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
     <!-- 분석 수치 텍스트 -->
     <style name="TextStyle" />
     <style name="TextStyle.Stat" />

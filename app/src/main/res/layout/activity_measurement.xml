@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -47,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:text="도움말"
                 android:textColor="@color/primary"
-                android:textSize="13sp"
+                android:textSize="11sp"
                 android:layout_marginEnd="4dp"/>
             <ImageView
                 android:layout_width="20dp"
@@ -60,6 +61,7 @@
     <!-- SCREEN 1: 나의 압력 측정 (대기 / WAITING) -->
     <!-- ══════════════════════════════════════ -->
     <ScrollView
+        tools:visibility="gone"
         android:id="@+id/screenWaiting"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -92,146 +94,28 @@
                 android:layout_marginTop="28dp">
 
                 <ImageView
+                    android:id="@+id/imgMeasureStart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/medi_ready_new"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:scaleType="fitCenter"/>
-
-                <ImageButton
-                    android:id="@+id/btnStartMeasure"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_play"
-                    android:background="@drawable/bg_circle_white"
-                    android:elevation="4dp"
-                    android:padding="16dp"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="측정 시작"/>
-
             </FrameLayout>
 
 
             <!-- 측정 안내 카드 -->
-            <androidx.cardview.widget.CardView
+            <!-- 측정 안내 이미지 -->
+            <ImageView
+                android:id="@+id/imgMeasurementGuide"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/surface">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="측정 안내"
-                        android:textColor="@color/text_primary"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="12dp"/>
-
-                    <!-- 안내 항목 1 -->
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="8dp">
-                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
-                            android:src="@drawable/ic_measure_1" android:layout_marginEnd="8dp"/>
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="기기를 손에 쥐고 올바른 자세로 앉아주세요."
-                            android:textColor="@color/text_secondary" android:textSize="13sp"/>
-                    </LinearLayout>
-                    <!-- 안내 항목 2 -->
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="8dp">
-                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
-                            android:src="@drawable/ic_measure_2" android:layout_marginEnd="8dp"/>
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="등을 곧게 펴고, 어깨에 힘을 빼주세요."
-                            android:textColor="@color/text_secondary" android:textSize="13sp"/>
-                    </LinearLayout>
-                    <!-- 안내 항목 3 -->
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="8dp">
-                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
-                            android:src="@drawable/ic_measure_3" android:layout_marginEnd="8dp"/>
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="가만히 눈을 감고 자연스럽게 호흡합니다."
-                            android:textColor="@color/text_secondary" android:textSize="13sp"/>
-                    </LinearLayout>
-                    <!-- 안내 항목 4 (체크) -->
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal" android:gravity="center_vertical">
-                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
-                            android:src="@drawable/ic_measure_4" android:layout_marginEnd="8dp"/>
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="측정은 약 3분간 진행됩니다."
-                            android:textColor="@color/text_secondary" android:textSize="13sp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- TIP 카드 -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="8dp"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="#F2F6F0">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="14dp"
-                    android:gravity="center_vertical">
-
-                    <!-- 왼쪽: 아이콘 + 텍스트 -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <LinearLayout android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            android:layout_marginBottom="6dp">
-                            <ImageView android:layout_width="16dp" android:layout_height="16dp"
-                                android:src="@drawable/tip_bulb_new" android:layout_marginEnd="4dp"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="TIP"
-                                android:textColor="@color/primary"
-                                android:textSize="13sp" android:textStyle="bold"/>
-                        </LinearLayout>
-
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:text="조용하고 방해받지 않는 환경에서 측정하면\n더 정확한 결과를 얻을 수 있어요."
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp"
-                            android:lineSpacingExtra="3dp"/>
-                    </LinearLayout>
-
-                    <!-- 오른쪽: 앉아있는 사람 아이콘 -->
-                    <ImageView
-                        android:layout_width="56dp"
-                        android:layout_height="72dp"
-                        android:layout_marginStart="8dp"
-                        android:src="@drawable/ic_person_sitting_new"
-                        android:contentDescription="명상 자세"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                android:layout_marginBottom="12dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_measurement_guide_new"
+                android:scaleType="fitCenter"
+                android:contentDescription="측정 안내"/>
 
         </LinearLayout>
     </ScrollView>
@@ -244,7 +128,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toTopOf="@id/bottomNav">
 
@@ -262,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:text="현재 압력 상태"
                 android:textColor="@color/text_primary"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textStyle="bold"/>
 
             <TextView
@@ -270,7 +154,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="적절 범위 내의 편안한 압력입니다."
+                android:text="적정 범위 내의 편안한 압력입니다."
                 android:textColor="@color/text_secondary"
                 android:textSize="13sp"/>
 
@@ -427,5 +311,31 @@
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_nav_menu"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <!-- 도움말 오버레이 (클릭 시 전체 화면을 덮음) -->
+    <FrameLayout
+        android:id="@+id/layoutHelpOverlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#99000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/imgHelpContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="32dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/help"
+            android:scaleType="fitCenter"/>
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

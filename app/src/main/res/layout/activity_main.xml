@@ -20,7 +20,7 @@
         android:background="@color/surface"
         app:itemIconTint="@color/nav_selector"
         app:itemTextColor="@color/nav_selector"
-        app:itemIconSize="28dp"
+        app:itemIconSize="36dp"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

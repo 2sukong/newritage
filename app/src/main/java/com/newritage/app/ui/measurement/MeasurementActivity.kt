@@ -56,10 +56,18 @@ class MeasurementActivity : AppCompatActivity() {
 
         findViewById<ImageButton>(R.id.btnBack).setOnClickListener { finish() }
         btnComplete.setOnClickListener { finishSession() }
-        
-        findViewById<ImageButton>(R.id.btnStartMeasure).setOnClickListener {
-            findViewById<ImageButton>(R.id.btnStartMeasure).visibility = View.GONE
-            startCountdown()
+
+        findViewById<ImageView>(R.id.imgMeasureStart).setOnClickListener {
+            showMeasuring()
+        }
+
+        // 도움말 버튼 로직 추가
+        val helpOverlay = findViewById<View>(R.id.layoutHelpOverlay)
+        findViewById<View>(R.id.btnHelp).setOnClickListener {
+            helpOverlay.visibility = View.VISIBLE
+        }
+        helpOverlay.setOnClickListener {
+            helpOverlay.visibility = View.GONE
         }
 
         // 탭바: 다른 메뉴 누르면 MainActivity로 돌아가서 해당 탭 선택
