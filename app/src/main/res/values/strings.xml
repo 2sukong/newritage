@@ -83,6 +83,9 @@
     <string name="complete_message">오늘이\n기록되었습니다</string>
     <string name="btn_view_thread">색 설명 보기</string>
     <string name="thread_title">오늘의 실이 생성되었어요</string>
+    <string name="thread_main_title">오늘의 실이 생성되었어요</string>
+    <string name="thread_home">Home</string>
+    <string name="thread_header">오늘의 실</string>
     <string name="thread_header_home">Home</string>
     <string name="thread_header_today">오늘의 실</string>
 
@@ -164,7 +167,20 @@
     <string name="max_min_kpa_format">%1$.1f / %2$.1f kPa</string>
     <string name="deviation_count_format">%1$d회</string>
     <string name="streak_days_format">연속 기록 %1$d일째</string>
+    <string name="thread_dummy_date">2222.22.22</string>
+    <string name="thread_analysis_eval_placeholder">평소보다 비교적 높은 긴장도가 측정되었어요.\n천천히 호흡하면 몸의 긴장을 이완시킬 수 있어요.</string>
+    <string name="thread_analysis_desc_placeholder">긴장도의 변화가 평소보다 자주 일어났어요.\n다음에는 좀 더 집중해보아요!</string>
+    <string name="thread_btn_view_colors">색 설명 보기</string>
     <string name="error_fill_all">모든 필드를 입력해 주세요.</string>
     <string name="error_invalid_id">아이디 형식이 올바르지 않습니다.</string>
     <string name="error_password_mismatch">비밀번호가 일치하지 않습니다.</string>
+    <string name="knot_detail_header">이달의 매듭</string>
+    <string name="knot_dummy_date">2222년 22월</string>
+    <string name="knot_dummy_name">0000 매듭</string>
+    <string name="btn_view_knot_storage">매듭 보관함 보기</string>
+    <string name="knot_description_placeholder">매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명매듭설명</string>
+    <string name="content_desc_back">뒤로</string>
+    <string name="content_desc_prev">이전</string>
+    <string name="content_desc_next">다음</string>
 </resources>
+

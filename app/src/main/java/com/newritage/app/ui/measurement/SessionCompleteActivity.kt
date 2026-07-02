@@ -200,6 +200,7 @@ class SessionCompleteActivity : AppCompatActivity() {
     private fun goHome() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.putExtra("NAVIGATE_TO_HOME", true)
         startActivity(intent)
         finish()
     }

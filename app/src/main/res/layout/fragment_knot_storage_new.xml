@@ -1,0 +1,994 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <!-- 하단 큰 카드 -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mainCard"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.LargeComponent.TopRounded">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+
+            <!-- 월 이동 영역 -->
+            <LinearLayout
+                android:id="@+id/monthNavigation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/btnPrevMonth"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_chevron_left"
+                    android:contentDescription="이전 달" />
+
+                <TextView
+                    android:id="@+id/tvCurrentMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:text="2024년 5월"
+                    android:textColor="@color/text_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/btnNextMonth"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_chevron_right"
+                    android:contentDescription="다음 달" />
+            </LinearLayout>
+
+            <!-- 달력 영역 보드 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/calendarBoard"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/monthNavigation">
+
+                <!-- Base Layer (Square) -->
+                <View
+                    android:id="@+id/calendarSquare"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_board_background"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Frame Layer (Between Square and Cells) -->
+                <View
+                    android:id="@+id/calendarFrame"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/calendar_frame"
+                    android:elevation="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Border Layer -->
+                <View
+                    android:id="@+id/boardBorder"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_board_border"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- ScrollView for Grid -->
+                <ScrollView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:paddingHorizontal="46dp"
+                    android:paddingTop="45dp"
+                    android:paddingBottom="42dp"
+                    android:clipToPadding="true"
+                    android:scrollbars="none"
+                    android:elevation="4dp"
+                    app:layout_constraintBottom_toBottomOf="@id/calendarFrame"
+                    app:layout_constraintEnd_toEndOf="@id/calendarFrame"
+                    app:layout_constraintStart_toStartOf="@id/calendarFrame"
+                    app:layout_constraintTop_toTopOf="@id/calendarFrame">
+
+                    <GridLayout
+                        android:id="@+id/calendarGrid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:columnCount="4"
+                        android:rowCount="8"
+                        android:useDefaultMargins="false">
+
+                        <!-- Day 1 -->
+                        <LinearLayout
+                            android:id="@+id/container1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell1"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="1일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 2 -->
+                        <LinearLayout
+                            android:id="@+id/container2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell2"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="2일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 3 -->
+                        <LinearLayout
+                            android:id="@+id/container3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell3"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="3일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 4 -->
+                        <LinearLayout
+                            android:id="@+id/container4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell4"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="4일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 5 -->
+                        <LinearLayout
+                            android:id="@+id/container5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell5"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="5일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 6 -->
+                        <LinearLayout
+                            android:id="@+id/container6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell6"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="6일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 7 -->
+                        <LinearLayout
+                            android:id="@+id/container7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell7"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="7일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 8 -->
+                        <LinearLayout
+                            android:id="@+id/container8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell8"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="8일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 9 -->
+                        <LinearLayout
+                            android:id="@+id/container9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell9"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay9"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="9일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 10 -->
+                        <LinearLayout
+                            android:id="@+id/container10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell10"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="10일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 11 -->
+                        <LinearLayout
+                            android:id="@+id/container11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell11"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="11일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 12 -->
+                        <LinearLayout
+                            android:id="@+id/container12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell12"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="12일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 13 -->
+                        <LinearLayout
+                            android:id="@+id/container13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell13"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="13일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 14 -->
+                        <LinearLayout
+                            android:id="@+id/container14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell14"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="14일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 15 -->
+                        <LinearLayout
+                            android:id="@+id/container15"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell15"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay15"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="15일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 16 -->
+                        <LinearLayout
+                            android:id="@+id/container16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell16"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="16일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 17 -->
+                        <LinearLayout
+                            android:id="@+id/container17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell17"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay17"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="17일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 18 -->
+                        <LinearLayout
+                            android:id="@+id/container18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell18"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay18"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="18일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 19 -->
+                        <LinearLayout
+                            android:id="@+id/container19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell19"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay19"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="19일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 20 -->
+                        <LinearLayout
+                            android:id="@+id/container20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell20"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="20일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 21 -->
+                        <LinearLayout
+                            android:id="@+id/container21"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell21"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay21"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="21일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 22 -->
+                        <LinearLayout
+                            android:id="@+id/container22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell22"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay22"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="22일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 23 -->
+                        <LinearLayout
+                            android:id="@+id/container23"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell23"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay23"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="23일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 24 -->
+                        <LinearLayout
+                            android:id="@+id/container24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell24"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="24일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 25 -->
+                        <LinearLayout
+                            android:id="@+id/container25"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell25"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay25"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="25일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 26 -->
+                        <LinearLayout
+                            android:id="@+id/container26"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell26"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay26"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="26일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 27 -->
+                        <LinearLayout
+                            android:id="@+id/container27"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell27"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay27"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="27일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 28 -->
+                        <LinearLayout
+                            android:id="@+id/container28"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell28"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay28"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="28일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 29 -->
+                        <LinearLayout
+                            android:id="@+id/container29"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell29"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay29"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="29일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 30 -->
+                        <LinearLayout
+                            android:id="@+id/container30"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell30"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay30"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="30일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Day 31 -->
+                        <LinearLayout
+                            android:id="@+id/container31"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground">
+                            <View
+                                android:id="@+id/cell31"
+                                android:layout_width="49dp"
+                                android:layout_height="59dp"
+                                android:background="@drawable/bg_calendar_cell_frame" />
+                            <TextView
+                                android:id="@+id/tvDay31"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="31일"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                    </GridLayout>
+                </ScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- 상단 Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="12dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/back"
+            android:contentDescription="뒤로가기" />
+
+        <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="매듭 보관함"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            />
+
+    </androidx.appcompat.widget.Toolbar>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

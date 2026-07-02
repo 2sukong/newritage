@@ -42,130 +42,123 @@
             <View android:layout_width="40dp" android:layout_height="40dp"/>
         </LinearLayout>
 
-        <ScrollView
+        <!-- 본문 영역 -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:fillViewport="true">
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="16dp">
 
-            <LinearLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="오늘의 기록"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- 통계 카드 -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingHorizontal="24dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="0dp">
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#E3E3E3"
+                app:cardBackgroundColor="#FAFAFA">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="오늘의 기록"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    android:fontFamily="sans-serif-medium"
-                    android:layout_marginBottom="16dp"/>
-
-                <!-- 통계 카드 -->
-                <com.google.android.material.card.MaterialCardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="14dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#E3E3E3"
-                    app:cardBackgroundColor="#FAFAFA">
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingHorizontal="16dp">
-
-                        <!-- 명상 시간 -->
-                        <LinearLayout android:layout_width="match_parent"
-                            android:layout_height="48dp" android:gravity="center_vertical"
-                            android:orientation="horizontal">
-                            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                                android:layout_weight="1" android:text="명상 시간"
-                                android:textColor="@color/text_secondary" android:textSize="14sp"/>
-                            <TextView android:id="@+id/tvSessionTimeVal"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="-" android:textColor="@color/text_primary" android:textSize="14sp"/>
-                        </LinearLayout>
-                        <View android:layout_width="match_parent" android:layout_height="0.5dp"
-                            android:background="@color/divider"/>
-
-                        <!-- 평균 긴장도 -->
-                        <LinearLayout android:layout_width="match_parent"
-                            android:layout_height="48dp" android:gravity="center_vertical"
-                            android:orientation="horizontal">
-                            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                                android:layout_weight="1" android:text="평균 긴장도"
-                                android:textColor="@color/text_secondary" android:textSize="14sp"/>
-                            <TextView android:id="@+id/tvAvgPressureVal"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="-" android:textColor="@color/text_primary" android:textSize="14sp"/>
-                        </LinearLayout>
-                        <View android:layout_width="match_parent" android:layout_height="0.5dp"
-                            android:background="@color/divider"/>
-
-                        <!-- 최고/최저 긴장도 -->
-                        <LinearLayout android:layout_width="match_parent"
-                            android:layout_height="48dp" android:gravity="center_vertical"
-                            android:orientation="horizontal">
-                            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                                android:layout_weight="1" android:text="최고/최저 긴장도"
-                                android:textColor="@color/text_secondary" android:textSize="14sp"/>
-                            <TextView android:id="@+id/tvMaxMinVal"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="-" android:textColor="@color/text_primary" android:textSize="14sp"/>
-                        </LinearLayout>
-                        <View android:layout_width="match_parent" android:layout_height="0.5dp"
-                            android:background="@color/divider"/>
-
-                        <!-- 안정 상태 이탈 빈도 -->
-                        <LinearLayout android:layout_width="match_parent"
-                            android:layout_height="48dp" android:gravity="center_vertical"
-                            android:orientation="horizontal">
-                            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                                android:layout_weight="1" android:text="안정 상태 이탈 빈도"
-                                android:textColor="@color/text_secondary" android:textSize="14sp"/>
-                            <TextView android:id="@+id/tvDeviationVal"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="-" android:textColor="@color/text_primary" android:textSize="14sp"/>
-                        </LinearLayout>
+                    <!-- 명상 시간 -->
+                    <LinearLayout android:layout_width="match_parent"
+                        android:layout_height="48dp" android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="명상 시간"
+                            android:textColor="@color/text_secondary" android:textSize="14sp"/>
+                        <TextView android:id="@+id/tvSessionTimeVal"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="-" android:textColor="@color/text_primary" android:textSize="14sp"/>
                     </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                    <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                        android:background="@color/divider"/>
 
-                <!-- 오늘의 감정 -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="오늘의 감정"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    android:fontFamily="sans-serif-medium"/>
+                    <!-- 평균 긴장도 -->
+                    <LinearLayout android:layout_width="match_parent"
+                        android:layout_height="48dp" android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="평균 긴장도"
+                            android:textColor="@color/text_secondary" android:textSize="14sp"/>
+                        <TextView android:id="@+id/tvAvgPressureVal"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="-" android:textColor="@color/text_primary" android:textSize="14sp"/>
+                    </LinearLayout>
+                    <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                        android:background="@color/divider"/>
 
-                <EditText
-                    android:id="@+id/etEmotion"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:minHeight="300dp"
-                    android:background="@drawable/bg_mind"
-                    android:gravity="top|start"
-                    android:hint="오늘 하루 무슨 일이 있었나요?"
-                    android:textColorHint="@color/text_hint"
-                    android:padding="18dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_primary"
-                    android:inputType="textMultiLine"
-                    android:lines="15"/>
+                    <!-- 최고/최저 긴장도 -->
+                    <LinearLayout android:layout_width="match_parent"
+                        android:layout_height="48dp" android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="최고/최저 긴장도"
+                            android:textColor="@color/text_secondary" android:textSize="14sp"/>
+                        <TextView android:id="@+id/tvMaxMinVal"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="-" android:textColor="@color/text_primary" android:textSize="14sp"/>
+                    </LinearLayout>
+                    <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                        android:background="@color/divider"/>
 
-            </LinearLayout>
-        </ScrollView>
+                    <!-- 안정 상태 이탈 빈도 -->
+                    <LinearLayout android:layout_width="match_parent"
+                        android:layout_height="48dp" android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="안정 상태 이탈 빈도"
+                            android:textColor="@color/text_secondary" android:textSize="14sp"/>
+                        <TextView android:id="@+id/tvDeviationVal"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="-" android:textColor="@color/text_primary" android:textSize="14sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 오늘의 감정 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="10dp"
+                android:text="오늘의 감정"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-medium"/>
+
+            <EditText
+                android:id="@+id/etEmotion"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_mind"
+                android:gravity="top|start"
+                android:hint="오늘 하루 무슨 일이 있었나요?"
+                android:textColorHint="@color/text_hint"
+                android:padding="18dp"
+                android:textSize="14sp"
+                android:textColor="@color/text_primary"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="12dp"/>
+
+        </LinearLayout>
 
         <!-- 하단 버튼 (건너뛰기 / 기록하기) -->
         <LinearLayout
@@ -175,7 +168,7 @@
             android:orientation="horizontal"
             android:paddingHorizontal="20dp"
             android:paddingVertical="12dp"
-            android:background="@color/surface"
+            android:background="@color/background"
             android:elevation="4dp">
             <Button
                 android:id="@+id/btnSkip"
@@ -209,7 +202,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:background="#F8FAF8"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -274,152 +267,175 @@
     <!-- ══════════════════════════════════════ -->
     <!-- SCREEN 3: 실 제공 (최초 1회 / THREAD)   -->
     <!-- ══════════════════════════════════════ -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/screenThread"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#F8FAF8"
-        android:visibility="gone">
+        android:background="@color/background"
+        android:visibility="visible">
 
-        <!-- 헤더 -->
+        <!-- 헤더 영역 -->
+        <TextView
+            android:id="@+id/tvHeaderHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/thread_home"
+            android:textColor="@color/primary"
+            android:textSize="15sp"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvHeaderToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/thread_header"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif-medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvThreadMainTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/thread_main_title"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHeaderToday" />
+
+        <TextView
+            android:id="@+id/tvThreadDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/thread_dummy_date"
+            android:textColor="@color/text_hint"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvThreadMainTitle" />
+
+        <!-- 실 색상 프레임 (thread_frame.xml) 비율 유지하며 축소 -->
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:paddingHorizontal="20dp">
-            <TextView
-                android:id="@+id/tvHeaderHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Home"
-                android:textColor="#AAAAAA"
-                android:textSize="15sp"
-                android:background="?attr/selectableItemBackground"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="오늘의 실"
-                android:textColor="@color/text_primary"
-                android:textSize="15sp"
-                android:fontFamily="sans-serif-medium"/>
+            android:id="@+id/containerThread"
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvThreadDate">
+
+            <ImageView
+                android:id="@+id/ivThreadFrame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/thread_frame"
+                android:scaleType="fitCenter" />
+
+            <!-- 실의 색상 -->
+            <View
+                android:id="@+id/threadColorView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="24dp" />
         </FrameLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:fillViewport="true">
+        <!-- 긴장도 게이지 (nervous_circle.xml) 비율 유지하며 축소, 간격 23 (기존 31의 0.75배) -->
+        <TextView
+            android:id="@+id/tvTensionGauge"
+            android:layout_width="84dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/nervous_circle"
+            android:gravity="center"
+            android:text="긴장도 --/255"
+            android:textColor="@color/primary"
+            android:textSize="11sp"
+            android:fontFamily="sans-serif-medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/containerThread" />
+
+        <!-- 분석 박스 비율 유지하며 축소, 간격 21 (기존 29의 0.75배) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardAnalysis"
+            android:layout_width="256dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="21dp"
+            app:cardBackgroundColor="@color/thread_analysis_card_bg"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTensionGauge">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:paddingHorizontal="32dp"
-                android:paddingTop="32dp">
+                android:padding="12dp">
 
                 <TextView
+                    android:id="@+id/tvPressureDesc1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="오늘의 실이 생성되었어요"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    android:fontFamily="sans-serif-medium"/>
-
-                <TextView
-                    android:id="@+id/tvThreadDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="#AAAAAA"
-                    android:textSize="13sp"/>
-
-                <!-- 실 색상 상자 -->
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/bg_thread_frame"
-                    android:padding="10dp">
-                    <View
-                        android:id="@+id/threadColorView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </FrameLayout>
-
-                <!-- 긴장도 pill -->
-                <TextView
-                    android:id="@+id/tvTensionGauge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/bg_tension_pill"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="8dp"
-                    android:text="긴장도 -/-"
+                    android:gravity="center"
+                    android:text="@string/thread_analysis_eval_placeholder"
                     android:textColor="@color/text_secondary"
-                    android:textSize="12sp"
-                    android:fontFamily="sans-serif-medium"/>
+                    android:textSize="10sp"
+                    android:lineSpacingExtra="2dp"/>
 
-                <!-- 설명 박스 -->
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <View
+                    android:layout_width="150dp"
+                    android:layout_height="0.5dp"
+                    android:background="#CCCCCC"
+                    android:layout_marginVertical="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvPressureDesc2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginBottom="32dp"
-                    android:background="#F4F6F2"
-                    android:orientation="vertical"
-                    android:padding="20dp"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/tvPressureDesc1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="12sp"
-                        android:lineSpacingExtra="4dp"/>
-
-                    <View
-                        android:layout_width="200dp"
-                        android:layout_height="0.5dp"
-                        android:background="#CCCCCC"
-                        android:layout_marginVertical="16dp"/>
-
-                    <TextView
-                        android:id="@+id/tvPressureDesc2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="12sp"
-                        android:lineSpacingExtra="4dp"/>
-                </LinearLayout>
-
+                    android:gravity="center"
+                    android:text="@string/thread_analysis_desc_placeholder"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="10sp"
+                    android:lineSpacingExtra="2dp"/>
             </LinearLayout>
-        </ScrollView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <!-- 하단 버튼 -->
+        <!-- 하단 버튼 영역 -->
         <LinearLayout
+            android:id="@+id/layoutThreadBottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="24dp"
             android:gravity="center"
-            android:background="#F8FAF8">
+            android:background="@color/background"
+            app:layout_constraintBottom_toBottomOf="parent">
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnViewColorDesc"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="색 설명 보기"
+                android:text="@string/thread_btn_view_colors"
                 android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 app:cornerRadius="28dp"
-                app:backgroundTint="#F4F4F4"
+                app:backgroundTint="@color/thread_btn_bg"
                 app:elevation="2dp"
                 android:textAllCaps="false"/>
         </LinearLayout>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -22,9 +22,16 @@ class MainActivity : AppCompatActivity() {
 
         bottomNav = findViewById(R.id.bottomNavigation)
         
+        val navigateToHome = intent.getBooleanExtra("NAVIGATE_TO_HOME", false)
+
         if (savedInstanceState == null) {
-            // 앱 실행 시 첫 화면은 IntroFragment (하단바 숨김)
-            loadFragment(IntroFragment(), showNav = false)
+            if (navigateToHome) {
+                loadFragment(HomeFragment(), showNav = true)
+                bottomNav.selectedItemId = R.id.nav_home
+            } else {
+                // 앱 실행 시 첫 화면은 IntroFragment (하단바 숨김)
+                loadFragment(IntroFragment(), showNav = false)
+            }
         }
 
         bottomNav.setOnItemSelectedListener { item ->

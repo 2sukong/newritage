@@ -333,7 +333,8 @@
             android:layout_gravity="center"
             android:padding="32dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/help"
+            android:src="@drawable/help_new"
+            android:alpha="1.0"
             android:scaleType="fitCenter"/>
 
     </FrameLayout>

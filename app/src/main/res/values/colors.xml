@@ -43,4 +43,7 @@
     <color name="primary_bg">#8B9E7B</color>
     <color name="transparent">#00000000</color>
     <color name="dot_inactive">#DDDDDD</color>
+    <color name="thread_analysis_card_bg">#F6F7F3</color>
+    <color name="thread_btn_bg">#F4F4F4</color>
+    <color name="thread_chip_bg">#F2F4F0</color>
 </resources>
