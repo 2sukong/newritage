@@ -69,6 +69,12 @@ class KnotStorageFragment : Fragment() {
             cellView.findViewById<TextView>(R.id.tvDay).text = day.toString()
             cellView.findViewById<View>(R.id.knotIndicator).visibility =
                 if (hasKnot) View.VISIBLE else View.INVISIBLE
+            if (hasKnot) {
+                cellView.setOnClickListener {
+                    KnotModelDialogFragment.newInstance(dateStr)
+                        .show(childFragmentManager, "knot_model")
+                }
+            }
             grid.addView(cellView)
         }
     }
