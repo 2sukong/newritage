@@ -370,49 +370,59 @@
         <!-- 분석 박스 비율 유지하며 축소, 간격 21 (기존 29의 0.75배) -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardAnalysis"
-            android:layout_width="256dp"
-            android:layout_height="108dp"
+            android:layout_width="280dp"
+            android:layout_height="160dp"
             android:layout_marginTop="21dp"
+            android:layout_marginBottom="12dp"
             app:cardBackgroundColor="@color/thread_analysis_card_bg"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTensionGauge">
+            app:layout_constraintTop_toBottomOf="@id/tvTensionGauge"
+            app:layout_constraintBottom_toTopOf="@id/layoutThreadBottom"
+            app:layout_constrainedHeight="true">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:scrollbars="vertical"
+                android:fadeScrollbars="false"
+                android:scrollbarStyle="insideOverlay">
 
-                <TextView
-                    android:id="@+id/tvPressureDesc1"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/thread_analysis_eval_placeholder"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="10sp"
-                    android:lineSpacingExtra="2dp"/>
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <View
-                    android:layout_width="150dp"
-                    android:layout_height="0.5dp"
-                    android:background="#CCCCCC"
-                    android:layout_marginVertical="8dp"/>
+                    <TextView
+                        android:id="@+id/tvKeywords"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="오늘의 키워드: -"
+                        android:textColor="@color/primary"
+                        android:textSize="11sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_marginBottom="8dp"/>
 
-                <TextView
-                    android:id="@+id/tvPressureDesc2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/thread_analysis_desc_placeholder"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="10sp"
-                    android:lineSpacingExtra="2dp"/>
-            </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#DDDDDD"
+                        android:layout_marginBottom="12dp"/>
+
+                    <TextView
+                        android:id="@+id/tvAiFeedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="명상 데이터를 분석 중입니다..."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="4dp"/>
+                </LinearLayout>
+            </ScrollView>
         </com.google.android.material.card.MaterialCardView>
 
         <!-- 하단 버튼 영역 -->
