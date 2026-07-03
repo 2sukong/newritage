@@ -120,8 +120,6 @@
     <string name="knot_provide_title">매듭 제공</string>
     <string name="btn_view_knot_storage">매듭 보관함 보기</string>
     <string name="no_knot_yet">이번 달 매듭이 아직 없습니다.</string>
-    <string name="knot_model_dialog_title">%s의 매듭</string>
-    <string name="btn_close">닫기</string>
 
     <!-- 분석 -->
     <string name="analysis_title">명상분석</string>
