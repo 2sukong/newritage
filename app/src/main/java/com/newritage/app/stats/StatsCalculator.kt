@@ -1,5 +1,7 @@
 package com.newritage.app.stats
 
+import com.newritage.app.data.SensorReading
+
 data class PressureStats(
     val max: Float,
     val min: Float,
@@ -10,6 +12,10 @@ data class PressureStats(
 class StatsCalculator {
 
     fun calculate(values: List<Float>): PressureStats {
+        if (values.isEmpty()) {
+            return PressureStats(max = 0f, min = 0f, avg = 0f, median = 0f)
+        }
+
         val sorted = values.sorted()
         val median = if (sorted.size % 2 == 0) {
             (sorted[sorted.size / 2 - 1] + sorted[sorted.size / 2]) / 2f

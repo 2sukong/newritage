@@ -232,6 +232,7 @@
             android:layout_marginTop="32dp">
 
             <TextView
+                android:id="@+id/tvWeeklyComparison"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="저번주와 비교"

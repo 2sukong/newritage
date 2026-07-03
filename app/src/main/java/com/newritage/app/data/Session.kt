@@ -30,5 +30,25 @@ data class Session(
     val threadColor: String = "#8B9E7B",
 
     /** 생성 시각 (ms) */
-    val createdAt: Long = System.currentTimeMillis()
+    //val createdAt: Long = System.currentTimeMillis()
+
+    // ── 새로 추가: 부위별 통계 (분석 페이지용, 화면엔 아직 안 보여줘도 DB엔 저장) ──
+    val medianPressure: Float = 0f,
+
+    val thumbAvg: Float = 0f,
+    val thumbMin: Float = 0f,
+    val thumbMax: Float = 0f,
+    val thumbMedian: Float = 0f,
+
+    val imAvg: Float = 0f,
+    val imMin: Float = 0f,
+    val imMax: Float = 0f,
+    val imMedian: Float = 0f,
+
+    val palmAvg: Float = 0f,
+    val palmMin: Float = 0f,
+    val palmMax: Float = 0f,
+    val palmMedian: Float = 0f,
+
+    val vibrationCount: Int = 0
 )

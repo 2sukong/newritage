@@ -4,19 +4,19 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.newritage.app.data.AppDatabase
 import com.newritage.app.data.Session
+import com.newritage.app.data.SessionDataHolder
 import com.newritage.app.data.UserPreferences
 import com.newritage.app.databinding.ActivitySessionCompleteBinding
+import com.newritage.app.stats.StatsCalculator
 import com.newritage.app.ui.main.MainActivity
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.random.Random
 
 class SessionCompleteActivity : AppCompatActivity() {
 
@@ -26,7 +26,7 @@ class SessionCompleteActivity : AppCompatActivity() {
     private var savedSessionId: Long = -1L
     private var generatedColor: String = "#8B9E7B"
 
-    // 세션 데이터
+    // 기존: Intent로 받은 세션 데이터 (그대로 유지, 화면 표시용)
     private var durationSeconds = 0
     private var avgPressure = 0f
     private var maxPressure = 0f
@@ -41,13 +41,11 @@ class SessionCompleteActivity : AppCompatActivity() {
 
         prefs = UserPreferences(this)
 
-        // Intent로 전달받은 세션 데이터
         durationSeconds = intent.getIntExtra("duration_seconds", 0)
         avgPressure = intent.getFloatExtra("avg_pressure", 0f)
         maxPressure = intent.getFloatExtra("max_pressure", 0f)
         minPressure = intent.getFloatExtra("min_pressure", 0f)
 
-        // 실 색상 생성 (평균 압력 기반 색상 매핑)
         generatedColor = generateThreadColor(avgPressure)
 
         showScreen(Screen.COMPLETE)
@@ -55,18 +53,15 @@ class SessionCompleteActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
-        // 완료 → 기록 화면
         binding.btnGoRecord.setOnClickListener {
             showScreen(Screen.RECORD)
             populateRecord()
         }
 
-        // 기록 저장 → 실 제공 화면
         binding.btnSaveRecord.setOnClickListener {
             saveSession()
         }
 
-        // 실 제공 → 메인
         binding.btnGoMain.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -76,6 +71,7 @@ class SessionCompleteActivity : AppCompatActivity() {
     }
 
     private fun populateRecord() {
+        // 기존 그대로 - 화면에 보이는 값 변화 없음
         val min = durationSeconds / 60
         val sec = durationSeconds % 60
         binding.tvRecordMedTime.text = String.format("%02d:%02d", min, sec)
@@ -88,21 +84,53 @@ class SessionCompleteActivity : AppCompatActivity() {
         val emotion = binding.etEmotion.text?.toString()?.trim() ?: ""
         val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
+        // 새로 추가: Holder에 담아둔 원시 데이터로 부위별 통계 계산
+        val readings = SessionDataHolder.sensorReadings
+        val stats = StatsCalculator().calculateDailyReport(readings)
+
         val session = Session(
+            // ── 기존 필드: 그대로 ──
             date = today,
             durationSeconds = durationSeconds,
             avgPressure = avgPressure,
             maxPressure = maxPressure,
             minPressure = minPressure,
             emotion = emotion,
-            threadColor = generatedColor
+            threadColor = generatedColor,
+
+            // ── 새로 추가: 부위별 통계 + 진동 횟수 ──
+            medianPressure = stats["overall"]?.median ?: 0f,
+
+            thumbAvg = stats["thumb"]?.avg ?: 0f,
+            thumbMin = stats["thumb"]?.min ?: 0f,
+            thumbMax = stats["thumb"]?.max ?: 0f,
+            thumbMedian = stats["thumb"]?.median ?: 0f,
+
+            imAvg = stats["indexMiddle"]?.avg ?: 0f,
+            imMin = stats["indexMiddle"]?.min ?: 0f,
+            imMax = stats["indexMiddle"]?.max ?: 0f,
+            imMedian = stats["indexMiddle"]?.median ?: 0f,
+
+            palmAvg = stats["palm"]?.avg ?: 0f,
+            palmMin = stats["palm"]?.min ?: 0f,
+            palmMax = stats["palm"]?.max ?: 0f,
+            palmMedian = stats["palm"]?.median ?: 0f,
+
+            vibrationCount = SessionDataHolder.vibrationCount
         )
 
         lifecycleScope.launch {
             val db = AppDatabase.getInstance(this@SessionCompleteActivity)
             val id = db.sessionDao().insert(session)
+
+            // 원시 데이터(SensorReading)도 sessionId 채워서 저장 (그래프용)
+            val readingsWithId = readings.map { it.copy(sessionId = id) }
+            db.sessionDao().insertReadings(readingsWithId)
+
             savedSessionId = id
             prefs.lastSessionId = id
+
+            SessionDataHolder.clear()  // 다 썼으니 비워줌
 
             runOnUiThread {
                 showScreen(Screen.THREAD)
@@ -120,7 +148,6 @@ class SessionCompleteActivity : AppCompatActivity() {
         binding.tvThreadColorName.text = colorName(generatedColor)
     }
 
-    /** 평균 압력 기반 실 색상 생성 (플레이스홀더 로직) */
     private fun generateThreadColor(avgPressure: Float): String {
         val colors = listOf(
             "#A8C5A0", "#B5C9A5", "#8FAF7F", "#C5B5A0",

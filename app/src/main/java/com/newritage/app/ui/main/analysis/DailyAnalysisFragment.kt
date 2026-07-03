@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.newritage.app.R
 import com.newritage.app.data.AppDatabase
 import com.newritage.app.databinding.FragmentDailyAnalysisBinding
+import com.newritage.app.stats.StatsCalculator
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -73,28 +74,33 @@ class DailyAnalysisFragment : Fragment() {
 
         lifecycleScope.launch {
             val db = AppDatabase.getInstance(requireContext())
-            val session = db.sessionDao().getLatestSessionByDate(dateStr)
+            val dao = db.sessionDao()
 
-            if (session != null) {
-                // [수정] 데이터가 있을 때 기존에 없던 형식을 XML ID 규칙에 맞게 매핑
-                val min = session.durationSeconds / 60
-                val sec = session.durationSeconds % 60
+            val sessions = dao.getSessionsByDate(dateStr)
+            val readings = dao.getReadingsByDate(dateStr)
 
-                // XML의 정식 ID들로 데이터 텍스트 바인딩
-                binding.tvAvgPressure1.text = String.format("%.1f", session.avgPressure)
-                binding.tvAvgPressure2.text = String.format("%.1f", session.minPressure) // 만약 DB에 minPressure가 없다면 적절한 변수나 session.avgPressure - 5f 등으로 대체 가능
-                binding.tvAvgPressure3.text = String.format("%.1f", session.maxPressure)
+            if (sessions.isNotEmpty() && readings.isNotEmpty()) {
+
+                val stats = StatsCalculator().calculateDailyReport(readings)
+
+                val totalDurationSeconds = sessions.sumOf { it.durationSeconds }
+                val min = totalDurationSeconds / 60
+                val sec = totalDurationSeconds % 60
+                val totalVibrationCount = sessions.sumOf { it.vibrationCount }
+
+                binding.tvAvgPressure1.text = String.format("%.1f", stats["overall"]!!.avg)
+                binding.tvAvgPressure2.text = String.format("%.1f", stats["overall"]!!.min)
+                binding.tvAvgPressure3.text = String.format("%.1f", stats["overall"]!!.max)
                 binding.tvMedTime.text = String.format("%02d:%02d", min, sec)
 
-                // 센서별 상세 분석 텍스트 세팅 (임시 수치 대입 또는 DB 값 매핑)
-                binding.tvSensorADetail.text = "최고 45.0 / 최저 10.2 / 평균 ${String.format("%.1f", session.avgPressure)} / 중앙 28.4 kPa"
-                binding.tvSensorBDetail.text = "최고 42.1 / 최저 15.4 / 평균 ${String.format("%.1f", session.avgPressure - 1)} / 중앙 32.0 kPa"
-                binding.tvSensorCDetail.text = "최고 51.3 / 최저 8.9 / 평균 ${String.format("%.1f", session.avgPressure + 2)} / 중앙 33.2 kPa"
+                binding.tvSensorADetail.text =
+                    "최고 ${stats["thumb"]!!.max} / 최저 ${stats["thumb"]!!.min} / 평균 ${String.format("%.1f", stats["thumb"]!!.avg)} / 중앙 ${stats["thumb"]!!.median} kPa"
+                binding.tvSensorBDetail.text =
+                    "최고 ${stats["indexMiddle"]!!.max} / 최저 ${stats["indexMiddle"]!!.min} / 평균 ${String.format("%.1f", stats["indexMiddle"]!!.avg)} / 중앙 ${stats["indexMiddle"]!!.median} kPa"
+                binding.tvSensorCDetail.text =
+                    "최고 ${stats["palm"]!!.max} / 최저 ${stats["palm"]!!.min} / 평균 ${String.format("%.1f", stats["palm"]!!.avg)} / 중앙 ${stats["palm"]!!.median} kPa"
 
-                binding.tvDailyComment.text = "오늘의 명상 상태는 대체로 안정적입니다. 센서 A 구역의 압력이 다소 높게 유지되었으니 다음 명상 시 참고해 주세요."
-
-                // 시뮬레이션 그래프 데이터 (실제 기기 데이터 없으므로 평균 기반 생성)
-                val entries = generateSimulatedEntries(session.avgPressure, session.durationSeconds / 10)
+                val entries = readings.mapIndexed { index, r -> Entry(index.toFloat(), r.overall) }
                 val dataSet = LineDataSet(entries, "압력").apply {
                     color = Color.parseColor("#8B9E7B")
                     setDrawCircles(false)
@@ -106,8 +112,13 @@ class DailyAnalysisFragment : Fragment() {
                 }
                 binding.lineChart.data = LineData(dataSet)
                 binding.lineChart.invalidate()
+
+                // TODO: [수빈]이 AI 연동 후 아래 줄을 실제 코멘트 생성 로직으로 교체
+                // 활용 가능 데이터: stats["overall"/"thumb"/"indexMiddle"/"palm"], sessions.size,
+                //                    totalDurationSeconds, totalVibrationCount
+                binding.tvDailyComment.text = "분석 코멘트를 준비 중입니다."
+
             } else {
-                // [수정] 데이터가 없을 때 빈 값 처리 (--.-)
                 binding.tvAvgPressure1.text = "--.-"
                 binding.tvAvgPressure2.text = "--.-"
                 binding.tvAvgPressure3.text = "--.-"
@@ -121,17 +132,7 @@ class DailyAnalysisFragment : Fragment() {
         }
     }
 
-    private fun generateSimulatedEntries(avg: Float, count: Int): List<Entry> {
-        val result = mutableListOf<Entry>()
-        val n = maxOf(count, 10)
-        var current = avg
-        for (i in 0 until n) {
-            val noise = (Math.random() - 0.5).toFloat() * 8f
-            current = (current + noise).coerceIn(5f, 80f)
-            result.add(Entry(i.toFloat(), current))
-        }
-        return result
-    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

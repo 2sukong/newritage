@@ -14,18 +14,24 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.newritage.app.R
+import com.newritage.app.ble.BleManager
+import com.newritage.app.data.SensorReading
+import com.newritage.app.data.SessionDataHolder
 import com.newritage.app.databinding.ActivityMeasurementBinding
-import kotlin.random.Random
 
 class MeasurementActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMeasurementBinding
+    private lateinit var bleManager: BleManager
 
     private val handler = Handler(Looper.getMainLooper())
     private var measuring = false
     private var elapsedSeconds = 0
-    private val pressureReadings = mutableListOf<Float>()
+
+    // 기존: Float 하나만 저장 → 이제 SensorReading 통째로 저장 (부위별 값 포함)
+    private val sensorReadings = mutableListOf<SensorReading>()
     private val chartEntries = mutableListOf<Entry>()
+    private var vibrationCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +39,35 @@ class MeasurementActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupChart()
+        setupBle()
         showGuideDialog()
 
         binding.btnBack.setOnClickListener { finish() }
         binding.btnStop.setOnClickListener { stopMeasurement() }
+    }
+
+    private fun setupBle() {
+        bleManager = BleManager(
+            context = this,
+            onBaselineReceived = { },  // 이 화면에서는 안 씀
+            onDataReceived = { reading ->
+                if (measuring) {
+                    sensorReadings.add(reading)
+
+                    runOnUiThread {
+                        val min = elapsedSeconds / 60
+                        val sec = elapsedSeconds % 60
+                        binding.tvTimer.text = String.format("%02d:%02d", min, sec)
+                        binding.tvCurrentPressure.text = String.format("%.1f", reading.overall)
+
+                        chartEntries.add(Entry(elapsedSeconds.toFloat(), reading.overall))
+                        updateChart()
+                    }
+                }
+            },
+            onVibrationEvent = { vibrationCount++ }
+        )
+        bleManager.startScan()
     }
 
     private fun showGuideDialog() {
@@ -72,33 +103,19 @@ class MeasurementActivity : AppCompatActivity() {
     private fun startMeasurement() {
         measuring = true
         elapsedSeconds = 0
-        pressureReadings.clear()
+        sensorReadings.clear()
         chartEntries.clear()
+        vibrationCount = 0
         binding.btnStop.isEnabled = true
-        measureLoop.run()
+        timerLoop.run()
     }
 
-    private val measureLoop = object : Runnable {
+    // 기존 measureLoop(가짜 값 생성)에서 타이머 기능만 남긴 버전
+    // 실제 압력 값은 setupBle()의 onDataReceived에서 옴
+    private val timerLoop = object : Runnable {
         override fun run() {
             if (!measuring) return
             elapsedSeconds++
-
-            // 시뮬레이션 압력 값 생성
-            val prev = pressureReadings.lastOrNull() ?: 30f
-            val noise = (Random.nextFloat() - 0.5f) * 10f
-            val pressure = (prev + noise).coerceIn(5f, 75f)
-            pressureReadings.add(pressure)
-
-            // UI 업데이트
-            val min = elapsedSeconds / 60
-            val sec = elapsedSeconds % 60
-            binding.tvTimer.text = String.format("%02d:%02d", min, sec)
-            binding.tvCurrentPressure.text = String.format("%.1f", pressure)
-
-            // 차트 업데이트
-            chartEntries.add(Entry(elapsedSeconds.toFloat(), pressure))
-            updateChart()
-
             handler.postDelayed(this, 1000L)
         }
     }
@@ -126,17 +143,24 @@ class MeasurementActivity : AppCompatActivity() {
 
     private fun stopMeasurement() {
         measuring = false
-        handler.removeCallbacks(measureLoop)
+        handler.removeCallbacks(timerLoop)
+        bleManager.disconnect()
 
-        if (pressureReadings.isEmpty()) {
+        if (sensorReadings.isEmpty()) {
             finish()
             return
         }
 
-        val avgPressure = pressureReadings.average().toFloat()
-        val maxPressure = pressureReadings.max()
-        val minPressure = pressureReadings.min()
+        // 기존: avg/max/min 계산해서 Intent로 숫자만 전달
+        val avgPressure = sensorReadings.map { it.overall }.average().toFloat()
+        val maxPressure = sensorReadings.maxOf { it.overall }
+        val minPressure = sensorReadings.minOf { it.overall }
 
+        // 새로 추가: 원시 데이터 전체 + 진동 횟수는 Holder에 담아둠
+        SessionDataHolder.sensorReadings = sensorReadings.toList()
+        SessionDataHolder.vibrationCount = vibrationCount
+
+        // 기존 방식 그대로: 숫자 4개는 Intent로 전달 (화면 표시는 이 값 그대로 씀)
         val intent = Intent(this, SessionCompleteActivity::class.java).apply {
             putExtra("duration_seconds", elapsedSeconds)
             putExtra("avg_pressure", avgPressure)
@@ -150,6 +174,7 @@ class MeasurementActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         measuring = false
-        handler.removeCallbacks(measureLoop)
+        handler.removeCallbacks(timerLoop)
+        bleManager.disconnect()
     }
 }

@@ -13,6 +13,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.newritage.app.data.AppDatabase
 import com.newritage.app.databinding.FragmentMonthlyAnalysisBinding
+import com.newritage.app.stats.StatsCalculator
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -34,22 +35,19 @@ class MonthlyAnalysisFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 뒤로가기 버튼
         binding.btnBack.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
 
-        // 이전 달 버튼
         binding.btnPrevMonth.setOnClickListener {
             currentMonth.add(Calendar.MONTH, -1)
             loadData()
         }
 
-        // 다음 달 버튼 (★ 괄호 짝 맞추기 수정)
         binding.btnNextMonth.setOnClickListener {
             currentMonth.add(Calendar.MONTH, 1)
             loadData()
-        } // <- 여기서 중괄호와 소괄호가 정확히 닫혀야 합니다!
+        }
 
         setupChart()
         loadData()
@@ -62,7 +60,7 @@ class MonthlyAnalysisFragment : Fragment() {
             setTouchEnabled(false)
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.textColor = Color.parseColor("#5A6B5A")
-            xAxis.setDrawGridLines(false) // 격자 제거로 스크롤 레이아웃과 디자인 통일
+            xAxis.setDrawGridLines(false)
             axisLeft.textColor = Color.parseColor("#5A6B5A")
             axisRight.isEnabled = false
         }
@@ -70,31 +68,46 @@ class MonthlyAnalysisFragment : Fragment() {
 
     private fun loadData() {
         val yearMonth = SimpleDateFormat("yyyy-MM", Locale.getDefault()).format(currentMonth.time)
-        // [수정] XML의 날짜 라벨 ID인 tvDateLabel로 명칭 변경 (2026.05 형식으로 깔끔하게 노출)
         binding.tvDateLabel.text = SimpleDateFormat("yyyy.MM", Locale.getDefault()).format(currentMonth.time)
 
         lifecycleScope.launch {
             val db = AppDatabase.getInstance(requireContext())
-            val sessions = db.sessionDao().getSessionsByMonth(yearMonth)
+            val dao = db.sessionDao()
 
-            if (sessions.isNotEmpty()) {
-                // [수정] 한 달 동안 누적된 데이터를 조건대로 연산 가공
-                val avgPressure = sessions.map { it.avgPressure }.average().toFloat()
-                val maxPressure = sessions.maxOf { it.maxPressure }
-                val minPressure = sessions.minOf { it.minPressure } // 월간 최저 압력 연산 추가
+            // ① 이번 달의 모든 세션 (총 시간, 총 횟수 계산용)
+            val sessions = dao.getSessionsByMonth("$yearMonth%")
+
+            // ② 이번 달의 모든 원시 데이터 (통계 + 일별 그래프용)
+            val readings = dao.getReadingsByMonth("$yearMonth%")
+
+            if (sessions.isNotEmpty() && readings.isNotEmpty()) {
+
+                // ③ 한 달치 원시 데이터를 합쳐서 통계 계산
+                //    (세션별 평균을 다시 평균 내지 않음 — 일간 때와 같은 원칙)
+                val overallStats = StatsCalculator().calculate(readings.map { it.overall })
+
+                binding.tvAvgPressure1.text = String.format("%.1f", overallStats.avg)
+                binding.tvAvgPressure2.text = String.format("%.1f", overallStats.max)
+                binding.tvAvgPressure3.text = String.format("%.1f", overallStats.min)
+
+                // ④ 총 명상 시간 / 횟수는 세션 기준 그대로 합산
                 val totalTime = sessions.sumOf { it.durationSeconds }
-                val count = sessions.size
+                val min = totalTime / 60
+                val sec = totalTime % 60
+                binding.tvMedTime.text = String.format("%02d:%02d", min, sec)
+                binding.tvMedCount.text = sessions.size.toString()
 
-                // [수정] 월간 XML 구조와 완벽히 동일한 ID 규칙으로 그릇 채우기
-                binding.tvAvgPressure1.text = String.format("%.1f", avgPressure) // 월간 평균
-                binding.tvAvgPressure2.text = String.format("%.1f", maxPressure) // 월간 최고
-                binding.tvAvgPressure3.text = String.format("%.1f", minPressure) // 월간 최저
+                // ⑤ 일별 평균 압력 그래프
+                //    readings를 timestamp 기준으로 "날짜"별로 묶어서 그날의 평균 하나씩 계산
+                val dayFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val groupedByDay = readings.groupBy { dayFormat.format(it.timestamp) }
+                    .toSortedMap()  // 날짜 오름차순 정렬
 
-                val min = totalTime / 60; val sec = totalTime % 60
-                binding.tvMedTime.text = String.format("%02d:%02d", min, sec)   // 월간 총 명상 시간
-                binding.tvMedCount.text = count.toString()                      // 월간 총 명상 횟수
+                val entries = groupedByDay.entries.mapIndexed { index, (_, dayReadings) ->
+                    val dayAvg = dayReadings.map { it.overall }.average().toFloat()
+                    Entry(index.toFloat(), dayAvg)
+                }
 
-                val entries = sessions.mapIndexed { i, s -> Entry(i.toFloat(), s.avgPressure) }
                 val dataSet = LineDataSet(entries, "월간 압력").apply {
                     color = Color.parseColor("#8B9E7B")
                     setDrawCircles(false)
@@ -106,13 +119,18 @@ class MonthlyAnalysisFragment : Fragment() {
                 }
                 binding.lineChart.data = LineData(dataSet)
                 binding.lineChart.invalidate()
+
+                // TODO: [수빈]이 AI 연동 후 실제 이번 달 코멘트로 교체 예정
+                // 활용 가능 데이터: overallStats(avg/min/max), sessions.size, totalTime, groupedByDay(일별 평균 추이)
+                binding.tvMonthlyComment.text = "이번 달 분석 코멘트를 준비 중입니다."
+
             } else {
-                // [수정] 해당 월에 데이터가 전혀 없을 때 튕기거나 숨기지 않고 빈 값 방어 처리
                 binding.tvAvgPressure1.text = "--.-"
                 binding.tvAvgPressure2.text = "--.-"
                 binding.tvAvgPressure3.text = "--.-"
                 binding.tvMedTime.text = "--:--"
                 binding.tvMedCount.text = "-"
+                binding.tvMonthlyComment.text = "측정된 데이터가 없어 코멘트를 생성할 수 없습니다."
                 binding.lineChart.clear()
             }
         }

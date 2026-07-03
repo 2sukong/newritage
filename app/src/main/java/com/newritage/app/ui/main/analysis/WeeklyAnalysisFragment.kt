@@ -13,6 +13,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.newritage.app.data.AppDatabase
 import com.newritage.app.databinding.FragmentWeeklyAnalysisBinding
+import com.newritage.app.stats.StatsCalculator
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -37,7 +38,6 @@ class WeeklyAnalysisFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
 
-        // XML 파일의 화살표 ID가 주간용 명칭인 btnPrevWeek / btnNextWeek 인지 체크하세요!
         binding.btnPrevWeek.setOnClickListener {
             currentWeekStart.add(Calendar.WEEK_OF_YEAR, -1)
             loadData()
@@ -57,7 +57,7 @@ class WeeklyAnalysisFragment : Fragment() {
             setTouchEnabled(false)
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.textColor = Color.parseColor("#5A6B5A")
-            xAxis.setDrawGridLines(false) // 격자 제거로 일관된 디자인 유지
+            xAxis.setDrawGridLines(false)
             axisLeft.textColor = Color.parseColor("#5A6B5A")
             axisRight.isEnabled = false
         }
@@ -71,34 +71,44 @@ class WeeklyAnalysisFragment : Fragment() {
         val startStr = sdf.format(currentWeekStart.time)
         val endStr = sdf.format(weekEnd.time)
 
-        // [수정] XML 날짜 라벨 ID 규칙인 tvDateLabel로 명칭 변경
         binding.tvDateLabel.text = "$startStr ~ $endStr"
 
         lifecycleScope.launch {
             val db = AppDatabase.getInstance(requireContext())
-            val sessions = db.sessionDao().getSessionsInRange(startStr, endStr)
+            val dao = db.sessionDao()
 
-            if (sessions.isNotEmpty()) {
-                // [수정] 데이터가 존재할 때 수치 연산
-                val avgPressure = sessions.map { it.avgPressure }.average().toFloat()
-                val maxPressure = sessions.maxOf { it.maxPressure }
-                val minPressure = sessions.minOf { it.minPressure } // 주간 최저 압력 연산 추가
+            // ① 이번 주 세션 목록 (총 시간/횟수 계산용)
+            val sessions = dao.getSessionsInRange(startStr, endStr)
+
+            // ② 이번 주 원시 데이터 전체 (통계 + 일별 그래프용)
+            val readings = dao.getReadingsInRange(startStr, endStr)
+
+            if (sessions.isNotEmpty() && readings.isNotEmpty()) {
+
+                // ③ 한 주치 원시 데이터를 합쳐서 통계 계산 (세션 평균의 평균 X)
+                val overallStats = StatsCalculator().calculate(readings.map { it.overall })
+
+                binding.tvAvgPressure1.text = String.format("%.1f", overallStats.avg)
+                binding.tvAvgPressure2.text = String.format("%.1f", overallStats.min)
+                binding.tvAvgPressure3.text = String.format("%.1f", overallStats.max)
+
+                // ④ 총 명상 시간 / 횟수는 세션 기준 합산
                 val totalTime = sessions.sumOf { it.durationSeconds }
-                val count = sessions.size
+                val min = totalTime / 60
+                val sec = totalTime % 60
+                binding.tvMedTime.text = String.format("%02d:%02d", min, sec)
+                binding.tvMedCount.text = sessions.size.toString()
 
-                // [수정] 상단 5개 칸 공통 ID 매핑 규칙 적용
-                binding.tvAvgPressure1.text = String.format("%.1f", avgPressure) // 주간 평균
-                binding.tvAvgPressure2.text = String.format("%.1f", minPressure) // 주간 최저
-                binding.tvAvgPressure3.text = String.format("%.1f", maxPressure) // 주간 최고
+                // ⑤ 일별 평균 압력 그래프 (날짜별로 묶어서 하루 평균 하나씩)
+                val dayFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val groupedByDay = readings.groupBy { dayFormat.format(it.timestamp) }
+                    .toSortedMap()
 
-                val min = totalTime / 60; val sec = totalTime % 60
-                binding.tvMedTime.text = String.format("%02d:%02d", min, sec)   // 주간 총 시간
-                binding.tvMedCount.text = count.toString()                      // 주간 총 횟수
-
-                // 일별 평균 그래프
-                val entries = sessions.mapIndexed { i, s ->
-                    Entry(i.toFloat(), s.avgPressure)
+                val entries = groupedByDay.entries.mapIndexed { index, (_, dayReadings) ->
+                    val dayAvg = dayReadings.map { it.overall }.average().toFloat()
+                    Entry(index.toFloat(), dayAvg)
                 }
+
                 val dataSet = LineDataSet(entries, "주간 압력").apply {
                     color = Color.parseColor("#8B9E7B")
                     setDrawCircles(true)
@@ -112,13 +122,19 @@ class WeeklyAnalysisFragment : Fragment() {
                 }
                 binding.lineChart.data = LineData(dataSet)
                 binding.lineChart.invalidate()
+
+                // TODO: [수빈] 저번 주 대비 비교 로직 (AI 코멘트 또는 단순 증감 계산) 연동 예정
+                // 비교하려면 저번 주 range: startStr/endStr에서 -7일 한 값으로 getReadingsInRange 한번 더 호출해서
+                // overallStats.avg끼리 비교하면 됨
+                binding.tvWeeklyComparison.text = "저번 주 비교를 준비 중입니다."
+
             } else {
-                // [수정] 데이터가 없는 기간일 때 크래시 방지 및 안전 처리
                 binding.tvAvgPressure1.text = "--.-"
                 binding.tvAvgPressure2.text = "--.-"
                 binding.tvAvgPressure3.text = "--.-"
                 binding.tvMedTime.text = "--:--"
                 binding.tvMedCount.text = "-"
+                binding.tvWeeklyComparison.text = "-"
                 binding.lineChart.clear()
             }
         }
