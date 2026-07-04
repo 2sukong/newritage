@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/surface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/tvComparisonTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="저번주와 비교"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <include
+                android:id="@+id/compAvgPressure"
+                layout="@layout/layout_analysis_comparison_item" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="4dp"
+                android:background="@color/divider"/>
+
+            <include
+                android:id="@+id/compMaxPressure"
+                layout="@layout/layout_analysis_comparison_item" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="4dp"
+                android:background="@color/divider"/>
+
+            <include
+                android:id="@+id/compMeditationTime"
+                layout="@layout/layout_analysis_comparison_item" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="4dp"
+                android:background="@color/divider"/>
+
+            <include
+                android:id="@+id/compMeditationCount"
+                layout="@layout/layout_analysis_comparison_item" />
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

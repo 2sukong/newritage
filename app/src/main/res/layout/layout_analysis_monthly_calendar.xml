@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="한 달 한눈에 보기"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Calendar Grid Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="일" android:gravity="center" android:textSize="11sp" android:textColor="@color/text_hint"/>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="월" android:gravity="center" android:textSize="11sp" android:textColor="@color/text_hint"/>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="화" android:gravity="center" android:textSize="11sp" android:textColor="@color/text_hint"/>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="수" android:gravity="center" android:textSize="11sp" android:textColor="@color/text_hint"/>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="목" android:gravity="center" android:textSize="11sp" android:textColor="@color/text_hint"/>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="금" android:gravity="center" android:textSize="11sp" android:textColor="@color/text_hint"/>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="토" android:gravity="center" android:textSize="11sp" android:textColor="@color/text_hint"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Calendar Days Container (to be populated or defined in XML if needed) -->
+        <!-- For now, we'll use a GridLayout or just leave a placeholder if it's dynamic -->
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/calendarGrid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:columnCount="7"
+            app:alignmentMode="alignBounds"
+            app:useDefaultMargins="false">
+            <!-- Programmatically populate this or define 35-42 items -->
+        </androidx.gridlayout.widget.GridLayout>
+
+        <!-- Legend -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_vertical" android:layout_marginHorizontal="8dp">
+                <View android:layout_width="8dp" android:layout_height="8dp" android:background="@drawable/bg_circle_green" android:backgroundTint="@color/primary"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" 안정" android:textSize="10sp" android:textColor="@color/text_secondary"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_vertical" android:layout_marginHorizontal="8dp">
+                <View android:layout_width="8dp" android:layout_height="8dp" android:background="@drawable/bg_circle_green" android:backgroundTint="#EDD055"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" 보통" android:textSize="10sp" android:textColor="@color/text_secondary"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_vertical" android:layout_marginHorizontal="8dp">
+                <View android:layout_width="8dp" android:layout_height="8dp" android:background="@drawable/bg_circle_green" android:backgroundTint="@color/error"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" 긴장" android:textSize="10sp" android:textColor="@color/text_secondary"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_vertical" android:layout_marginHorizontal="8dp">
+                <View android:layout_width="8dp" android:layout_height="8dp" android:background="@drawable/bg_circle_green" android:backgroundTint="@color/text_hint"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" 데이터 없음" android:textSize="10sp" android:textColor="@color/text_secondary"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
