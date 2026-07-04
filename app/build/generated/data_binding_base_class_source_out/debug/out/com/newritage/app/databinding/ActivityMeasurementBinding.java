@@ -7,15 +7,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.github.mikephil.charting.charts.LineChart;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.newritage.app.R;
+import com.newritage.app.ui.util.WaveView;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -25,47 +29,79 @@ public final class ActivityMeasurementBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
+  public final BottomNavigationView bottomNav;
+
+  @NonNull
   public final ImageButton btnBack;
 
   @NonNull
-  public final Button btnStop;
+  public final LinearLayout btnHelp;
 
   @NonNull
-  public final CardView cardChart;
+  public final Button btnSessionComplete;
 
   @NonNull
-  public final FrameLayout gaugeContainer;
+  public final ImageView imgHelpContent;
+
+  @NonNull
+  public final ImageView imgMeasureStart;
+
+  @NonNull
+  public final ImageView imgMeasurementGuide;
+
+  @NonNull
+  public final FrameLayout layoutHelpOverlay;
 
   @NonNull
   public final LineChart lineChart;
 
   @NonNull
-  public final FrameLayout toolbar;
+  public final ScrollView screenMeasuring;
 
   @NonNull
-  public final TextView tvChartLabel;
+  public final ScrollView screenWaiting;
 
   @NonNull
-  public final TextView tvCurrentPressure;
+  public final LinearLayout toolbar;
 
   @NonNull
-  public final TextView tvTimer;
+  public final TextView tvFeedbackStatus;
+
+  @NonNull
+  public final TextView tvPressureValue;
+
+  @NonNull
+  public final TextView tvSessionTime;
+
+  @NonNull
+  public final WaveView waveView;
 
   private ActivityMeasurementBinding(@NonNull ConstraintLayout rootView,
-      @NonNull ImageButton btnBack, @NonNull Button btnStop, @NonNull CardView cardChart,
-      @NonNull FrameLayout gaugeContainer, @NonNull LineChart lineChart,
-      @NonNull FrameLayout toolbar, @NonNull TextView tvChartLabel,
-      @NonNull TextView tvCurrentPressure, @NonNull TextView tvTimer) {
+      @NonNull BottomNavigationView bottomNav, @NonNull ImageButton btnBack,
+      @NonNull LinearLayout btnHelp, @NonNull Button btnSessionComplete,
+      @NonNull ImageView imgHelpContent, @NonNull ImageView imgMeasureStart,
+      @NonNull ImageView imgMeasurementGuide, @NonNull FrameLayout layoutHelpOverlay,
+      @NonNull LineChart lineChart, @NonNull ScrollView screenMeasuring,
+      @NonNull ScrollView screenWaiting, @NonNull LinearLayout toolbar,
+      @NonNull TextView tvFeedbackStatus, @NonNull TextView tvPressureValue,
+      @NonNull TextView tvSessionTime, @NonNull WaveView waveView) {
     this.rootView = rootView;
+    this.bottomNav = bottomNav;
     this.btnBack = btnBack;
-    this.btnStop = btnStop;
-    this.cardChart = cardChart;
-    this.gaugeContainer = gaugeContainer;
+    this.btnHelp = btnHelp;
+    this.btnSessionComplete = btnSessionComplete;
+    this.imgHelpContent = imgHelpContent;
+    this.imgMeasureStart = imgMeasureStart;
+    this.imgMeasurementGuide = imgMeasurementGuide;
+    this.layoutHelpOverlay = layoutHelpOverlay;
     this.lineChart = lineChart;
+    this.screenMeasuring = screenMeasuring;
+    this.screenWaiting = screenWaiting;
     this.toolbar = toolbar;
-    this.tvChartLabel = tvChartLabel;
-    this.tvCurrentPressure = tvCurrentPressure;
-    this.tvTimer = tvTimer;
+    this.tvFeedbackStatus = tvFeedbackStatus;
+    this.tvPressureValue = tvPressureValue;
+    this.tvSessionTime = tvSessionTime;
+    this.waveView = waveView;
   }
 
   @Override
@@ -95,27 +131,51 @@ public final class ActivityMeasurementBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.bottomNav;
+      BottomNavigationView bottomNav = ViewBindings.findChildViewById(rootView, id);
+      if (bottomNav == null) {
+        break missingId;
+      }
+
       id = R.id.btnBack;
       ImageButton btnBack = ViewBindings.findChildViewById(rootView, id);
       if (btnBack == null) {
         break missingId;
       }
 
-      id = R.id.btnStop;
-      Button btnStop = ViewBindings.findChildViewById(rootView, id);
-      if (btnStop == null) {
+      id = R.id.btnHelp;
+      LinearLayout btnHelp = ViewBindings.findChildViewById(rootView, id);
+      if (btnHelp == null) {
         break missingId;
       }
 
-      id = R.id.cardChart;
-      CardView cardChart = ViewBindings.findChildViewById(rootView, id);
-      if (cardChart == null) {
+      id = R.id.btnSessionComplete;
+      Button btnSessionComplete = ViewBindings.findChildViewById(rootView, id);
+      if (btnSessionComplete == null) {
         break missingId;
       }
 
-      id = R.id.gaugeContainer;
-      FrameLayout gaugeContainer = ViewBindings.findChildViewById(rootView, id);
-      if (gaugeContainer == null) {
+      id = R.id.imgHelpContent;
+      ImageView imgHelpContent = ViewBindings.findChildViewById(rootView, id);
+      if (imgHelpContent == null) {
+        break missingId;
+      }
+
+      id = R.id.imgMeasureStart;
+      ImageView imgMeasureStart = ViewBindings.findChildViewById(rootView, id);
+      if (imgMeasureStart == null) {
+        break missingId;
+      }
+
+      id = R.id.imgMeasurementGuide;
+      ImageView imgMeasurementGuide = ViewBindings.findChildViewById(rootView, id);
+      if (imgMeasurementGuide == null) {
+        break missingId;
+      }
+
+      id = R.id.layoutHelpOverlay;
+      FrameLayout layoutHelpOverlay = ViewBindings.findChildViewById(rootView, id);
+      if (layoutHelpOverlay == null) {
         break missingId;
       }
 
@@ -125,32 +185,52 @@ public final class ActivityMeasurementBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.screenMeasuring;
+      ScrollView screenMeasuring = ViewBindings.findChildViewById(rootView, id);
+      if (screenMeasuring == null) {
+        break missingId;
+      }
+
+      id = R.id.screenWaiting;
+      ScrollView screenWaiting = ViewBindings.findChildViewById(rootView, id);
+      if (screenWaiting == null) {
+        break missingId;
+      }
+
       id = R.id.toolbar;
-      FrameLayout toolbar = ViewBindings.findChildViewById(rootView, id);
+      LinearLayout toolbar = ViewBindings.findChildViewById(rootView, id);
       if (toolbar == null) {
         break missingId;
       }
 
-      id = R.id.tvChartLabel;
-      TextView tvChartLabel = ViewBindings.findChildViewById(rootView, id);
-      if (tvChartLabel == null) {
+      id = R.id.tvFeedbackStatus;
+      TextView tvFeedbackStatus = ViewBindings.findChildViewById(rootView, id);
+      if (tvFeedbackStatus == null) {
         break missingId;
       }
 
-      id = R.id.tvCurrentPressure;
-      TextView tvCurrentPressure = ViewBindings.findChildViewById(rootView, id);
-      if (tvCurrentPressure == null) {
+      id = R.id.tvPressureValue;
+      TextView tvPressureValue = ViewBindings.findChildViewById(rootView, id);
+      if (tvPressureValue == null) {
         break missingId;
       }
 
-      id = R.id.tvTimer;
-      TextView tvTimer = ViewBindings.findChildViewById(rootView, id);
-      if (tvTimer == null) {
+      id = R.id.tvSessionTime;
+      TextView tvSessionTime = ViewBindings.findChildViewById(rootView, id);
+      if (tvSessionTime == null) {
         break missingId;
       }
 
-      return new ActivityMeasurementBinding((ConstraintLayout) rootView, btnBack, btnStop,
-          cardChart, gaugeContainer, lineChart, toolbar, tvChartLabel, tvCurrentPressure, tvTimer);
+      id = R.id.waveView;
+      WaveView waveView = ViewBindings.findChildViewById(rootView, id);
+      if (waveView == null) {
+        break missingId;
+      }
+
+      return new ActivityMeasurementBinding((ConstraintLayout) rootView, bottomNav, btnBack,
+          btnHelp, btnSessionComplete, imgHelpContent, imgMeasureStart, imgMeasurementGuide,
+          layoutHelpOverlay, lineChart, screenMeasuring, screenWaiting, toolbar, tvFeedbackStatus,
+          tvPressureValue, tvSessionTime, waveView);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

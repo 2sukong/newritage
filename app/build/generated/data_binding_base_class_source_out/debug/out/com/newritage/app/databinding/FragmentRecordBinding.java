@@ -4,8 +4,7 @@ package com.newritage.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,46 +17,24 @@ import java.lang.String;
 
 public final class FragmentRecordBinding implements ViewBinding {
   @NonNull
-  private final ScrollView rootView;
+  private final FrameLayout rootView;
 
   @NonNull
-  public final LinearLayout layoutNoRecord;
+  public final TextView tvNoRecord;
 
   @NonNull
-  public final LinearLayout layoutRecord;
+  public final TextView tvStats;
 
-  @NonNull
-  public final TextView tvAvgPressure;
-
-  @NonNull
-  public final TextView tvEmotion;
-
-  @NonNull
-  public final TextView tvMaxPressure;
-
-  @NonNull
-  public final TextView tvMedTime;
-
-  @NonNull
-  public final TextView tvMinPressure;
-
-  private FragmentRecordBinding(@NonNull ScrollView rootView, @NonNull LinearLayout layoutNoRecord,
-      @NonNull LinearLayout layoutRecord, @NonNull TextView tvAvgPressure,
-      @NonNull TextView tvEmotion, @NonNull TextView tvMaxPressure, @NonNull TextView tvMedTime,
-      @NonNull TextView tvMinPressure) {
+  private FragmentRecordBinding(@NonNull FrameLayout rootView, @NonNull TextView tvNoRecord,
+      @NonNull TextView tvStats) {
     this.rootView = rootView;
-    this.layoutNoRecord = layoutNoRecord;
-    this.layoutRecord = layoutRecord;
-    this.tvAvgPressure = tvAvgPressure;
-    this.tvEmotion = tvEmotion;
-    this.tvMaxPressure = tvMaxPressure;
-    this.tvMedTime = tvMedTime;
-    this.tvMinPressure = tvMinPressure;
+    this.tvNoRecord = tvNoRecord;
+    this.tvStats = tvStats;
   }
 
   @Override
   @NonNull
-  public ScrollView getRoot() {
+  public FrameLayout getRoot() {
     return rootView;
   }
 
@@ -82,50 +59,19 @@ public final class FragmentRecordBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.layoutNoRecord;
-      LinearLayout layoutNoRecord = ViewBindings.findChildViewById(rootView, id);
-      if (layoutNoRecord == null) {
+      id = R.id.tvNoRecord;
+      TextView tvNoRecord = ViewBindings.findChildViewById(rootView, id);
+      if (tvNoRecord == null) {
         break missingId;
       }
 
-      id = R.id.layoutRecord;
-      LinearLayout layoutRecord = ViewBindings.findChildViewById(rootView, id);
-      if (layoutRecord == null) {
+      id = R.id.tvStats;
+      TextView tvStats = ViewBindings.findChildViewById(rootView, id);
+      if (tvStats == null) {
         break missingId;
       }
 
-      id = R.id.tvAvgPressure;
-      TextView tvAvgPressure = ViewBindings.findChildViewById(rootView, id);
-      if (tvAvgPressure == null) {
-        break missingId;
-      }
-
-      id = R.id.tvEmotion;
-      TextView tvEmotion = ViewBindings.findChildViewById(rootView, id);
-      if (tvEmotion == null) {
-        break missingId;
-      }
-
-      id = R.id.tvMaxPressure;
-      TextView tvMaxPressure = ViewBindings.findChildViewById(rootView, id);
-      if (tvMaxPressure == null) {
-        break missingId;
-      }
-
-      id = R.id.tvMedTime;
-      TextView tvMedTime = ViewBindings.findChildViewById(rootView, id);
-      if (tvMedTime == null) {
-        break missingId;
-      }
-
-      id = R.id.tvMinPressure;
-      TextView tvMinPressure = ViewBindings.findChildViewById(rootView, id);
-      if (tvMinPressure == null) {
-        break missingId;
-      }
-
-      return new FragmentRecordBinding((ScrollView) rootView, layoutNoRecord, layoutRecord,
-          tvAvgPressure, tvEmotion, tvMaxPressure, tvMedTime, tvMinPressure);
+      return new FragmentRecordBinding((FrameLayout) rootView, tvNoRecord, tvStats);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

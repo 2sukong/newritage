@@ -1,162 +1,370 @@
 [
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_fragment_weekly_analysis.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\fragment_weekly_analysis.xml"
+        "merged": "com.newritage.app-debug-49:/drawable_ic_pause.xml.flat",
+        "source": "com.newritage.app-main-51:/drawable/ic_pause.xml"
     },
     {
-        "merged": "com.newritage.app-debug-52:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.newritage.app-main-54:/drawable/ic_launcher_background.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_img_measurement_guide_new.png.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\img_measurement_guide_new.png"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_fragment_analysis.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\fragment_analysis.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_btn_primary_bg.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\btn_primary_bg.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\drawable_btn_primary_bg.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\drawable\\btn_primary_bg.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_fragment_onboarding_page.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\fragment_onboarding_page.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_fragment_daily_analysis.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_daily_analysis.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\drawable_tab_dot_selected.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\drawable\\tab_dot_selected.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_launcher_background.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\drawable_bg_card_rounded.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\drawable\\bg_card_rounded.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_fragment_analysis.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_analysis.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_activity_session_complete.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\activity_session_complete.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_fragment_monthly_analysis.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_monthly_analysis.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\drawable_btn_green_outline_bg.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\drawable\\btn_green_outline_bg.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_launcher_foreground.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_activity_start.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\activity_start.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_square_date_frame.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_square_date_frame.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_item_calendar_cell.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\item_calendar_cell.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_play.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_play.xml"
     },
     {
-        "merged": "com.newritage.app-debug-52:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.newritage.app-main-54:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_layout_analysis_comparison_item.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\layout_analysis_comparison_item.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\menu_bottom_nav_menu.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\menu\\bottom_nav_menu.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_board_border.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_board_border.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\drawable_btn_outline_bg.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\drawable\\btn_outline_bg.xml"
+        "merged": "com.newritage.app-debug-49:/layout_fragment_home.xml.flat",
+        "source": "com.newritage.app-main-51:/layout/fragment_home.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\color_nav_selector.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\color\\nav_selector.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_nav_knot.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_nav_knot.xml"
     },
     {
-        "merged": "com.newritage.app-debug-52:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.newritage.app-main-54:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_fragment_onboarding_page.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_onboarding_page.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_fragment_daily_analysis.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\fragment_daily_analysis.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_measure_circle_view.png.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\measure_circle_view.png"
     },
     {
-        "merged": "com.newritage.app-debug-52:/mipmap_ic_launcher.xml.flat",
-        "source": "com.newritage.app-main-54:/mipmap/ic_launcher.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_nav_home.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_nav_home.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_fragment_knot_storage.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\fragment_knot_storage.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_card_rounded.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_card_rounded.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\drawable_bg_thread_square.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\drawable\\bg_thread_square.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_btn_outline_bg.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\btn_outline_bg.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\drawable_tab_selector.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\drawable\\tab_selector.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_logo.png.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\logo.png"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_activity_measurement.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\activity_measurement.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_chevron_left.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_chevron_left.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\drawable_bg_onboarding_gradient.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\drawable\\bg_onboarding_gradient.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_status_dot_disconnected.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_status_dot_disconnected.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_fragment_record.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\fragment_record.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_back.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_back.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\drawable_bg_input_rounded.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\drawable\\bg_input_rounded.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_layout_analysis_monthly_calendar.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\layout_analysis_monthly_calendar.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_activity_login.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\activity_login.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_btn_green_outline_bg.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\btn_green_outline_bg.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_activity_main.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\activity_main.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_item_calendar_cell_simple.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\item_calendar_cell_simple.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_fragment_thread_storage.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\fragment_thread_storage.xml"
+        "merged": "com.newritage.app-debug-49:/layout_activity_measurement.xml.flat",
+        "source": "com.newritage.app-main-51:/layout/activity_measurement.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_fragment_monthly_analysis.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\fragment_monthly_analysis.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_activity_login.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_login.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\drawable_bg_circle_white.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\drawable\\bg_circle_white.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_view_connection_state.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\view_connection_state.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_activity_signup.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\activity_signup.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_onboarding_gradient.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_onboarding_gradient.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\drawable_bg_circle_green.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\drawable\\bg_circle_green.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_activity_onboarding.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_onboarding.xml"
     },
     {
-        "merged": "com.newritage.app-debug-52:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.newritage.app-main-54:/drawable/ic_launcher_foreground.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_view_tip_card.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\view_tip_card.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_item_calendar_cell_knot.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\item_calendar_cell_knot.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_view_measure_circle.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\view_measure_circle.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_activity_baseline_measurement.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\activity_baseline_measurement.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_nav_settings.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_nav_settings.xml"
     },
     {
-        "merged": "com.newritage.app-debug-52:/mipmap_ic_launcher_round.xml.flat",
-        "source": "com.newritage.app-main-54:/mipmap/ic_launcher_round.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\color_nav_selector.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\color\\nav_selector.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\drawable_tab_dot_unselected.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\drawable\\tab_dot_unselected.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_activity_session_complete.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_session_complete.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\drawable_bg_thread_square_selected.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\drawable\\bg_thread_square_selected.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_input_rounded.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_input_rounded.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_dialog_measurement_guide.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\dialog_measurement_guide.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_activity_baseline_measurement.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_baseline_measurement.xml"
     },
     {
-        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-debug-52:\\layout_activity_onboarding.xml.flat",
-        "source": "C:\\Users\\goodb\\.gradle\\daemon\\8.13\\com.newritage.app-main-54:\\layout\\activity_onboarding.xml"
+        "merged": "com.newritage.app-debug-49:/drawable_bg_square_date_frame.xml.flat",
+        "source": "com.newritage.app-main-51:/drawable/bg_square_date_frame.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_tab_dot_selected.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\tab_dot_selected.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_view_pressure_graph.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\view_pressure_graph.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_fragment_record.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_record.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_circle_white.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_circle_white.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_arrow_right.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_arrow_right.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_fragment_weekly_analysis.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_weekly_analysis.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_circle_green.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_circle_green.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_thread_frame.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\thread_frame.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\mipmap_ic_launcher.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\mipmap\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_tab_dot_unselected.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\tab_dot_unselected.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_nervous_circle.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\nervous_circle.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_help_new.png.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\help_new.png"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_knot_frame.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\knot_frame.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_chevron_right.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_chevron_right.xml"
+    },
+    {
+        "merged": "com.newritage.app-debug-49:/drawable_medi_ready_new.png.flat",
+        "source": "com.newritage.app-main-51:/drawable/medi_ready_new.png"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_view_guide_card.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\view_guide_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_nav_analysis.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_nav_analysis.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_item_calendar_cell_knot.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\item_calendar_cell_knot.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_circle_measure.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_circle_measure.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_board_background.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_board_background.xml"
+    },
+    {
+        "merged": "com.newritage.app-debug-49:/drawable_ic_back.xml.flat",
+        "source": "com.newritage.app-main-51:/drawable/ic_back.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_back.png.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\back.png"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_background_texture.png.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\background_texture.png"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_activity_signup.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_signup.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_layout_comparison_card.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\layout_comparison_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_status_dot_connected.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_status_dot_connected.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_activity_start.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_start.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_arrow_left.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_arrow_left.xml"
+    },
+    {
+        "merged": "com.newritage.app-debug-49:/drawable_logo_new.xml.flat",
+        "source": "com.newritage.app-main-51:/drawable/logo_new.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_fragment_intro.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_intro.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_help.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\help.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_fragment_thread_storage_new.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_thread_storage_new.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_rounded_button.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_rounded_button.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_fragment_home.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_home.xml"
+    },
+    {
+        "merged": "com.newritage.app-debug-49:/drawable_background_texture.xml.flat",
+        "source": "com.newritage.app-main-51:/drawable/background_texture.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_start_start.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\start_start.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_calendar_cell_frame.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_calendar_cell_frame.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_pause.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_pause.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_layout_comment_card.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\layout_comment_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_fragment_knot_storage_new.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_knot_storage_new.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.newritage.app-debug-49:/drawable_ic_help.xml.flat",
+        "source": "com.newritage.app-main-51:/drawable/ic_help.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_tab_selector.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\tab_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_view_meditation_timer.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\view_meditation_timer.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\mipmap_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\mipmap\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.newritage.app-debug-49:/layout_fragment_intro.xml.flat",
+        "source": "com.newritage.app-main-51:/layout/fragment_intro.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\layout_fragment_knot_detail_view_new.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_knot_detail_view_new.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\menu_bottom_nav_menu.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\menu\\bottom_nav_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_calendar_frame.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\calendar_frame.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_ic_nav_thread.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\ic_nav_thread.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-debug-49:\\drawable_bg_mind.xml.flat",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\drawable\\bg_mind.xml"
     }
 ]

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,59 +19,55 @@ import java.lang.String;
 
 public final class FragmentDailyAnalysisBinding implements ViewBinding {
   @NonNull
-  private final ScrollView rootView;
+  private final LinearLayout rootView;
 
   @NonNull
   public final ImageButton btnBack;
 
   @NonNull
-  public final ImageButton btnNextDay;
+  public final ImageButton btnNext;
 
   @NonNull
-  public final ImageButton btnPrevDay;
+  public final ImageButton btnPrev;
 
   @NonNull
-  public final LinearLayout layoutStats;
+  public final LayoutCommentCardBinding layoutComment;
 
   @NonNull
   public final LineChart lineChart;
 
   @NonNull
-  public final TextView tvAvg;
+  public final TextView tvAvgPressure;
 
   @NonNull
-  public final TextView tvDateLabel;
+  public final TextView tvDate;
 
   @NonNull
-  public final TextView tvMax;
+  public final TextView tvMaxPressure;
 
   @NonNull
-  public final TextView tvMedTime;
+  public final TextView tvSessionTime;
 
-  @NonNull
-  public final TextView tvNoData;
-
-  private FragmentDailyAnalysisBinding(@NonNull ScrollView rootView, @NonNull ImageButton btnBack,
-      @NonNull ImageButton btnNextDay, @NonNull ImageButton btnPrevDay,
-      @NonNull LinearLayout layoutStats, @NonNull LineChart lineChart, @NonNull TextView tvAvg,
-      @NonNull TextView tvDateLabel, @NonNull TextView tvMax, @NonNull TextView tvMedTime,
-      @NonNull TextView tvNoData) {
+  private FragmentDailyAnalysisBinding(@NonNull LinearLayout rootView, @NonNull ImageButton btnBack,
+      @NonNull ImageButton btnNext, @NonNull ImageButton btnPrev,
+      @NonNull LayoutCommentCardBinding layoutComment, @NonNull LineChart lineChart,
+      @NonNull TextView tvAvgPressure, @NonNull TextView tvDate, @NonNull TextView tvMaxPressure,
+      @NonNull TextView tvSessionTime) {
     this.rootView = rootView;
     this.btnBack = btnBack;
-    this.btnNextDay = btnNextDay;
-    this.btnPrevDay = btnPrevDay;
-    this.layoutStats = layoutStats;
+    this.btnNext = btnNext;
+    this.btnPrev = btnPrev;
+    this.layoutComment = layoutComment;
     this.lineChart = lineChart;
-    this.tvAvg = tvAvg;
-    this.tvDateLabel = tvDateLabel;
-    this.tvMax = tvMax;
-    this.tvMedTime = tvMedTime;
-    this.tvNoData = tvNoData;
+    this.tvAvgPressure = tvAvgPressure;
+    this.tvDate = tvDate;
+    this.tvMaxPressure = tvMaxPressure;
+    this.tvSessionTime = tvSessionTime;
   }
 
   @Override
   @NonNull
-  public ScrollView getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -103,23 +98,24 @@ public final class FragmentDailyAnalysisBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btnNextDay;
-      ImageButton btnNextDay = ViewBindings.findChildViewById(rootView, id);
-      if (btnNextDay == null) {
+      id = R.id.btnNext;
+      ImageButton btnNext = ViewBindings.findChildViewById(rootView, id);
+      if (btnNext == null) {
         break missingId;
       }
 
-      id = R.id.btnPrevDay;
-      ImageButton btnPrevDay = ViewBindings.findChildViewById(rootView, id);
-      if (btnPrevDay == null) {
+      id = R.id.btnPrev;
+      ImageButton btnPrev = ViewBindings.findChildViewById(rootView, id);
+      if (btnPrev == null) {
         break missingId;
       }
 
-      id = R.id.layoutStats;
-      LinearLayout layoutStats = ViewBindings.findChildViewById(rootView, id);
-      if (layoutStats == null) {
+      id = R.id.layoutComment;
+      View layoutComment = ViewBindings.findChildViewById(rootView, id);
+      if (layoutComment == null) {
         break missingId;
       }
+      LayoutCommentCardBinding binding_layoutComment = LayoutCommentCardBinding.bind(layoutComment);
 
       id = R.id.lineChart;
       LineChart lineChart = ViewBindings.findChildViewById(rootView, id);
@@ -127,38 +123,32 @@ public final class FragmentDailyAnalysisBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.tvAvg;
-      TextView tvAvg = ViewBindings.findChildViewById(rootView, id);
-      if (tvAvg == null) {
+      id = R.id.tvAvgPressure;
+      TextView tvAvgPressure = ViewBindings.findChildViewById(rootView, id);
+      if (tvAvgPressure == null) {
         break missingId;
       }
 
-      id = R.id.tvDateLabel;
-      TextView tvDateLabel = ViewBindings.findChildViewById(rootView, id);
-      if (tvDateLabel == null) {
+      id = R.id.tvDate;
+      TextView tvDate = ViewBindings.findChildViewById(rootView, id);
+      if (tvDate == null) {
         break missingId;
       }
 
-      id = R.id.tvMax;
-      TextView tvMax = ViewBindings.findChildViewById(rootView, id);
-      if (tvMax == null) {
+      id = R.id.tvMaxPressure;
+      TextView tvMaxPressure = ViewBindings.findChildViewById(rootView, id);
+      if (tvMaxPressure == null) {
         break missingId;
       }
 
-      id = R.id.tvMedTime;
-      TextView tvMedTime = ViewBindings.findChildViewById(rootView, id);
-      if (tvMedTime == null) {
+      id = R.id.tvSessionTime;
+      TextView tvSessionTime = ViewBindings.findChildViewById(rootView, id);
+      if (tvSessionTime == null) {
         break missingId;
       }
 
-      id = R.id.tvNoData;
-      TextView tvNoData = ViewBindings.findChildViewById(rootView, id);
-      if (tvNoData == null) {
-        break missingId;
-      }
-
-      return new FragmentDailyAnalysisBinding((ScrollView) rootView, btnBack, btnNextDay,
-          btnPrevDay, layoutStats, lineChart, tvAvg, tvDateLabel, tvMax, tvMedTime, tvNoData);
+      return new FragmentDailyAnalysisBinding((LinearLayout) rootView, btnBack, btnNext, btnPrev,
+          binding_layoutComment, lineChart, tvAvgPressure, tvDate, tvMaxPressure, tvSessionTime);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

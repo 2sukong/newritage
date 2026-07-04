@@ -4,7 +4,7 @@ package com.newritage.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +17,7 @@ import java.lang.String;
 
 public final class ItemCalendarCellKnotBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final FrameLayout rootView;
 
   @NonNull
   public final View knotIndicator;
@@ -25,7 +25,7 @@ public final class ItemCalendarCellKnotBinding implements ViewBinding {
   @NonNull
   public final TextView tvDay;
 
-  private ItemCalendarCellKnotBinding(@NonNull LinearLayout rootView, @NonNull View knotIndicator,
+  private ItemCalendarCellKnotBinding(@NonNull FrameLayout rootView, @NonNull View knotIndicator,
       @NonNull TextView tvDay) {
     this.rootView = rootView;
     this.knotIndicator = knotIndicator;
@@ -34,7 +34,7 @@ public final class ItemCalendarCellKnotBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public FrameLayout getRoot() {
     return rootView;
   }
 
@@ -71,7 +71,7 @@ public final class ItemCalendarCellKnotBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemCalendarCellKnotBinding((LinearLayout) rootView, knotIndicator, tvDay);
+      return new ItemCalendarCellKnotBinding((FrameLayout) rootView, knotIndicator, tvDay);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

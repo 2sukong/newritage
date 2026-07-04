@@ -139,6 +139,10 @@ class SessionCompleteActivity : AppCompatActivity() {
         val colorObj = ThreadColors.assignColor(avgPressure)
         assignedColor = colorObj
 
+        // 키워드 추출 및 피드백 생성
+        val keywords = extractKeywords(emotion)
+        val feedback = generateAiFeedback(emotion, keywords)
+
         lifecycleScope.launch {
             // Get current session index
             val countToday = dao.countSessionsByDate(today)
@@ -155,14 +159,15 @@ class SessionCompleteActivity : AppCompatActivity() {
                 minPressure = minPressure,
                 emotion = emotion,
                 threadColor = colorObj.hex,
-                threadColorName = colorObj.nameKr
+                threadColorName = colorObj.nameKr,
+                aiFeedback = feedback
             )
 
             dao.insert(session)
             
             if (isFirstSession) {
                 showScreen(Screen.THREAD)
-                prepareThreadScreen(emotion)
+                prepareThreadScreen(today, feedback, keywords)
             } else {
                 showScreen(Screen.COMPLETE)
                 prepareCompleteScreen()
@@ -186,7 +191,7 @@ class SessionCompleteActivity : AppCompatActivity() {
         screenComplete.postDelayed({ goHome() }, 2500)
     }
 
-    private fun prepareThreadScreen(emotion: String) {
+    private fun prepareThreadScreen(today: String, feedback: String, keywords: List<String>) {
         val todayStr = SimpleDateFormat("yyyy년 M월 d일", Locale.getDefault()).format(Date())
         tvThreadDate.text = todayStr
         assignedColor?.let {
@@ -194,11 +199,8 @@ class SessionCompleteActivity : AppCompatActivity() {
             tvTensionGauge.text = "긴장도 ${it.level}/보통"
         }
 
-        // 키워드 추출 및 피드백 생성
-        val keywords = extractKeywords(emotion)
         tvKeywords.text = if (keywords.isEmpty()) "오늘의 키워드: 없음" else "오늘의 키워드: ${keywords.joinToString(", ")}"
-        
-        generateAiFeedback(emotion, keywords)
+        tvAiFeedback.text = feedback
     }
 
     private fun extractKeywords(text: String): List<String> {
@@ -222,13 +224,13 @@ class SessionCompleteActivity : AppCompatActivity() {
         return extracted.toList()
     }
 
-    private fun generateAiFeedback(emotion: String, keywords: List<String>) {
+    private fun generateAiFeedback(emotion: String, keywords: List<String>): String {
         val sentences = mutableListOf<String>()
 
         // 1. 전반적인 상태 평가
         val eval = if (avgPressure < 35) "전체적으로 아주 평온하고 깊은 이완 상태를 유지하셨네요." 
                   else if (avgPressure < 55) "적당한 집중력과 안정감 사이에서 균형을 잘 잡으신 명상이었습니다."
-                  else "오늘은 평소보다 조금 더 긴장된 상태로 명상을 시작하셨던 것 같아요."
+                  else "오늘 평소보다 조금 더 긴장된 상태로 명상을 시작하셨던 것 같아요."
         sentences.add(eval)
 
         // 2. 긴장도 변화 및 특이점 (최고 긴장도 언급)
@@ -255,7 +257,7 @@ class SessionCompleteActivity : AppCompatActivity() {
         sentences.add("오늘의 평온함이 일상까지 이어지길 바라며, 내일도 이 자리에서 당신을 기다리고 있겠습니다.")
 
         // 출력 형식: 문장 사이 한 줄씩 띄움
-        tvAiFeedback.text = sentences.joinToString("\n\n")
+        return sentences.joinToString("\n\n")
     }
 
     private fun goHome() {

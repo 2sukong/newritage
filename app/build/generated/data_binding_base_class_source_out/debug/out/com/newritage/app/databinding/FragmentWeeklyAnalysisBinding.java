@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,63 +19,65 @@ import java.lang.String;
 
 public final class FragmentWeeklyAnalysisBinding implements ViewBinding {
   @NonNull
-  private final ScrollView rootView;
+  private final LinearLayout rootView;
 
   @NonNull
   public final ImageButton btnBack;
 
   @NonNull
-  public final ImageButton btnNextWeek;
+  public final ImageButton btnNext;
 
   @NonNull
-  public final ImageButton btnPrevWeek;
+  public final ImageButton btnPrev;
 
   @NonNull
-  public final LinearLayout layoutStats;
+  public final LayoutCommentCardBinding layoutComment;
+
+  @NonNull
+  public final LayoutComparisonCardBinding layoutComparison;
 
   @NonNull
   public final LineChart lineChart;
 
   @NonNull
-  public final TextView tvAvg;
+  public final TextView tvAvgPressure;
 
   @NonNull
-  public final TextView tvCount;
+  public final TextView tvDateRange;
 
   @NonNull
-  public final TextView tvMax;
+  public final TextView tvMaxPressure;
 
   @NonNull
-  public final TextView tvMedTime;
+  public final TextView tvSessionCount;
 
   @NonNull
-  public final TextView tvNoData;
+  public final TextView tvSessionTime;
 
-  @NonNull
-  public final TextView tvWeekLabel;
-
-  private FragmentWeeklyAnalysisBinding(@NonNull ScrollView rootView, @NonNull ImageButton btnBack,
-      @NonNull ImageButton btnNextWeek, @NonNull ImageButton btnPrevWeek,
-      @NonNull LinearLayout layoutStats, @NonNull LineChart lineChart, @NonNull TextView tvAvg,
-      @NonNull TextView tvCount, @NonNull TextView tvMax, @NonNull TextView tvMedTime,
-      @NonNull TextView tvNoData, @NonNull TextView tvWeekLabel) {
+  private FragmentWeeklyAnalysisBinding(@NonNull LinearLayout rootView,
+      @NonNull ImageButton btnBack, @NonNull ImageButton btnNext, @NonNull ImageButton btnPrev,
+      @NonNull LayoutCommentCardBinding layoutComment,
+      @NonNull LayoutComparisonCardBinding layoutComparison, @NonNull LineChart lineChart,
+      @NonNull TextView tvAvgPressure, @NonNull TextView tvDateRange,
+      @NonNull TextView tvMaxPressure, @NonNull TextView tvSessionCount,
+      @NonNull TextView tvSessionTime) {
     this.rootView = rootView;
     this.btnBack = btnBack;
-    this.btnNextWeek = btnNextWeek;
-    this.btnPrevWeek = btnPrevWeek;
-    this.layoutStats = layoutStats;
+    this.btnNext = btnNext;
+    this.btnPrev = btnPrev;
+    this.layoutComment = layoutComment;
+    this.layoutComparison = layoutComparison;
     this.lineChart = lineChart;
-    this.tvAvg = tvAvg;
-    this.tvCount = tvCount;
-    this.tvMax = tvMax;
-    this.tvMedTime = tvMedTime;
-    this.tvNoData = tvNoData;
-    this.tvWeekLabel = tvWeekLabel;
+    this.tvAvgPressure = tvAvgPressure;
+    this.tvDateRange = tvDateRange;
+    this.tvMaxPressure = tvMaxPressure;
+    this.tvSessionCount = tvSessionCount;
+    this.tvSessionTime = tvSessionTime;
   }
 
   @Override
   @NonNull
-  public ScrollView getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -107,23 +108,31 @@ public final class FragmentWeeklyAnalysisBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btnNextWeek;
-      ImageButton btnNextWeek = ViewBindings.findChildViewById(rootView, id);
-      if (btnNextWeek == null) {
+      id = R.id.btnNext;
+      ImageButton btnNext = ViewBindings.findChildViewById(rootView, id);
+      if (btnNext == null) {
         break missingId;
       }
 
-      id = R.id.btnPrevWeek;
-      ImageButton btnPrevWeek = ViewBindings.findChildViewById(rootView, id);
-      if (btnPrevWeek == null) {
+      id = R.id.btnPrev;
+      ImageButton btnPrev = ViewBindings.findChildViewById(rootView, id);
+      if (btnPrev == null) {
         break missingId;
       }
 
-      id = R.id.layoutStats;
-      LinearLayout layoutStats = ViewBindings.findChildViewById(rootView, id);
-      if (layoutStats == null) {
+      id = R.id.layoutComment;
+      View layoutComment = ViewBindings.findChildViewById(rootView, id);
+      if (layoutComment == null) {
         break missingId;
       }
+      LayoutCommentCardBinding binding_layoutComment = LayoutCommentCardBinding.bind(layoutComment);
+
+      id = R.id.layoutComparison;
+      View layoutComparison = ViewBindings.findChildViewById(rootView, id);
+      if (layoutComparison == null) {
+        break missingId;
+      }
+      LayoutComparisonCardBinding binding_layoutComparison = LayoutComparisonCardBinding.bind(layoutComparison);
 
       id = R.id.lineChart;
       LineChart lineChart = ViewBindings.findChildViewById(rootView, id);
@@ -131,45 +140,39 @@ public final class FragmentWeeklyAnalysisBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.tvAvg;
-      TextView tvAvg = ViewBindings.findChildViewById(rootView, id);
-      if (tvAvg == null) {
+      id = R.id.tvAvgPressure;
+      TextView tvAvgPressure = ViewBindings.findChildViewById(rootView, id);
+      if (tvAvgPressure == null) {
         break missingId;
       }
 
-      id = R.id.tvCount;
-      TextView tvCount = ViewBindings.findChildViewById(rootView, id);
-      if (tvCount == null) {
+      id = R.id.tvDateRange;
+      TextView tvDateRange = ViewBindings.findChildViewById(rootView, id);
+      if (tvDateRange == null) {
         break missingId;
       }
 
-      id = R.id.tvMax;
-      TextView tvMax = ViewBindings.findChildViewById(rootView, id);
-      if (tvMax == null) {
+      id = R.id.tvMaxPressure;
+      TextView tvMaxPressure = ViewBindings.findChildViewById(rootView, id);
+      if (tvMaxPressure == null) {
         break missingId;
       }
 
-      id = R.id.tvMedTime;
-      TextView tvMedTime = ViewBindings.findChildViewById(rootView, id);
-      if (tvMedTime == null) {
+      id = R.id.tvSessionCount;
+      TextView tvSessionCount = ViewBindings.findChildViewById(rootView, id);
+      if (tvSessionCount == null) {
         break missingId;
       }
 
-      id = R.id.tvNoData;
-      TextView tvNoData = ViewBindings.findChildViewById(rootView, id);
-      if (tvNoData == null) {
+      id = R.id.tvSessionTime;
+      TextView tvSessionTime = ViewBindings.findChildViewById(rootView, id);
+      if (tvSessionTime == null) {
         break missingId;
       }
 
-      id = R.id.tvWeekLabel;
-      TextView tvWeekLabel = ViewBindings.findChildViewById(rootView, id);
-      if (tvWeekLabel == null) {
-        break missingId;
-      }
-
-      return new FragmentWeeklyAnalysisBinding((ScrollView) rootView, btnBack, btnNextWeek,
-          btnPrevWeek, layoutStats, lineChart, tvAvg, tvCount, tvMax, tvMedTime, tvNoData,
-          tvWeekLabel);
+      return new FragmentWeeklyAnalysisBinding((LinearLayout) rootView, btnBack, btnNext, btnPrev,
+          binding_layoutComment, binding_layoutComparison, lineChart, tvAvgPressure, tvDateRange,
+          tvMaxPressure, tvSessionCount, tvSessionTime);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

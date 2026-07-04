@@ -19,21 +19,20 @@ public final class FragmentAnalysisBinding implements ViewBinding {
   private final LinearLayout rootView;
 
   @NonNull
-  public final LinearLayout rowDailyAnalysis;
+  public final LinearLayout rowDaily;
 
   @NonNull
-  public final LinearLayout rowMonthlyAnalysis;
+  public final LinearLayout rowMonthly;
 
   @NonNull
-  public final LinearLayout rowWeeklyAnalysis;
+  public final LinearLayout rowWeekly;
 
-  private FragmentAnalysisBinding(@NonNull LinearLayout rootView,
-      @NonNull LinearLayout rowDailyAnalysis, @NonNull LinearLayout rowMonthlyAnalysis,
-      @NonNull LinearLayout rowWeeklyAnalysis) {
+  private FragmentAnalysisBinding(@NonNull LinearLayout rootView, @NonNull LinearLayout rowDaily,
+      @NonNull LinearLayout rowMonthly, @NonNull LinearLayout rowWeekly) {
     this.rootView = rootView;
-    this.rowDailyAnalysis = rowDailyAnalysis;
-    this.rowMonthlyAnalysis = rowMonthlyAnalysis;
-    this.rowWeeklyAnalysis = rowWeeklyAnalysis;
+    this.rowDaily = rowDaily;
+    this.rowMonthly = rowMonthly;
+    this.rowWeekly = rowWeekly;
   }
 
   @Override
@@ -63,26 +62,25 @@ public final class FragmentAnalysisBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.rowDailyAnalysis;
-      LinearLayout rowDailyAnalysis = ViewBindings.findChildViewById(rootView, id);
-      if (rowDailyAnalysis == null) {
+      id = R.id.rowDaily;
+      LinearLayout rowDaily = ViewBindings.findChildViewById(rootView, id);
+      if (rowDaily == null) {
         break missingId;
       }
 
-      id = R.id.rowMonthlyAnalysis;
-      LinearLayout rowMonthlyAnalysis = ViewBindings.findChildViewById(rootView, id);
-      if (rowMonthlyAnalysis == null) {
+      id = R.id.rowMonthly;
+      LinearLayout rowMonthly = ViewBindings.findChildViewById(rootView, id);
+      if (rowMonthly == null) {
         break missingId;
       }
 
-      id = R.id.rowWeeklyAnalysis;
-      LinearLayout rowWeeklyAnalysis = ViewBindings.findChildViewById(rootView, id);
-      if (rowWeeklyAnalysis == null) {
+      id = R.id.rowWeekly;
+      LinearLayout rowWeekly = ViewBindings.findChildViewById(rootView, id);
+      if (rowWeekly == null) {
         break missingId;
       }
 
-      return new FragmentAnalysisBinding((LinearLayout) rootView, rowDailyAnalysis,
-          rowMonthlyAnalysis, rowWeeklyAnalysis);
+      return new FragmentAnalysisBinding((LinearLayout) rootView, rowDaily, rowMonthly, rowWeekly);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

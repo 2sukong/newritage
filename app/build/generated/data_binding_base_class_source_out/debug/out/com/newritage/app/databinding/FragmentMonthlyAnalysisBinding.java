@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,63 +19,70 @@ import java.lang.String;
 
 public final class FragmentMonthlyAnalysisBinding implements ViewBinding {
   @NonNull
-  private final ScrollView rootView;
+  private final LinearLayout rootView;
 
   @NonNull
   public final ImageButton btnBack;
 
   @NonNull
-  public final ImageButton btnNextMonth;
+  public final ImageButton btnNext;
 
   @NonNull
-  public final ImageButton btnPrevMonth;
+  public final ImageButton btnPrev;
 
   @NonNull
-  public final LinearLayout layoutStats;
+  public final LayoutCommentCardBinding layoutAIComment;
+
+  @NonNull
+  public final LayoutComparisonCardBinding layoutComparison;
+
+  @NonNull
+  public final LayoutAnalysisMonthlyCalendarBinding layoutMonthlyCalendar;
 
   @NonNull
   public final LineChart lineChart;
 
   @NonNull
-  public final TextView tvAvg;
+  public final TextView tvAvgPressure;
 
   @NonNull
-  public final TextView tvCount;
+  public final TextView tvDateRange;
 
   @NonNull
-  public final TextView tvMax;
+  public final TextView tvMaxPressure;
 
   @NonNull
-  public final TextView tvMedTime;
+  public final TextView tvSessionCount;
 
   @NonNull
-  public final TextView tvMonthLabel;
+  public final TextView tvSessionTime;
 
-  @NonNull
-  public final TextView tvNoData;
-
-  private FragmentMonthlyAnalysisBinding(@NonNull ScrollView rootView, @NonNull ImageButton btnBack,
-      @NonNull ImageButton btnNextMonth, @NonNull ImageButton btnPrevMonth,
-      @NonNull LinearLayout layoutStats, @NonNull LineChart lineChart, @NonNull TextView tvAvg,
-      @NonNull TextView tvCount, @NonNull TextView tvMax, @NonNull TextView tvMedTime,
-      @NonNull TextView tvMonthLabel, @NonNull TextView tvNoData) {
+  private FragmentMonthlyAnalysisBinding(@NonNull LinearLayout rootView,
+      @NonNull ImageButton btnBack, @NonNull ImageButton btnNext, @NonNull ImageButton btnPrev,
+      @NonNull LayoutCommentCardBinding layoutAIComment,
+      @NonNull LayoutComparisonCardBinding layoutComparison,
+      @NonNull LayoutAnalysisMonthlyCalendarBinding layoutMonthlyCalendar,
+      @NonNull LineChart lineChart, @NonNull TextView tvAvgPressure, @NonNull TextView tvDateRange,
+      @NonNull TextView tvMaxPressure, @NonNull TextView tvSessionCount,
+      @NonNull TextView tvSessionTime) {
     this.rootView = rootView;
     this.btnBack = btnBack;
-    this.btnNextMonth = btnNextMonth;
-    this.btnPrevMonth = btnPrevMonth;
-    this.layoutStats = layoutStats;
+    this.btnNext = btnNext;
+    this.btnPrev = btnPrev;
+    this.layoutAIComment = layoutAIComment;
+    this.layoutComparison = layoutComparison;
+    this.layoutMonthlyCalendar = layoutMonthlyCalendar;
     this.lineChart = lineChart;
-    this.tvAvg = tvAvg;
-    this.tvCount = tvCount;
-    this.tvMax = tvMax;
-    this.tvMedTime = tvMedTime;
-    this.tvMonthLabel = tvMonthLabel;
-    this.tvNoData = tvNoData;
+    this.tvAvgPressure = tvAvgPressure;
+    this.tvDateRange = tvDateRange;
+    this.tvMaxPressure = tvMaxPressure;
+    this.tvSessionCount = tvSessionCount;
+    this.tvSessionTime = tvSessionTime;
   }
 
   @Override
   @NonNull
-  public ScrollView getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -107,23 +113,38 @@ public final class FragmentMonthlyAnalysisBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btnNextMonth;
-      ImageButton btnNextMonth = ViewBindings.findChildViewById(rootView, id);
-      if (btnNextMonth == null) {
+      id = R.id.btnNext;
+      ImageButton btnNext = ViewBindings.findChildViewById(rootView, id);
+      if (btnNext == null) {
         break missingId;
       }
 
-      id = R.id.btnPrevMonth;
-      ImageButton btnPrevMonth = ViewBindings.findChildViewById(rootView, id);
-      if (btnPrevMonth == null) {
+      id = R.id.btnPrev;
+      ImageButton btnPrev = ViewBindings.findChildViewById(rootView, id);
+      if (btnPrev == null) {
         break missingId;
       }
 
-      id = R.id.layoutStats;
-      LinearLayout layoutStats = ViewBindings.findChildViewById(rootView, id);
-      if (layoutStats == null) {
+      id = R.id.layoutAIComment;
+      View layoutAIComment = ViewBindings.findChildViewById(rootView, id);
+      if (layoutAIComment == null) {
         break missingId;
       }
+      LayoutCommentCardBinding binding_layoutAIComment = LayoutCommentCardBinding.bind(layoutAIComment);
+
+      id = R.id.layoutComparison;
+      View layoutComparison = ViewBindings.findChildViewById(rootView, id);
+      if (layoutComparison == null) {
+        break missingId;
+      }
+      LayoutComparisonCardBinding binding_layoutComparison = LayoutComparisonCardBinding.bind(layoutComparison);
+
+      id = R.id.layoutMonthlyCalendar;
+      View layoutMonthlyCalendar = ViewBindings.findChildViewById(rootView, id);
+      if (layoutMonthlyCalendar == null) {
+        break missingId;
+      }
+      LayoutAnalysisMonthlyCalendarBinding binding_layoutMonthlyCalendar = LayoutAnalysisMonthlyCalendarBinding.bind(layoutMonthlyCalendar);
 
       id = R.id.lineChart;
       LineChart lineChart = ViewBindings.findChildViewById(rootView, id);
@@ -131,45 +152,39 @@ public final class FragmentMonthlyAnalysisBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.tvAvg;
-      TextView tvAvg = ViewBindings.findChildViewById(rootView, id);
-      if (tvAvg == null) {
+      id = R.id.tvAvgPressure;
+      TextView tvAvgPressure = ViewBindings.findChildViewById(rootView, id);
+      if (tvAvgPressure == null) {
         break missingId;
       }
 
-      id = R.id.tvCount;
-      TextView tvCount = ViewBindings.findChildViewById(rootView, id);
-      if (tvCount == null) {
+      id = R.id.tvDateRange;
+      TextView tvDateRange = ViewBindings.findChildViewById(rootView, id);
+      if (tvDateRange == null) {
         break missingId;
       }
 
-      id = R.id.tvMax;
-      TextView tvMax = ViewBindings.findChildViewById(rootView, id);
-      if (tvMax == null) {
+      id = R.id.tvMaxPressure;
+      TextView tvMaxPressure = ViewBindings.findChildViewById(rootView, id);
+      if (tvMaxPressure == null) {
         break missingId;
       }
 
-      id = R.id.tvMedTime;
-      TextView tvMedTime = ViewBindings.findChildViewById(rootView, id);
-      if (tvMedTime == null) {
+      id = R.id.tvSessionCount;
+      TextView tvSessionCount = ViewBindings.findChildViewById(rootView, id);
+      if (tvSessionCount == null) {
         break missingId;
       }
 
-      id = R.id.tvMonthLabel;
-      TextView tvMonthLabel = ViewBindings.findChildViewById(rootView, id);
-      if (tvMonthLabel == null) {
+      id = R.id.tvSessionTime;
+      TextView tvSessionTime = ViewBindings.findChildViewById(rootView, id);
+      if (tvSessionTime == null) {
         break missingId;
       }
 
-      id = R.id.tvNoData;
-      TextView tvNoData = ViewBindings.findChildViewById(rootView, id);
-      if (tvNoData == null) {
-        break missingId;
-      }
-
-      return new FragmentMonthlyAnalysisBinding((ScrollView) rootView, btnBack, btnNextMonth,
-          btnPrevMonth, layoutStats, lineChart, tvAvg, tvCount, tvMax, tvMedTime, tvMonthLabel,
-          tvNoData);
+      return new FragmentMonthlyAnalysisBinding((LinearLayout) rootView, btnBack, btnNext, btnPrev,
+          binding_layoutAIComment, binding_layoutComparison, binding_layoutMonthlyCalendar,
+          lineChart, tvAvgPressure, tvDateRange, tvMaxPressure, tvSessionCount, tvSessionTime);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

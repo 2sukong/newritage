@@ -32,7 +32,11 @@ class DailyAnalysisFragment : Fragment() {
     private lateinit var tvMax: TextView
     private lateinit var tvTime: TextView
     private lateinit var lineChart: LineChart
-    private lateinit var tvComment: TextView
+    
+    private lateinit var layoutComment: View
+    private lateinit var tvCommentTitle: TextView
+    private lateinit var tvCommentContent: TextView
+    
     private lateinit var btnPrev: ImageButton
     private lateinit var btnNext: ImageButton
 
@@ -56,7 +60,11 @@ class DailyAnalysisFragment : Fragment() {
         tvMax = view.findViewById(R.id.tvMaxPressure)
         tvTime = view.findViewById(R.id.tvSessionTime)
         lineChart = view.findViewById(R.id.lineChart)
-        tvComment = view.findViewById(R.id.tvComment)
+        
+        layoutComment = view.findViewById(R.id.layoutComment)
+        tvCommentTitle = layoutComment.findViewById(R.id.tvCommentTitle)
+        tvCommentContent = layoutComment.findViewById(R.id.tvCommentContent)
+        
         btnPrev = view.findViewById(R.id.btnPrev)
         btnNext = view.findViewById(R.id.btnNext)
 
@@ -110,7 +118,8 @@ class DailyAnalysisFragment : Fragment() {
     private fun updateUI(sessions: List<Session>) {
         if (sessions.isEmpty()) {
             tvAvg.text = "-"; tvMax.text = "-"; tvTime.text = "-"
-            tvComment.text = getString(R.string.analysis_no_data)
+            tvCommentTitle.text = "오늘 코멘트"
+            tvCommentContent.text = getString(R.string.analysis_no_data)
             lineChart.clear()
             return
         }
@@ -121,8 +130,8 @@ class DailyAnalysisFragment : Fragment() {
         val allMax = sessions.maxOf { it.maxPressure }
         val maxDuration = sessions.maxOf { it.durationSeconds }.toFloat()
         
-        tvAvg.text = "%.1f kPa".format(allAvg)
-        tvMax.text = "%.1f kPa".format(allMax)
+        tvAvg.text = "%.1f".format(allAvg)
+        tvMax.text = "%.1f".format(allMax)
         tvTime.text = "%02d:%02d".format(totalSecs / 60, totalSecs % 60)
 
         // Set X-axis max to the longest meditation time
@@ -144,11 +153,10 @@ class DailyAnalysisFragment : Fragment() {
         lineChart.data = LineData(dataSets)
         lineChart.invalidate()
 
-        tvComment.text = when {
-            allAvg < 25f -> "오늘은 매우 안정적인 명상을 하셨어요!"
-            allAvg < 45f -> "전반적으로 명상 압력이 적절히 유지되었습니다."
-            else -> "조금 더 편안한 자세로 명상에 집중해보세요."
-        }
+        tvCommentTitle.text = "오늘 코멘트"
+        // Show AI feedback from the first session that has it
+        val feedback = sessions.find { it.aiFeedback.isNotEmpty() }?.aiFeedback
+        tvCommentContent.text = feedback ?: "오늘은 명상을 한 뒤 기록을 남겨보세요."
     }
 
     private fun generateSessionEntries(session: Session, timeOffsetSecs: Int): List<Entry> {

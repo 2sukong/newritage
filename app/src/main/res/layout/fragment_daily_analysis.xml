@@ -125,34 +125,13 @@
                 android:layout_height="200dp"
                 android:layout_marginTop="16dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="오늘의 코멘트"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif-medium"/>
-
-            <androidx.cardview.widget.CardView
+            <include
+                android:id="@+id/layoutComment"
+                layout="@layout/layout_comment_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:layout_marginBottom="32dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="#F4F6F2">
-                <TextView
-                    android:id="@+id/tvComment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="120dp"
-                    android:padding="20dp"
-                    android:text="비밀 ~"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif-medium"/>
-            </androidx.cardview.widget.CardView>
+                android:layout_marginBottom="32dp" />
 
         </LinearLayout>
     </ScrollView>

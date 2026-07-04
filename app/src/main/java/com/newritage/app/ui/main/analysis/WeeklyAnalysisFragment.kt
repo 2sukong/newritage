@@ -26,8 +26,19 @@ class WeeklyAnalysisFragment : Fragment() {
     private lateinit var tvTime: TextView
     private lateinit var tvCount: TextView
     private lateinit var lineChart: LineChart
-    private lateinit var tvPrevCompare: TextView
-    private lateinit var tvComment: TextView
+    
+    // Comparison Card
+    private lateinit var layoutComparison: View
+    private lateinit var compAvgPressure: View
+    private lateinit var compMaxPressure: View
+    private lateinit var compMeditationTime: View
+    private lateinit var compMeditationCount: View
+    
+    // Comment Card
+    private lateinit var layoutComment: View
+    private lateinit var tvCommentTitle: TextView
+    private lateinit var tvCommentContent: TextView
+    
     private lateinit var btnPrev: ImageButton
     private lateinit var btnNext: ImageButton
 
@@ -54,8 +65,17 @@ class WeeklyAnalysisFragment : Fragment() {
         tvTime = view.findViewById(R.id.tvSessionTime)
         tvCount = view.findViewById(R.id.tvSessionCount)
         lineChart = view.findViewById(R.id.lineChart)
-        tvPrevCompare = view.findViewById(R.id.tvPrevCompare)
-        tvComment = view.findViewById(R.id.tvComment)
+        
+        layoutComparison = view.findViewById(R.id.layoutComparison)
+        compAvgPressure = layoutComparison.findViewById(R.id.compAvgPressure)
+        compMaxPressure = layoutComparison.findViewById(R.id.compMaxPressure)
+        compMeditationTime = layoutComparison.findViewById(R.id.compMeditationTime)
+        compMeditationCount = layoutComparison.findViewById(R.id.compMeditationCount)
+        
+        layoutComment = view.findViewById(R.id.layoutComment)
+        tvCommentTitle = layoutComment.findViewById(R.id.tvCommentTitle)
+        tvCommentContent = layoutComment.findViewById(R.id.tvCommentContent)
+        
         btnPrev = view.findViewById(R.id.btnPrev)
         btnNext = view.findViewById(R.id.btnNext)
 
@@ -107,29 +127,20 @@ class WeeklyAnalysisFragment : Fragment() {
     private fun updateUI(sessions: List<Session>, prevSessions: List<Session>) {
         if (sessions.isEmpty()) {
             tvAvg.text = "-"; tvMax.text = "-"; tvTime.text = "-"; tvCount.text = "0회"
-            tvPrevCompare.text = "이전 주 데이터 없음"
+            tvCommentContent.text = getString(R.string.analysis_no_data)
             lineChart.clear(); return
         }
         val totalSecs = sessions.sumOf { it.durationSeconds }
         val allAvg = sessions.map { it.avgPressure }.average().toFloat()
         val allMax = sessions.maxOf { it.maxPressure }
 
-        tvAvg.text = "%.1f kPa".format(allAvg)
-        tvMax.text = "%.1f kPa".format(allMax)
+        tvAvg.text = "%.1f".format(allAvg)
+        tvMax.text = "%.1f".format(allMax)
         tvTime.text = "%02d:%02d".format(totalSecs / 60, totalSecs % 60)
         tvCount.text = "${sessions.size}회"
 
         // Previous week comparison
-        if (prevSessions.isNotEmpty()) {
-            val prevAvg = prevSessions.map { it.avgPressure }.average().toFloat()
-            val diff = allAvg - prevAvg
-            val arrow = if (diff < 0) "▼" else "▲"
-            val direction = if (diff < 0) "감소" else "증가"
-            tvPrevCompare.text = "저번 주 대비 평균 압력 $arrow ${"%.1f".format(kotlin.math.abs(diff))} kPa $direction"
-            tvPrevCompare.setTextColor(if (diff < 0) Color.parseColor("#5B9070") else Color.parseColor("#C07070"))
-        } else {
-            tvPrevCompare.text = "저번 주 비교 데이터 없음"
-        }
+        setupComparison(sessions, prevSessions)
 
         // Chart: this week vs prev week
         val thisWeekEntries = buildDailyAverages(sessions)
@@ -156,10 +167,71 @@ class WeeklyAnalysisFragment : Fragment() {
         lineChart.invalidate()
 
         // tvComment already bound in onViewCreated
-        tvComment.text = when {
+        tvCommentTitle.text = "주간 코멘트"
+        tvCommentContent.text = when {
             allAvg < 25f -> "이번 주는 매우 편안한 명상을 하셨어요!"
             allAvg < 45f -> "이번 주 명상이 전반적으로 좋았습니다."
             else -> "이번 주는 긴장이 높았습니다. 더 편안한 환경을 만들어보세요."
+        }
+    }
+
+    private fun setupComparison(sessions: List<Session>, prevSessions: List<Session>) {
+        layoutComparison.findViewById<TextView>(R.id.tvComparisonTitle).text = "저번주와 비교"
+        
+        if (prevSessions.isEmpty()) {
+            // Placeholder or disable
+            return
+        }
+
+        // Avg Pressure
+        val currAvg = sessions.map { it.avgPressure }.average().toFloat()
+        val prevAvg = prevSessions.map { it.avgPressure }.average().toFloat()
+        updateCompItem(compAvgPressure, "평균 압력", currAvg, prevAvg, isPercentage = true, inverseColor = true)
+
+        // Max Pressure
+        val currMax = sessions.maxOf { it.maxPressure }
+        val prevMax = prevSessions.maxOf { it.maxPressure }
+        updateCompItem(compMaxPressure, "최고 압력", currMax, prevMax, isPercentage = true, inverseColor = true)
+
+        // Meditation Time
+        val currTime = sessions.sumOf { it.durationSeconds } / 60
+        val prevTime = prevSessions.sumOf { it.durationSeconds } / 60
+        updateCompItem(compMeditationTime, "명상 시간", currTime.toFloat(), prevTime.toFloat(), isPercentage = false, unit = "분")
+
+        // Meditation Count
+        val currCount = sessions.size
+        val prevCount = prevSessions.size
+        updateCompItem(compMeditationCount, "명상 횟수", currCount.toFloat(), prevCount.toFloat(), isPercentage = false, unit = "회")
+    }
+
+    private fun updateCompItem(view: View, title: String, curr: Float, prev: Float, isPercentage: Boolean, inverseColor: Boolean = false, unit: String = "") {
+        val tvTitle = view.findViewById<TextView>(R.id.tvCompTitle)
+        val ivArrow = view.findViewById<ImageView>(R.id.ivCompArrow)
+        val tvValue = view.findViewById<TextView>(R.id.tvCompValue)
+
+        tvTitle.text = title
+        val diff = curr - prev
+        val isIncr = diff > 0
+        
+        ivArrow.rotation = if (isIncr) 180f else 0f // Rotate ic_arrow_left to point up/down? Actually ic_arrow_left is left.
+        // Better: let's use a simple arrow char for now or fix rotation. 
+        // If ic_arrow_left points Left (180deg from Right), then 90 is Down, 270 is Up.
+        ivArrow.rotation = if (isIncr) 270f else 90f
+        
+        val colorGreen = Color.parseColor("#8B9E7B")
+        val colorRed = Color.parseColor("#D32F2F")
+        
+        // Color rule: Pressure lower is better (Green), Time/Count higher is better (Green)
+        val goodColor = if (inverseColor) (if (!isIncr) colorGreen else colorRed) else (if (isIncr) colorGreen else colorRed)
+        ivArrow.setColorFilter(goodColor)
+        tvValue.setTextColor(goodColor)
+
+        val diffVal = kotlin.math.abs(diff)
+        if (isPercentage) {
+            val percent = if (prev != 0f) (diffVal / prev * 100) else 0f
+            tvValue.text = "${if (isIncr) "▲" else "▼"} ${"%.1f".format(percent)}%"
+        } else {
+            tvValue.text = "${if (isIncr) "▲" else "▼"} ${if (isIncr) "+" else "-"}${diffVal.toInt()}$unit"
         }
     }
 

@@ -7,14 +7,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ScrollView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.newritage.app.R;
+import com.newritage.app.ui.util.WaveView;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -24,78 +29,123 @@ public final class ActivitySessionCompleteBinding implements ViewBinding {
   private final FrameLayout rootView;
 
   @NonNull
-  public final Button btnGoMain;
+  public final ImageButton btnBackRecord;
 
   @NonNull
-  public final Button btnGoRecord;
+  public final Button btnRecord;
 
   @NonNull
-  public final Button btnSaveRecord;
+  public final Button btnSkip;
+
+  @NonNull
+  public final MaterialButton btnViewColorDesc;
+
+  @NonNull
+  public final MaterialCardView cardAnalysis;
+
+  @NonNull
+  public final FrameLayout containerThread;
 
   @NonNull
   public final EditText etEmotion;
 
   @NonNull
-  public final ConstraintLayout layoutComplete;
+  public final ImageView ivThreadFrame;
 
   @NonNull
-  public final ScrollView layoutRecord;
+  public final LinearLayout layoutThreadBottom;
 
   @NonNull
-  public final ConstraintLayout layoutThread;
+  public final LinearLayout screenComplete;
+
+  @NonNull
+  public final LinearLayout screenRecord;
+
+  @NonNull
+  public final ConstraintLayout screenThread;
 
   @NonNull
   public final View threadColorView;
 
   @NonNull
-  public final TextView tvCompleteTitle;
+  public final TextView tvAiFeedback;
 
   @NonNull
-  public final TextView tvRecordAvgPressure;
+  public final TextView tvAvgPressureVal;
 
   @NonNull
-  public final TextView tvRecordMaxPressure;
+  public final TextView tvDeviationVal;
 
   @NonNull
-  public final TextView tvRecordMedTime;
+  public final TextView tvHeaderHome;
 
   @NonNull
-  public final TextView tvRecordMinPressure;
+  public final TextView tvHeaderToday;
 
   @NonNull
-  public final TextView tvThreadColorName;
+  public final TextView tvKeywords;
 
   @NonNull
-  public final TextView tvThreadSubtitle;
+  public final TextView tvMaxMinVal;
 
   @NonNull
-  public final TextView tvThreadTitle;
+  public final TextView tvSessionTimeVal;
 
-  private ActivitySessionCompleteBinding(@NonNull FrameLayout rootView, @NonNull Button btnGoMain,
-      @NonNull Button btnGoRecord, @NonNull Button btnSaveRecord, @NonNull EditText etEmotion,
-      @NonNull ConstraintLayout layoutComplete, @NonNull ScrollView layoutRecord,
-      @NonNull ConstraintLayout layoutThread, @NonNull View threadColorView,
-      @NonNull TextView tvCompleteTitle, @NonNull TextView tvRecordAvgPressure,
-      @NonNull TextView tvRecordMaxPressure, @NonNull TextView tvRecordMedTime,
-      @NonNull TextView tvRecordMinPressure, @NonNull TextView tvThreadColorName,
-      @NonNull TextView tvThreadSubtitle, @NonNull TextView tvThreadTitle) {
+  @NonNull
+  public final TextView tvStreakDays;
+
+  @NonNull
+  public final TextView tvTensionGauge;
+
+  @NonNull
+  public final TextView tvThreadDate;
+
+  @NonNull
+  public final TextView tvThreadMainTitle;
+
+  @NonNull
+  public final WaveView waveViewComplete;
+
+  private ActivitySessionCompleteBinding(@NonNull FrameLayout rootView,
+      @NonNull ImageButton btnBackRecord, @NonNull Button btnRecord, @NonNull Button btnSkip,
+      @NonNull MaterialButton btnViewColorDesc, @NonNull MaterialCardView cardAnalysis,
+      @NonNull FrameLayout containerThread, @NonNull EditText etEmotion,
+      @NonNull ImageView ivThreadFrame, @NonNull LinearLayout layoutThreadBottom,
+      @NonNull LinearLayout screenComplete, @NonNull LinearLayout screenRecord,
+      @NonNull ConstraintLayout screenThread, @NonNull View threadColorView,
+      @NonNull TextView tvAiFeedback, @NonNull TextView tvAvgPressureVal,
+      @NonNull TextView tvDeviationVal, @NonNull TextView tvHeaderHome,
+      @NonNull TextView tvHeaderToday, @NonNull TextView tvKeywords, @NonNull TextView tvMaxMinVal,
+      @NonNull TextView tvSessionTimeVal, @NonNull TextView tvStreakDays,
+      @NonNull TextView tvTensionGauge, @NonNull TextView tvThreadDate,
+      @NonNull TextView tvThreadMainTitle, @NonNull WaveView waveViewComplete) {
     this.rootView = rootView;
-    this.btnGoMain = btnGoMain;
-    this.btnGoRecord = btnGoRecord;
-    this.btnSaveRecord = btnSaveRecord;
+    this.btnBackRecord = btnBackRecord;
+    this.btnRecord = btnRecord;
+    this.btnSkip = btnSkip;
+    this.btnViewColorDesc = btnViewColorDesc;
+    this.cardAnalysis = cardAnalysis;
+    this.containerThread = containerThread;
     this.etEmotion = etEmotion;
-    this.layoutComplete = layoutComplete;
-    this.layoutRecord = layoutRecord;
-    this.layoutThread = layoutThread;
+    this.ivThreadFrame = ivThreadFrame;
+    this.layoutThreadBottom = layoutThreadBottom;
+    this.screenComplete = screenComplete;
+    this.screenRecord = screenRecord;
+    this.screenThread = screenThread;
     this.threadColorView = threadColorView;
-    this.tvCompleteTitle = tvCompleteTitle;
-    this.tvRecordAvgPressure = tvRecordAvgPressure;
-    this.tvRecordMaxPressure = tvRecordMaxPressure;
-    this.tvRecordMedTime = tvRecordMedTime;
-    this.tvRecordMinPressure = tvRecordMinPressure;
-    this.tvThreadColorName = tvThreadColorName;
-    this.tvThreadSubtitle = tvThreadSubtitle;
-    this.tvThreadTitle = tvThreadTitle;
+    this.tvAiFeedback = tvAiFeedback;
+    this.tvAvgPressureVal = tvAvgPressureVal;
+    this.tvDeviationVal = tvDeviationVal;
+    this.tvHeaderHome = tvHeaderHome;
+    this.tvHeaderToday = tvHeaderToday;
+    this.tvKeywords = tvKeywords;
+    this.tvMaxMinVal = tvMaxMinVal;
+    this.tvSessionTimeVal = tvSessionTimeVal;
+    this.tvStreakDays = tvStreakDays;
+    this.tvTensionGauge = tvTensionGauge;
+    this.tvThreadDate = tvThreadDate;
+    this.tvThreadMainTitle = tvThreadMainTitle;
+    this.waveViewComplete = waveViewComplete;
   }
 
   @Override
@@ -125,21 +175,39 @@ public final class ActivitySessionCompleteBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.btnGoMain;
-      Button btnGoMain = ViewBindings.findChildViewById(rootView, id);
-      if (btnGoMain == null) {
+      id = R.id.btnBackRecord;
+      ImageButton btnBackRecord = ViewBindings.findChildViewById(rootView, id);
+      if (btnBackRecord == null) {
         break missingId;
       }
 
-      id = R.id.btnGoRecord;
-      Button btnGoRecord = ViewBindings.findChildViewById(rootView, id);
-      if (btnGoRecord == null) {
+      id = R.id.btnRecord;
+      Button btnRecord = ViewBindings.findChildViewById(rootView, id);
+      if (btnRecord == null) {
         break missingId;
       }
 
-      id = R.id.btnSaveRecord;
-      Button btnSaveRecord = ViewBindings.findChildViewById(rootView, id);
-      if (btnSaveRecord == null) {
+      id = R.id.btnSkip;
+      Button btnSkip = ViewBindings.findChildViewById(rootView, id);
+      if (btnSkip == null) {
+        break missingId;
+      }
+
+      id = R.id.btnViewColorDesc;
+      MaterialButton btnViewColorDesc = ViewBindings.findChildViewById(rootView, id);
+      if (btnViewColorDesc == null) {
+        break missingId;
+      }
+
+      id = R.id.cardAnalysis;
+      MaterialCardView cardAnalysis = ViewBindings.findChildViewById(rootView, id);
+      if (cardAnalysis == null) {
+        break missingId;
+      }
+
+      id = R.id.containerThread;
+      FrameLayout containerThread = ViewBindings.findChildViewById(rootView, id);
+      if (containerThread == null) {
         break missingId;
       }
 
@@ -149,21 +217,33 @@ public final class ActivitySessionCompleteBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.layoutComplete;
-      ConstraintLayout layoutComplete = ViewBindings.findChildViewById(rootView, id);
-      if (layoutComplete == null) {
+      id = R.id.ivThreadFrame;
+      ImageView ivThreadFrame = ViewBindings.findChildViewById(rootView, id);
+      if (ivThreadFrame == null) {
         break missingId;
       }
 
-      id = R.id.layoutRecord;
-      ScrollView layoutRecord = ViewBindings.findChildViewById(rootView, id);
-      if (layoutRecord == null) {
+      id = R.id.layoutThreadBottom;
+      LinearLayout layoutThreadBottom = ViewBindings.findChildViewById(rootView, id);
+      if (layoutThreadBottom == null) {
         break missingId;
       }
 
-      id = R.id.layoutThread;
-      ConstraintLayout layoutThread = ViewBindings.findChildViewById(rootView, id);
-      if (layoutThread == null) {
+      id = R.id.screenComplete;
+      LinearLayout screenComplete = ViewBindings.findChildViewById(rootView, id);
+      if (screenComplete == null) {
+        break missingId;
+      }
+
+      id = R.id.screenRecord;
+      LinearLayout screenRecord = ViewBindings.findChildViewById(rootView, id);
+      if (screenRecord == null) {
+        break missingId;
+      }
+
+      id = R.id.screenThread;
+      ConstraintLayout screenThread = ViewBindings.findChildViewById(rootView, id);
+      if (screenThread == null) {
         break missingId;
       }
 
@@ -173,58 +253,90 @@ public final class ActivitySessionCompleteBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.tvCompleteTitle;
-      TextView tvCompleteTitle = ViewBindings.findChildViewById(rootView, id);
-      if (tvCompleteTitle == null) {
+      id = R.id.tvAiFeedback;
+      TextView tvAiFeedback = ViewBindings.findChildViewById(rootView, id);
+      if (tvAiFeedback == null) {
         break missingId;
       }
 
-      id = R.id.tvRecordAvgPressure;
-      TextView tvRecordAvgPressure = ViewBindings.findChildViewById(rootView, id);
-      if (tvRecordAvgPressure == null) {
+      id = R.id.tvAvgPressureVal;
+      TextView tvAvgPressureVal = ViewBindings.findChildViewById(rootView, id);
+      if (tvAvgPressureVal == null) {
         break missingId;
       }
 
-      id = R.id.tvRecordMaxPressure;
-      TextView tvRecordMaxPressure = ViewBindings.findChildViewById(rootView, id);
-      if (tvRecordMaxPressure == null) {
+      id = R.id.tvDeviationVal;
+      TextView tvDeviationVal = ViewBindings.findChildViewById(rootView, id);
+      if (tvDeviationVal == null) {
         break missingId;
       }
 
-      id = R.id.tvRecordMedTime;
-      TextView tvRecordMedTime = ViewBindings.findChildViewById(rootView, id);
-      if (tvRecordMedTime == null) {
+      id = R.id.tvHeaderHome;
+      TextView tvHeaderHome = ViewBindings.findChildViewById(rootView, id);
+      if (tvHeaderHome == null) {
         break missingId;
       }
 
-      id = R.id.tvRecordMinPressure;
-      TextView tvRecordMinPressure = ViewBindings.findChildViewById(rootView, id);
-      if (tvRecordMinPressure == null) {
+      id = R.id.tvHeaderToday;
+      TextView tvHeaderToday = ViewBindings.findChildViewById(rootView, id);
+      if (tvHeaderToday == null) {
         break missingId;
       }
 
-      id = R.id.tvThreadColorName;
-      TextView tvThreadColorName = ViewBindings.findChildViewById(rootView, id);
-      if (tvThreadColorName == null) {
+      id = R.id.tvKeywords;
+      TextView tvKeywords = ViewBindings.findChildViewById(rootView, id);
+      if (tvKeywords == null) {
         break missingId;
       }
 
-      id = R.id.tvThreadSubtitle;
-      TextView tvThreadSubtitle = ViewBindings.findChildViewById(rootView, id);
-      if (tvThreadSubtitle == null) {
+      id = R.id.tvMaxMinVal;
+      TextView tvMaxMinVal = ViewBindings.findChildViewById(rootView, id);
+      if (tvMaxMinVal == null) {
         break missingId;
       }
 
-      id = R.id.tvThreadTitle;
-      TextView tvThreadTitle = ViewBindings.findChildViewById(rootView, id);
-      if (tvThreadTitle == null) {
+      id = R.id.tvSessionTimeVal;
+      TextView tvSessionTimeVal = ViewBindings.findChildViewById(rootView, id);
+      if (tvSessionTimeVal == null) {
         break missingId;
       }
 
-      return new ActivitySessionCompleteBinding((FrameLayout) rootView, btnGoMain, btnGoRecord,
-          btnSaveRecord, etEmotion, layoutComplete, layoutRecord, layoutThread, threadColorView,
-          tvCompleteTitle, tvRecordAvgPressure, tvRecordMaxPressure, tvRecordMedTime,
-          tvRecordMinPressure, tvThreadColorName, tvThreadSubtitle, tvThreadTitle);
+      id = R.id.tvStreakDays;
+      TextView tvStreakDays = ViewBindings.findChildViewById(rootView, id);
+      if (tvStreakDays == null) {
+        break missingId;
+      }
+
+      id = R.id.tvTensionGauge;
+      TextView tvTensionGauge = ViewBindings.findChildViewById(rootView, id);
+      if (tvTensionGauge == null) {
+        break missingId;
+      }
+
+      id = R.id.tvThreadDate;
+      TextView tvThreadDate = ViewBindings.findChildViewById(rootView, id);
+      if (tvThreadDate == null) {
+        break missingId;
+      }
+
+      id = R.id.tvThreadMainTitle;
+      TextView tvThreadMainTitle = ViewBindings.findChildViewById(rootView, id);
+      if (tvThreadMainTitle == null) {
+        break missingId;
+      }
+
+      id = R.id.waveViewComplete;
+      WaveView waveViewComplete = ViewBindings.findChildViewById(rootView, id);
+      if (waveViewComplete == null) {
+        break missingId;
+      }
+
+      return new ActivitySessionCompleteBinding((FrameLayout) rootView, btnBackRecord, btnRecord,
+          btnSkip, btnViewColorDesc, cardAnalysis, containerThread, etEmotion, ivThreadFrame,
+          layoutThreadBottom, screenComplete, screenRecord, screenThread, threadColorView,
+          tvAiFeedback, tvAvgPressureVal, tvDeviationVal, tvHeaderHome, tvHeaderToday, tvKeywords,
+          tvMaxMinVal, tvSessionTimeVal, tvStreakDays, tvTensionGauge, tvThreadDate,
+          tvThreadMainTitle, waveViewComplete);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

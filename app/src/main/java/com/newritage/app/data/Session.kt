@@ -19,5 +19,6 @@ data class Session(
     val emotion: String = "",
     val threadColor: String = "",      // hex string, empty if no thread
     val threadColorName: String = "",  // Korean name
+    val aiFeedback: String = "",       // AI feedback generated at session completion
     val createdAt: Long = System.currentTimeMillis()
 )

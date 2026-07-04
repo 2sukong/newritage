@@ -4,9 +4,7 @@ package com.newritage.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -23,34 +21,16 @@ public final class ActivityMainBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
-  public final BottomNavigationView bottomNav;
-
-  @NonNull
-  public final Button btnStartMeditation;
+  public final BottomNavigationView bottomNavigation;
 
   @NonNull
   public final FrameLayout fragmentContainer;
 
-  @NonNull
-  public final FrameLayout gaugeContainer;
-
-  @NonNull
-  public final ConstraintLayout layoutHome;
-
-  @NonNull
-  public final TextView tvToolbarTitle;
-
   private ActivityMainBinding(@NonNull ConstraintLayout rootView,
-      @NonNull BottomNavigationView bottomNav, @NonNull Button btnStartMeditation,
-      @NonNull FrameLayout fragmentContainer, @NonNull FrameLayout gaugeContainer,
-      @NonNull ConstraintLayout layoutHome, @NonNull TextView tvToolbarTitle) {
+      @NonNull BottomNavigationView bottomNavigation, @NonNull FrameLayout fragmentContainer) {
     this.rootView = rootView;
-    this.bottomNav = bottomNav;
-    this.btnStartMeditation = btnStartMeditation;
+    this.bottomNavigation = bottomNavigation;
     this.fragmentContainer = fragmentContainer;
-    this.gaugeContainer = gaugeContainer;
-    this.layoutHome = layoutHome;
-    this.tvToolbarTitle = tvToolbarTitle;
   }
 
   @Override
@@ -80,15 +60,9 @@ public final class ActivityMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.bottomNav;
-      BottomNavigationView bottomNav = ViewBindings.findChildViewById(rootView, id);
-      if (bottomNav == null) {
-        break missingId;
-      }
-
-      id = R.id.btnStartMeditation;
-      Button btnStartMeditation = ViewBindings.findChildViewById(rootView, id);
-      if (btnStartMeditation == null) {
+      id = R.id.bottomNavigation;
+      BottomNavigationView bottomNavigation = ViewBindings.findChildViewById(rootView, id);
+      if (bottomNavigation == null) {
         break missingId;
       }
 
@@ -98,26 +72,8 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.gaugeContainer;
-      FrameLayout gaugeContainer = ViewBindings.findChildViewById(rootView, id);
-      if (gaugeContainer == null) {
-        break missingId;
-      }
-
-      id = R.id.layoutHome;
-      ConstraintLayout layoutHome = ViewBindings.findChildViewById(rootView, id);
-      if (layoutHome == null) {
-        break missingId;
-      }
-
-      id = R.id.tvToolbarTitle;
-      TextView tvToolbarTitle = ViewBindings.findChildViewById(rootView, id);
-      if (tvToolbarTitle == null) {
-        break missingId;
-      }
-
-      return new ActivityMainBinding((ConstraintLayout) rootView, bottomNav, btnStartMeditation,
-          fragmentContainer, gaugeContainer, layoutHome, tvToolbarTitle);
+      return new ActivityMainBinding((ConstraintLayout) rootView, bottomNavigation,
+          fragmentContainer);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

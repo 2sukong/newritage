@@ -1,0 +1,9 @@
+com.newritage.app-pngs-0 C:\newmeditaion\app\build\generated\res\pngs\debug
+com.newritage.app-resValues-1 C:\newmeditaion\app\build\generated\res\resValues\debug
+com.newritage.app-updated_navigation_xml-2 C:\newmeditaion\app\build\generated\updated_navigation_xml\debug
+com.newritage.app-packageDebugResources-3 C:\newmeditaion\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.newritage.app-packageDebugResources-4 C:\newmeditaion\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.newritage.app-debug-5 C:\newmeditaion\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.newritage.app-debug-6 C:\newmeditaion\app\src\debug\res
+com.newritage.app-main-7 C:\newmeditaion\app\src\main\res
+gradleHome-0 C:\Users\goodb\.gradle

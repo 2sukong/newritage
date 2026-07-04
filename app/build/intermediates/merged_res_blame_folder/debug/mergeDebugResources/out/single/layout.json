@@ -1,78 +1,134 @@
 [
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/item_calendar_cell.xml",
-        "source": "com.newritage.app-main-54:/layout/item_calendar_cell.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\activity_session_complete.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_session_complete.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/fragment_daily_analysis.xml",
-        "source": "com.newritage.app-main-54:/layout/fragment_daily_analysis.xml"
+        "merged": "com.newritage.app-mergeDebugResources-48:/layout/fragment_intro.xml",
+        "source": "com.newritage.app-main-51:/layout/fragment_intro.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/activity_signup.xml",
-        "source": "com.newritage.app-main-54:/layout/activity_signup.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\fragment_analysis.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_analysis.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/fragment_weekly_analysis.xml",
-        "source": "com.newritage.app-main-54:/layout/fragment_weekly_analysis.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\item_calendar_cell_simple.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\item_calendar_cell_simple.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/item_calendar_cell_knot.xml",
-        "source": "com.newritage.app-main-54:/layout/item_calendar_cell_knot.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\fragment_monthly_analysis.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_monthly_analysis.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/activity_baseline_measurement.xml",
-        "source": "com.newritage.app-main-54:/layout/activity_baseline_measurement.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\layout_analysis_comparison_item.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\layout_analysis_comparison_item.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/fragment_onboarding_page.xml",
-        "source": "com.newritage.app-main-54:/layout/fragment_onboarding_page.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\fragment_home.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_home.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/activity_main.xml",
-        "source": "com.newritage.app-main-54:/layout/activity_main.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\fragment_onboarding_page.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_onboarding_page.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/fragment_monthly_analysis.xml",
-        "source": "com.newritage.app-main-54:/layout/fragment_monthly_analysis.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\fragment_weekly_analysis.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_weekly_analysis.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/dialog_measurement_guide.xml",
-        "source": "com.newritage.app-main-54:/layout/dialog_measurement_guide.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\activity_onboarding.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_onboarding.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/activity_start.xml",
-        "source": "com.newritage.app-main-54:/layout/activity_start.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\view_measure_circle.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\view_measure_circle.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/fragment_knot_storage.xml",
-        "source": "com.newritage.app-main-54:/layout/fragment_knot_storage.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\view_guide_card.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\view_guide_card.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/fragment_thread_storage.xml",
-        "source": "com.newritage.app-main-54:/layout/fragment_thread_storage.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\fragment_intro.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_intro.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/activity_measurement.xml",
-        "source": "com.newritage.app-main-54:/layout/activity_measurement.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\fragment_knot_detail_view_new.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_knot_detail_view_new.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/fragment_analysis.xml",
-        "source": "com.newritage.app-main-54:/layout/fragment_analysis.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\layout_comment_card.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\layout_comment_card.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/fragment_record.xml",
-        "source": "com.newritage.app-main-54:/layout/fragment_record.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\view_tip_card.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\view_tip_card.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/activity_onboarding.xml",
-        "source": "com.newritage.app-main-54:/layout/activity_onboarding.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\activity_baseline_measurement.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_baseline_measurement.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/activity_login.xml",
-        "source": "com.newritage.app-main-54:/layout/activity_login.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\activity_start.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_start.xml"
     },
     {
-        "merged": "com.newritage.app-mergeDebugResources-51:/layout/activity_session_complete.xml",
-        "source": "com.newritage.app-main-54:/layout/activity_session_complete.xml"
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\view_pressure_graph.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\view_pressure_graph.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\fragment_thread_storage_new.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_thread_storage_new.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\layout_comparison_card.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\layout_comparison_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\layout_analysis_monthly_calendar.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\layout_analysis_monthly_calendar.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\view_meditation_timer.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\view_meditation_timer.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\activity_login.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\fragment_knot_storage_new.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_knot_storage_new.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\activity_signup.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_signup.xml"
+    },
+    {
+        "merged": "com.newritage.app-mergeDebugResources-48:/layout/activity_measurement.xml",
+        "source": "com.newritage.app-main-51:/layout/activity_measurement.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\view_connection_state.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\view_connection_state.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "com.newritage.app-mergeDebugResources-48:/layout/fragment_home.xml",
+        "source": "com.newritage.app-main-51:/layout/fragment_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\item_calendar_cell_knot.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\item_calendar_cell_knot.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\fragment_daily_analysis.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_daily_analysis.xml"
+    },
+    {
+        "merged": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-mergeDebugResources-48:\\layout\\fragment_record.xml",
+        "source": "C:\\Users\\goodb\\.gradle\\daemon\\9.4.1\\com.newritage.app-main-51:\\layout\\fragment_record.xml"
     }
 ]
