@@ -69,7 +69,7 @@ class DailyAnalysisFragment : Fragment() {
                 val sec = session.durationSeconds % 60
 
                 binding.tvAvgPressure1.text = String.format("%.1f", session.avgPressure)
-                binding.tvAvgPressure2.text = String.format("%.1f", session.minPressure)
+
                 binding.tvAvgPressure3.text = String.format("%.1f", session.maxPressure)
                 binding.tvMedTime.text = String.format("%02d:%02d", min, sec)
 
@@ -104,7 +104,7 @@ class DailyAnalysisFragment : Fragment() {
                 binding.lineChart.invalidate()
             } else {
                 binding.tvAvgPressure1.text = "--.-"
-                binding.tvAvgPressure2.text = "--.-"
+
                 binding.tvAvgPressure3.text = "--.-"
                 binding.tvMedTime.text = "--:--"
                 binding.tvSensorADetail.text = "데이터가 없습니다."

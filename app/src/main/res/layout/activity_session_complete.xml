@@ -345,10 +345,11 @@
                 android:scaleType="fitCenter" />
 
             <!-- 실의 색상 -->
-            <View
+            <ImageView
                 android:id="@+id/threadColorView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:scaleType="centerCrop"
                 android:layout_margin="24dp" />
         </FrameLayout>
 

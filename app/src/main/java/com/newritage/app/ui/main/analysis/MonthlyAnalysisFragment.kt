@@ -76,7 +76,7 @@ class MonthlyAnalysisFragment : Fragment() {
 
                 // 월간 XML 구조와 동일한 ID 규칙(2=최저, 3=최고)으로 채우기
                 binding.tvAvgPressure1.text = String.format("%.1f", avgPressure) // 월간 평균
-                binding.tvAvgPressure2.text = String.format("%.1f", minPressure) // 월간 최저
+                 // 월간 최저
                 binding.tvAvgPressure3.text = String.format("%.1f", maxPressure) // 월간 최고
 
                 val min = totalTime / 60; val sec = totalTime % 60
@@ -97,7 +97,7 @@ class MonthlyAnalysisFragment : Fragment() {
                 binding.lineChart.invalidate()
             } else {
                 binding.tvAvgPressure1.text = "--.-"
-                binding.tvAvgPressure2.text = "--.-"
+
                 binding.tvAvgPressure3.text = "--.-"
                 binding.tvMedTime.text = "--:--"
                 binding.tvMedCount.text = "-"

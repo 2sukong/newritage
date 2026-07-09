@@ -16,6 +16,7 @@ import com.newritage.app.util.ThreadColors
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import com.newritage.app.data.UserPreferences
 
 class SessionCompleteActivity : AppCompatActivity() {
 
@@ -37,9 +38,10 @@ class SessionCompleteActivity : AppCompatActivity() {
     private lateinit var tvStreakDays: TextView
 
     // THREAD
+    // THREAD
     private lateinit var screenThread: View
     private lateinit var tvThreadDate: TextView
-    private lateinit var threadColorView: View
+    private lateinit var threadColorView: ImageView    // View → ImageView로 변경
     private lateinit var tvTensionGauge: TextView
     private lateinit var tvKeywords: TextView
     private lateinit var tvAiFeedback: TextView
@@ -133,7 +135,8 @@ class SessionCompleteActivity : AppCompatActivity() {
 
     private fun saveSession(emotion: String) {
         val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        val colorObj = ThreadColors.assignColor(avgPressure)
+        val prefs = UserPreferences(this)
+        val colorObj = ThreadColors.assignColor(avgPressure, prefs.baselineOverall)
         assignedColor = colorObj
 
         // 키워드 추출 및 피드백 생성
@@ -192,7 +195,7 @@ class SessionCompleteActivity : AppCompatActivity() {
         val todayStr = SimpleDateFormat("yyyy년 M월 d일", Locale.getDefault()).format(Date())
         tvThreadDate.text = todayStr
         assignedColor?.let {
-            threadColorView.setBackgroundColor(Color.parseColor(it.hex))
+            threadColorView.setImageResource(it.drawableRes)
             tvTensionGauge.text = "긴장도 ${it.level}/보통"
         }
 
