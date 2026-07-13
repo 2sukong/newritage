@@ -19,9 +19,9 @@ import com.newritage.app.R
 import com.newritage.app.databinding.ActivityMeasurementBinding
 import com.newritage.app.ui.main.MainActivity
 import com.newritage.app.ui.util.WaveViewNew
-import kotlin.random.Random
 import java.text.SimpleDateFormat
 import java.util.*
+import com.newritage.app.ble.BleManager
 
 class MeasurementActivity : AppCompatActivity() {
 
@@ -106,6 +106,18 @@ class MeasurementActivity : AppCompatActivity() {
         } else {
             showWaiting()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        BleManager.onSensorData = { f0, f1, f2, total ->
+            currentPressure = total / 3f
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        BleManager.onSensorData = null
     }
 
     private fun bindViews() {
@@ -227,8 +239,7 @@ class MeasurementActivity : AppCompatActivity() {
                 elapsedSeconds++
 
                 // 압력 시뮬레이션
-                val noise = (Random.nextFloat() - 0.5f) * 7f
-                currentPressure = (currentPressure + noise).coerceIn(8f, 72f)
+
                 allPressures.add(currentPressure)
 
                 // 이탈 횟수 카운트 (>50kPa 를 '이탈'로 정의)

@@ -76,7 +76,7 @@ class WeeklyAnalysisFragment : Fragment() {
                 val count = sessions.size
 
                 binding.tvAvgPressure1.text = String.format("%.1f", avgPressure) // 주간 평균
-                binding.tvAvgPressure2.text = String.format("%.1f", minPressure) // 주간 최저
+                //binding.tvAvgPressure2.text = String.format("%.1f", minPressure) // 주간 최저
                 binding.tvAvgPressure3.text = String.format("%.1f", maxPressure) // 주간 최고
 
                 val min = totalTime / 60; val sec = totalTime % 60
@@ -102,7 +102,7 @@ class WeeklyAnalysisFragment : Fragment() {
                 binding.lineChart.invalidate()
             } else {
                 binding.tvAvgPressure1.text = "--.-"
-                binding.tvAvgPressure2.text = "--.-"
+                //binding.tvAvgPressure2.text = "--.-"
                 binding.tvAvgPressure3.text = "--.-"
                 binding.tvMedTime.text = "--:--"
                 binding.tvMedCount.text = "-"
