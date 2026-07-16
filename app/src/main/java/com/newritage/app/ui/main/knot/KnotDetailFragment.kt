@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.newritage.app.R
 import com.newritage.app.data.AppDatabase
+import com.newritage.app.data.GroqRepository
 import com.newritage.app.ui.main.knot.recommend.DiaryEntry
 import com.newritage.app.ui.main.knot.recommend.RecommendationEngine
 import kotlinx.coroutines.launch
@@ -25,6 +26,7 @@ class KnotDetailFragment : Fragment() {
 
     private var currentDate = Calendar.getInstance()
     private val dao by lazy { AppDatabase.getInstance(requireContext()).sessionDao() }
+    private val groqRepository by lazy { GroqRepository(dao) }
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     private val monthSdf = SimpleDateFormat("yyyy-MM", Locale.getDefault())
     private val displaySdf = SimpleDateFormat("yyyy년 M월", Locale.getDefault())
@@ -50,6 +52,7 @@ class KnotDetailFragment : Fragment() {
         val tvDate = view.findViewById<TextView>(R.id.tvDateDisplay)
         val tvKnotName = view.findViewById<TextView>(R.id.tvKnotNameDisplay)
         val tvDescription = view.findViewById<TextView>(R.id.tvDescriptionText)
+        val tvReason = view.findViewById<TextView>(R.id.tvKnotReason)
         val btnBack = view.findViewById<ImageButton>(R.id.btnBack)
         val btnPrev = view.findViewById<ImageButton>(R.id.btnPrevMonth)
         val btnNext = view.findViewById<ImageButton>(R.id.btnNextMonth)
@@ -65,18 +68,18 @@ class KnotDetailFragment : Fragment() {
 
         btnPrev.setOnClickListener {
             currentDate.add(Calendar.MONTH, -1)
-            loadKnotData(tvDate, tvKnotName, tvDescription)
+            loadKnotData(tvDate, tvKnotName, tvDescription, tvReason)
         }
 
         btnNext.setOnClickListener {
             currentDate.add(Calendar.MONTH, 1)
-            loadKnotData(tvDate, tvKnotName, tvDescription)
+            loadKnotData(tvDate, tvKnotName, tvDescription, tvReason)
         }
 
-        loadKnotData(tvDate, tvKnotName, tvDescription)
+        loadKnotData(tvDate, tvKnotName, tvDescription, tvReason)
     }
 
-    private fun loadKnotData(tvDate: TextView, tvKnotName: TextView, tvDescription: TextView) {
+    private fun loadKnotData(tvDate: TextView, tvKnotName: TextView, tvDescription: TextView, tvReason: TextView) {
         val yearMonth = monthSdf.format(currentDate.time)
         tvDate.text = displaySdf.format(currentDate.time)
 
@@ -89,10 +92,21 @@ class KnotDetailFragment : Fragment() {
             if (entries.isEmpty()) {
                 tvKnotName.text = getString(R.string.no_knot_yet)
                 tvDescription.text = ""
+                tvReason.visibility = View.GONE
             } else {
-                val knot = RecommendationEngine.recommendKnot(entries)
+                // 최근 30일 감정 기록으로 Groq API를 우선 시도하고, 실패 시에만 표시 중인 달 기준 로컬 추천으로 폴백한다.
+                val today = sdf.format(Date())
+                val aiResult = groqRepository.recommendKnot(today)
+                val knot = aiResult?.knot ?: RecommendationEngine.recommendKnot(entries)
                 tvKnotName.text = knot.name
                 tvDescription.text = knot.meaning
+
+                if (aiResult != null) {
+                    tvReason.text = "${getString(R.string.knot_reason_label)}\n\n${aiResult.reason}"
+                    tvReason.visibility = View.VISIBLE
+                } else {
+                    tvReason.visibility = View.GONE
+                }
             }
         }
     }

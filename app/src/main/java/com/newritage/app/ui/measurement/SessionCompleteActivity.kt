@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.newritage.app.R
 import com.newritage.app.data.AppDatabase
+import com.newritage.app.data.GroqRepository
 import com.newritage.app.data.Session
 import com.newritage.app.data.SessionDataHolder
 import com.newritage.app.data.UserPreferences
@@ -60,6 +61,7 @@ class SessionCompleteActivity : AppCompatActivity() {
     private var assignedColor: ThreadColors.ThreadColor? = null
 
     private val dao by lazy { AppDatabase.getInstance(this).sessionDao() }
+    private val groqRepository by lazy { GroqRepository(dao) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,9 +142,8 @@ class SessionCompleteActivity : AppCompatActivity() {
         val colorObj = ThreadColors.assignColor(avgPressure, baselineOverall)
         assignedColor = colorObj
 
-        // 키워드 및 랜덤 다채로운 AI 피드백 생성 (첫 번째 코드 알고리즘 이용)
+        // 키워드 추출 (AI 호출 실패 시 로컬 피드백 생성용 폴백 재료)
         val keywords = extractKeywords(emotion)
-        val feedback = generateAiFeedback(emotion, keywords)
 
         // 세밀한 센서 데이터 가공 (첫 번째 코드의 고도화된 계산 방식)
         val rawReadings = SessionDataHolder.sensorReadings
@@ -153,11 +154,18 @@ class SessionCompleteActivity : AppCompatActivity() {
 
         fun List<Float>.median() = if (isEmpty()) 0f else this[size / 2]
 
+        // 안정 상태 비율(%) — MeasurementActivity의 이탈 기준(50kPa 초과)과 동일하게 계산
+        val stableRatio = if (rawReadings.isNotEmpty()) {
+            (1f - deviationCount.toFloat() / rawReadings.size) * 100f
+        } else {
+            100f
+        }
+
         lifecycleScope.launch {
             val countToday = dao.countSessionsByDate(today)
 
-            // 상세 데이터 기반으로 세션 인스턴스 생성
-            val session = Session(
+            // 상세 데이터 기반으로 세션 인스턴스 생성 (aiFeedback은 AI 호출 결과를 받은 뒤 채운다)
+            val baseSession = Session(
                 date = today,
                 sessionIndex = countToday + 1,
                 hasThread = isFirstSessionToday, // 오늘 첫 세션일 때만 실 부여 플래그 true
@@ -187,9 +195,13 @@ class SessionCompleteActivity : AppCompatActivity() {
 
                 emotion = emotion,
                 threadColor = colorObj.hex,
-                threadColorName = colorObj.nameKr,
-                aiFeedback = feedback
+                threadColorName = colorObj.nameKr
             )
+
+            // Groq API를 우선 시도하고, 실패(키 누락/네트워크 오류 등) 시에만 로컬 템플릿으로 폴백한다.
+            val feedback = groqRepository.generateDailyFeedback(baseSession, stableRatio, rawReadings)
+                ?: generateAiFeedback(emotion, keywords)
+            val session = baseSession.copy(aiFeedback = feedback)
 
             val sessionId = dao.insert(session)
 
