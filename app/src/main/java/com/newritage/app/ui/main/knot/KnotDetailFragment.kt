@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.newritage.app.R
 import com.newritage.app.data.AppDatabase
-import com.newritage.app.data.GroqRepository
+import com.newritage.app.data.GeminiRepository
 import com.newritage.app.ui.main.knot.recommend.DiaryEntry
 import com.newritage.app.ui.main.knot.recommend.RecommendationEngine
 import kotlinx.coroutines.launch
@@ -26,7 +26,7 @@ class KnotDetailFragment : Fragment() {
 
     private var currentDate = Calendar.getInstance()
     private val dao by lazy { AppDatabase.getInstance(requireContext()).sessionDao() }
-    private val groqRepository by lazy { GroqRepository(dao) }
+    private val geminiRepository by lazy { GeminiRepository(dao) }
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     private val monthSdf = SimpleDateFormat("yyyy-MM", Locale.getDefault())
     private val displaySdf = SimpleDateFormat("yyyy년 M월", Locale.getDefault())
@@ -94,9 +94,9 @@ class KnotDetailFragment : Fragment() {
                 tvDescription.text = ""
                 tvReason.visibility = View.GONE
             } else {
-                // 최근 30일 감정 기록으로 Groq API를 우선 시도하고, 실패 시에만 표시 중인 달 기준 로컬 추천으로 폴백한다.
+                // 최근 30일 감정 기록으로 Gemini API를 우선 시도하고, 실패 시에만 표시 중인 달 기준 로컬 추천으로 폴백한다.
                 val today = sdf.format(Date())
-                val aiResult = groqRepository.recommendKnot(today)
+                val aiResult = geminiRepository.recommendKnot(today)
                 val knot = aiResult?.knot ?: RecommendationEngine.recommendKnot(entries)
                 tvKnotName.text = knot.name
                 tvDescription.text = knot.meaning

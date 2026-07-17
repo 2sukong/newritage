@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.newritage.app.R
 import com.newritage.app.data.AppDatabase
-import com.newritage.app.data.GroqRepository
+import com.newritage.app.data.GeminiRepository
 import com.newritage.app.data.Session
 import com.newritage.app.data.SessionDataHolder
 import com.newritage.app.data.UserPreferences
@@ -61,7 +61,7 @@ class SessionCompleteActivity : AppCompatActivity() {
     private var assignedColor: ThreadColors.ThreadColor? = null
 
     private val dao by lazy { AppDatabase.getInstance(this).sessionDao() }
-    private val groqRepository by lazy { GroqRepository(dao) }
+    private val geminiRepository by lazy { GeminiRepository(dao) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -198,8 +198,8 @@ class SessionCompleteActivity : AppCompatActivity() {
                 threadColorName = colorObj.nameKr
             )
 
-            // Groq API를 우선 시도하고, 실패(키 누락/네트워크 오류 등) 시에만 로컬 템플릿으로 폴백한다.
-            val feedback = groqRepository.generateDailyFeedback(baseSession, stableRatio, rawReadings)
+            // Gemini API를 우선 시도하고, 실패(키 누락/네트워크 오류 등) 시에만 로컬 템플릿으로 폴백한다.
+            val feedback = geminiRepository.generateDailyFeedback(baseSession, stableRatio, rawReadings)
                 ?: generateAiFeedback(emotion, keywords)
             val session = baseSession.copy(aiFeedback = feedback)
 

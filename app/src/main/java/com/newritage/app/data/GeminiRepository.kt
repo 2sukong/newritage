@@ -1,7 +1,7 @@
 package com.newritage.app.data
 
 import android.util.Log
-import com.newritage.app.network.GroqApi
+import com.newritage.app.network.GeminiApi
 import com.newritage.app.network.PromptBuilder
 import com.newritage.app.ui.main.knot.model.KnotInfo
 import com.newritage.app.ui.main.knot.model.KnotRepository
@@ -13,17 +13,17 @@ import java.util.Locale
 data class KnotRecommendation(val knot: KnotInfo, val reason: String)
 
 /**
- * Groq API(llama-3.1-8b-instant) 연동 저장소.
+ * Gemini API(gemini-3.5-flash) 연동 저장소.
  *
- * AI(GroqApi)는 DB에 직접 접근하지 않는다 — 이 Repository가 [sessionDao]로 필요한 데이터를 조회하고
- * [PromptBuilder]로 프롬프트를 구성한 뒤 [GroqApi]를 호출한다. API 호출이 실패하면(키 누락, 네트워크 오류,
+ * AI(GeminiApi)는 DB에 직접 접근하지 않는다 — 이 Repository가 [sessionDao]로 필요한 데이터를 조회하고
+ * [PromptBuilder]로 프롬프트를 구성한 뒤 [GeminiApi]를 호출한다. API 호출이 실패하면(키 누락, 네트워크 오류,
  * 응답 파싱 실패 등) null을 반환하므로, 호출자는 항상 API를 우선 시도하고 null일 때만 기존 로컬 로직으로
  * 폴백해야 한다.
  */
-class GroqRepository(private val sessionDao: SessionDao) {
+class GeminiRepository(private val sessionDao: SessionDao) {
 
     companion object {
-        private const val TAG = "GroqRepository"
+        private const val TAG = "GeminiRepository"
 
         /** 압력이 이 값(kPa)을 넘으면 '이탈'로 간주한다 — MeasurementActivity의 이탈 카운트 기준과 동일. */
         private const val STABLE_THRESHOLD = 50f
@@ -40,7 +40,7 @@ class GroqRepository(private val sessionDao: SessionDao) {
         readings: List<SensorReading> = emptyList()
     ): String? = runCatching {
         val (system, user) = PromptBuilder.buildDailyFeedbackPrompt(session, stableRatio, readings)
-        GroqApi.chatCompletion(system, user)
+        GeminiApi.chatCompletion(system, user)
     }.onFailure { Log.e(TAG, "일간 AI 피드백 생성 실패", it) }.getOrNull()
 
     /** [endDate](yyyy-MM-dd, 보통 오늘)로부터 최근 30일 세션을 바탕으로 월간 피드백 생성. 실패 시 null. */
@@ -53,7 +53,7 @@ class GroqRepository(private val sessionDao: SessionDao) {
             val readings = sessionDao.getReadingsInRange(startDate, endDate)
             val stableRatio = stableRatioOf(readings)
             val (system, user) = PromptBuilder.buildMonthlyFeedbackPrompt(sessions, stableRatio)
-            GroqApi.chatCompletion(system, user)
+            GeminiApi.chatCompletion(system, user)
         }.onFailure { Log.e(TAG, "월간 AI 피드백 생성 실패", it) }.getOrNull()
     }
 
@@ -67,7 +67,7 @@ class GroqRepository(private val sessionDao: SessionDao) {
 
         return runCatching {
             val (system, user) = PromptBuilder.buildKnotRecommendationPrompt(entries)
-            val raw = GroqApi.chatCompletion(system, user)
+            val raw = GeminiApi.chatCompletion(system, user)
             parseKnotRecommendation(raw)
         }.onFailure { Log.e(TAG, "매듭 추천 생성 실패", it) }.getOrNull()
     }
