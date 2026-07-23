@@ -21,6 +21,7 @@
         <activity
             android:name=".ui.onboarding.SplashActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.NewRitage.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,34 +32,40 @@
         <!-- 온보딩 -->
         <activity
             android:name=".ui.onboarding.OnboardingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <!-- 시작 페이지 (로그인 전) -->
         <activity
             android:name=".ui.auth.StartActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <!-- 로그인 -->
         <activity
             android:name=".ui.auth.LoginActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- 회원가입 -->
         <activity
             android:name=".ui.auth.SignupActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- 기준 압력 측정 (최초 1회) -->
         <activity
             android:name=".ui.baseline.BaselineMeasurementActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <!-- 메인 (하단 내비) -->
         <activity
             android:name=".ui.main.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <!-- 명상 측정 세션 -->
         <activity
@@ -69,27 +76,32 @@
         <!-- 세션 완료 (기록 + 실 제공) -->
         <activity
             android:name=".ui.measurement.SessionCompleteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <!-- 설정 -->
         <activity
             android:name=".ui.settings.SettingsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <!-- 진동 설정 -->
         <activity
             android:name=".ui.settings.VibrationSettingsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <!-- 디버그 설정 -->
         <activity
             android:name=".ui.settings.DebugSettingsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <!-- 진동 패턴 선택 -->
         <activity
             android:name=".ui.settings.VibrationListActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
     </application>
 

@@ -16,25 +16,25 @@
         android:layout_height="wrap_content"
         android:text="@string/badge_new"
         android:textColor="@color/accent_new"
-        android:textSize="9sp"
+        android:textSize="12sp"
         android:textStyle="bold"
-        android:layout_marginBottom="2dp"
+        android:layout_marginBottom="3dp"
         android:visibility="invisible" />
 
-    <!-- NEW 배지 유무와 상관없이 바깥 프레임 자리는 항상 같은 크기(74x86)로 예약해 둔다.
-         NEW가 아닐 때는 이 프레임의 배경을 비워 둬서, 상태가 바뀌어도 칸/레이아웃이
-         아래로 밀리지 않게 한다. -->
+    <!-- NEW 배지 유무와 상관없이 바깥 프레임 자리는 항상 같은 크기로 예약해 둔다(태블릿 열 너비에
+         맞춰 확대된 크기, 원본 70x82 비율 유지). NEW가 아닐 때는 이 프레임의 배경을 비워 둬서,
+         상태가 바뀌어도 칸/레이아웃이 아래로 밀리지 않게 한다. -->
     <FrameLayout
         android:id="@+id/threadNewFrame"
-        android:layout_width="70dp"
-        android:layout_height="82dp"
-        android:padding="3dp">
+        android:layout_width="100dp"
+        android:layout_height="118dp"
+        android:padding="4dp">
 
         <FrameLayout
             android:id="@+id/threadSquareFrame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="4dp">
+            android:padding="6dp">
             <ImageView
                 android:id="@+id/threadSwatch"
                 android:layout_width="match_parent"
@@ -49,8 +49,8 @@
         android:id="@+id/tvDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="11sp"
+        android:textSize="14sp"
         android:textColor="@color/text_secondary"
-        android:layout_marginTop="4dp" />
+        android:layout_marginTop="6dp" />
 
 </LinearLayout>

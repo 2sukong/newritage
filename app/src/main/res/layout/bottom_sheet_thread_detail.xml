@@ -15,16 +15,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clToolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="72dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <ImageButton
                 android:id="@+id/btnBack"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="8dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="12dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/content_desc_back"
                 android:src="@drawable/back"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/today_thread_title"
                 android:textColor="@color/text_primary"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,13 +50,13 @@
             android:id="@+id/clDateNav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="28dp"
             app:layout_constraintTop_toBottomOf="@id/clToolbar">
 
             <ImageButton
                 android:id="@+id/btnPrevDay"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/content_desc_prev"
                 android:src="@drawable/ic_arrow_left"
@@ -70,9 +70,9 @@
                 android:id="@+id/tvDateDisplay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
+                android:layout_marginHorizontal="28dp"
                 android:textColor="@color/text_primary"
-                android:textSize="17sp"
+                android:textSize="21sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btnNextDay"
                 app:layout_constraintStart_toEndOf="@id/btnPrevDay"
@@ -80,8 +80,8 @@
 
             <ImageButton
                 android:id="@+id/btnNextDay"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/content_desc_next"
                 android:src="@drawable/ic_arrow_right"
@@ -92,17 +92,17 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- 실 색상 원형 스와치 -->
+        <!-- 실 색상 원형 스와치 (태블릿 폭 활용을 위해 확대) -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvThreadCircle"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="56dp"
+            android:layout_width="340dp"
+            android:layout_height="340dp"
+            android:layout_marginTop="48dp"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="100dp"
+            app:cardCornerRadius="170dp"
             app:cardElevation="6dp"
             app:strokeColor="@color/white"
-            app:strokeWidth="6dp"
+            app:strokeWidth="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/clDateNav">
@@ -120,23 +120,23 @@
             android:id="@+id/tvThreadColorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
             android:textColor="@color/text_secondary"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cvThreadCircle" />
 
-        <!-- 그 날 작성한 일기 박스 -->
+        <!-- 그 날 작성한 일기 박스 (가독성을 위해 최대 폭을 두고 중앙 정렬) -->
         <ScrollView
             android:id="@+id/svDiary"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="64dp"
+            android:layout_marginBottom="32dp"
             android:background="@drawable/bg_detail_note"
-            android:padding="18dp"
+            android:padding="28dp"
             android:fadeScrollbars="false"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -148,9 +148,9 @@
                 android:id="@+id/tvDiary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lineSpacingExtra="4dp"
+                android:lineSpacingExtra="6dp"
                 android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
+                android:textSize="17sp" />
 
         </ScrollView>
 
@@ -158,12 +158,12 @@
             android:id="@+id/tvNoThread"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="48dp"
             android:layout_marginHorizontal="24dp"
             android:gravity="center"
             android:text="@string/no_thread_today"
             android:textColor="@color/text_hint"
-            android:textSize="14sp"
+            android:textSize="17sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

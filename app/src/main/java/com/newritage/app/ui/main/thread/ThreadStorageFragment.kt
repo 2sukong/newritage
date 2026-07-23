@@ -251,6 +251,7 @@ class ThreadStorageFragment : Fragment() {
     }
 
     private companion object {
-        const val COLUMN_COUNT = 4
+        // 태블릿 폭에 맞춰 4→6열로 늘려 매듭보관함(Adaptive Compose 그리드)과 밀도를 맞춘다.
+        const val COLUMN_COUNT = 6
     }
 }

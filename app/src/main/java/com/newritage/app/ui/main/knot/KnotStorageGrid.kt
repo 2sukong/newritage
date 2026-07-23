@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -79,12 +79,15 @@ fun KnotStorageGrid(
     modifier: Modifier = Modifier,
     onEntryClick: (String) -> Unit
 ) {
+    // Adaptive: 태블릿처럼 넓은 화면에서는 칸이 자동으로 늘어나 열이 더 많아지고,
+    // 각 칸도 fillMaxWidth로 열 너비를 그대로 채워 휴대폰 고정 크기(64dp)로 인한
+    // 빈 공간이 생기지 않는다.
     LazyVerticalGrid(
-        columns = GridCells.Fixed(4),
+        columns = GridCells.Adaptive(minSize = 120.dp),
         modifier = modifier,
         contentPadding = PaddingValues(4.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(entries, key = { it.key }) { entry ->
             KnotGridCell(
@@ -106,21 +109,23 @@ private fun KnotGridCell(
         Text(
             text = stringResource(R.string.badge_new),
             color = NEW_ACCENT_COLOR,
-            fontSize = 9.sp,
+            fontSize = 12.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = InterFontFamily,
             modifier = Modifier
-                .padding(bottom = 2.dp)
+                .padding(bottom = 3.dp)
                 .alpha(if (entry.isNew) 1f else 0f)
         )
 
         // NEW 배지 유무와 상관없이 바깥 프레임 자리는 항상 같은 크기로 예약해 둔다.
         // NEW가 아닐 때는 이 자리의 테두리 색을 투명하게만 둬서, 상태가 바뀌어도
         // 칸/레이아웃이 아래로 밀리지 않게 한다.
+        // 고정 dp 대신 fillMaxWidth+aspectRatio를 써서, Adaptive 그리드가 만든 열 너비를
+        // 그대로 채운다(원본 64:76 비율 유지) — 태블릿처럼 열이 넓어져도 칸이 따라 커진다.
         Box(
             modifier = Modifier
-                .width(64.dp + NEW_FRAME_BORDER_WIDTH * 2)
-                .height(76.dp + NEW_FRAME_BORDER_WIDTH * 2)
+                .fillMaxWidth()
+                .aspectRatio(64f / 76f)
                 .border(
                     width = NEW_FRAME_BORDER_WIDTH,
                     color = if (entry.isNew) NEW_ACCENT_COLOR else Color.Transparent,
@@ -179,10 +184,10 @@ private fun KnotGridCell(
 
         Text(
             text = entry.label,
-            fontSize = 11.sp,
+            fontSize = 14.sp,
             color = DAY_LABEL_COLOR,
             fontFamily = InterFontFamily,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(top = 6.dp)
         )
     }
 }
