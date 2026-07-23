@@ -33,6 +33,11 @@ class SessionCompleteActivity : AppCompatActivity() {
     private lateinit var prefs: UserPreferences
 
     private var assignedColor: ThreadColors.ThreadColor? = null
+    // 저장하기/건너뛰기를 중복 탭하면 saveSession()이 두 번 실행돼, 매번 새로 랜덤 배정되는
+    // 실 색상(ThreadColors.assignColor)이 뒤늦게 도착한 두 번째 호출로 덮어써진다 — 실 제공
+    // 화면을 가만히 보고 있는데 색이 갑자기 바뀌는 것처럼 보이는 원인이었다. 첫 탭 이후로는
+    // 막는다.
+    private var sessionSaveStarted = false
 
     // 세션 데이터
     private var durationSeconds = 0
@@ -90,14 +95,18 @@ class SessionCompleteActivity : AppCompatActivity() {
 
         val avgN = avgPressure.roundToInt()
         val maxN = maxPressure.roundToInt()
-        val minN = minPressure.roundToInt()
         binding.tvRecordAvgPressure.text = getString(R.string.review_tension_value_format, avgN)
-        binding.tvRecordMinMaxPressure.text = getString(R.string.review_minmax_format, maxN, minN)
+        binding.tvRecordMinMaxPressure.text = getString(R.string.review_tension_value_format, maxN)
         binding.tvRecordDeviationCount.text =
             getString(R.string.review_deviation_count_format, SessionDataHolder.vibrationCount)
     }
 
     private fun saveSession(skipEmotion: Boolean) {
+        if (sessionSaveStarted) return
+        sessionSaveStarted = true
+        binding.btnSaveRecord.isEnabled = false
+        binding.btnSkipRecord.isEnabled = false
+
         val emotion = if (skipEmotion) "" else (binding.etEmotion.text?.toString()?.trim() ?: "")
         // 시연용 가상 날짜 기준으로 실 획득/세션 날짜를 정한다(날짜를 넘기면 그날 다시 실을 얻는다).
         val today = DevClock.todayString(prefs)
@@ -173,7 +182,7 @@ class SessionCompleteActivity : AppCompatActivity() {
             val emotionComment = generateAiFeedback(emotion, keywords)
 
             runOnUiThread {
-                showSavedScreen(isFirstSession, colorObj, keywords, emotionComment)
+                showSavedScreen(isFirstSession, colorObj, emotionComment)
             }
         }
     }
@@ -185,7 +194,6 @@ class SessionCompleteActivity : AppCompatActivity() {
     private fun showSavedScreen(
         isFirstSession: Boolean,
         colorObj: ThreadColors.ThreadColor,
-        keywords: List<String>,
         emotionComment: String
     ) {
         showScreen(Screen.SAVED)
@@ -211,14 +219,14 @@ class SessionCompleteActivity : AppCompatActivity() {
             if (isFirstSession) {
                 assignedColor = colorObj
                 showScreen(Screen.THREAD)
-                showThreadProvide(keywords, emotionComment)
+                showThreadProvide(emotionComment)
             } else {
                 goHome()
             }
         }
     }
 
-    private fun showThreadProvide(keywords: List<String>, emotionComment: String) {
+    private fun showThreadProvide(emotionComment: String) {
         val color = assignedColor
         if (color != null) {
             // 단색 대신 실 색상별 사진(drawableRes)을 프레임 안에 보여준다(master와 동일).
@@ -230,9 +238,7 @@ class SessionCompleteActivity : AppCompatActivity() {
         binding.tvThreadDate.text =
             DevClock.today(prefs).format(THREAD_DATE_DISPLAY)
 
-        // 오늘의 일기에서 뽑은 감정 키워드 + 그 감정을 분석한 코멘트(master 동작 복원).
-        binding.tvKeywords.text =
-            if (keywords.isEmpty()) "" else "오늘의 키워드: ${keywords.joinToString(", ")}"
+        // 감정을 분석한 코멘트(master 동작 복원). 키워드 줄은 더 이상 보여주지 않는다.
         binding.tvEmotionComment.text = emotionComment
 
         // 매듭은 "월 단위" 보상이라 세션마다 주지 않는다. 매듭 팝업은 메인 화면에서 날짜를 넘겨

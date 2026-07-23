@@ -67,21 +67,6 @@ private val NEW_FRAME_SHAPE = RoundedCornerShape(12.dp)
 private val NEW_FRAME_BORDER_WIDTH = 3.dp
 
 /**
- * [colors]를 세로로 같은 폭씩 나눠 칠하는 하드 엣지 그라데이션. 경계에 같은 좌표에서 색이 바뀌는
- * stop 쌍을 둬서(보간 폭이 0) 매끄럽게 섞이지 않고 뚜렷한 밴드로 나뉘게 한다.
- */
-private fun hardBandedGradient(colors: List<Color>): Brush {
-    val n = colors.size
-    val stops = buildList {
-        colors.forEachIndexed { i, color ->
-            add(i.toFloat() / n to color)
-            add((i + 1).toFloat() / n to color)
-        }
-    }
-    return Brush.verticalGradient(colorStops = stops.toTypedArray())
-}
-
-/**
  * 매듭을 얻은 날짜만큼만 칸이 늘어나는 그리드. 각 칸은 회전/줌 없이 고정된 각도로만 보이므로,
  * 매번 라이브 3D를 렌더링하는 대신 흰색 재질로 미리 렌더링해 둔 정적 이미지(KnotType.thumbnailRes)에
  * 세션 실 색상을 곱연산(Modulate) 틴트해서 보여준다. 한 달치 칸이 전부 라이브 Filament 렌더러였을 때는
@@ -172,14 +157,10 @@ private fun KnotGridCell(
                             .fillMaxSize()
                             .padding(4.dp)
                     )
-                    // 색이 여럿이면 실제로 받은 색들을 하드 엣지 밴드로 이어 붙여 "섞인" 인상을 준다.
-                    // 매듭 상세보기(KnotModelViewer)의 공간 클러스터 셰이더도 색을 부드럽게 보간하지
-                    // 않고 하드 엣지로 나눠 칠하므로(KnotClusterColorMapping 참고), 그 결과와
-                    // 최대한 같은 인상을 주려면 여기서도 매끄러운 그라데이션 대신 색이 뚜렷이 구분되는
-                    // 밴드를 써야 한다 — 비슷한 색끼리 부드럽게 섞으면(예: 붉은 계열끼리) 밴드 경계가
-                    // 뭉개져 실제로 받은 색과 다른 탁한 단색처럼 보인다.
+                    // 색이 여럿이면 실제로 받은 색들을 그라데이션으로 이어 붙여 "섞인" 인상을 준다.
                     // ColorFilter.tint는 단색만 받으므로, offscreen 레이어에 그린 뒤 그 위에
-                    // Modulate 블렌드로 밴드를 곱해 넣는다(그려진 실루엣 밖은 alpha가 0이라 영향받지 않는다).
+                    // Modulate 블렌드로 그라데이션을 곱해 넣는다(그려진 실루엣 밖은 alpha가 0이라
+                    // 영향받지 않는다).
                     else -> Image(
                         painter = painterResource(entry.knotType.thumbnailRes),
                         contentDescription = null,
@@ -189,7 +170,7 @@ private fun KnotGridCell(
                             .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
                             .drawWithContent {
                                 drawContent()
-                                drawRect(brush = hardBandedGradient(tintColors), blendMode = BlendMode.Modulate)
+                                drawRect(brush = Brush.linearGradient(tintColors), blendMode = BlendMode.Modulate)
                             }
                     )
                 }

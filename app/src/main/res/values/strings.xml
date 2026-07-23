@@ -112,7 +112,6 @@
     <string name="review_row_deviation_count">안정 상태 이탈 빈도</string>
     <string name="review_deviation_count_format">%d회</string>
     <string name="review_tension_value_format">%dN</string>
-    <string name="review_minmax_format">%1$dN/%2$dN</string>
     <string name="review_time_range_format">%1$s-%2$s</string>
     <string name="review_today_emotion">오늘의 감정</string>
     <string name="review_emotion_hint">오늘 하루 무슨 일이 있었나요?</string>
