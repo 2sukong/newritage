@@ -79,11 +79,10 @@ fun KnotStorageGrid(
     modifier: Modifier = Modifier,
     onEntryClick: (String) -> Unit
 ) {
-    // Adaptive: 태블릿처럼 넓은 화면에서는 칸이 자동으로 늘어나 열이 더 많아지고,
-    // 각 칸도 fillMaxWidth로 열 너비를 그대로 채워 휴대폰 고정 크기(64dp)로 인한
-    // 빈 공간이 생기지 않는다.
+    // 휴대폰과 동일하게 4열 고정. 각 칸은 fillMaxWidth로 열 너비를 그대로 채우므로
+    // (휴대폰 고정 크기 64dp 대신) 태블릿의 넓은 4열 너비만큼 칸 자체가 커진다.
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 120.dp),
+        columns = GridCells.Fixed(4),
         modifier = modifier,
         contentPadding = PaddingValues(4.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -109,7 +108,7 @@ private fun KnotGridCell(
         Text(
             text = stringResource(R.string.badge_new),
             color = NEW_ACCENT_COLOR,
-            fontSize = 12.sp,
+            fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = InterFontFamily,
             modifier = Modifier
@@ -120,8 +119,8 @@ private fun KnotGridCell(
         // NEW 배지 유무와 상관없이 바깥 프레임 자리는 항상 같은 크기로 예약해 둔다.
         // NEW가 아닐 때는 이 자리의 테두리 색을 투명하게만 둬서, 상태가 바뀌어도
         // 칸/레이아웃이 아래로 밀리지 않게 한다.
-        // 고정 dp 대신 fillMaxWidth+aspectRatio를 써서, Adaptive 그리드가 만든 열 너비를
-        // 그대로 채운다(원본 64:76 비율 유지) — 태블릿처럼 열이 넓어져도 칸이 따라 커진다.
+        // 고정 dp 대신 fillMaxWidth+aspectRatio를 써서, 4열로 나눈 실제 열 너비를 그대로
+        // 채운다(원본 64:76 비율 유지) — 태블릿처럼 화면이 넓어지면 칸도 그만큼 커진다.
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -184,7 +183,7 @@ private fun KnotGridCell(
 
         Text(
             text = entry.label,
-            fontSize = 14.sp,
+            fontSize = 16.sp,
             color = DAY_LABEL_COLOR,
             fontFamily = InterFontFamily,
             modifier = Modifier.padding(top = 6.dp)

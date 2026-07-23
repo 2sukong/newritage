@@ -251,7 +251,8 @@ class ThreadStorageFragment : Fragment() {
     }
 
     private companion object {
-        // 태블릿 폭에 맞춰 4→6열로 늘려 매듭보관함(Adaptive Compose 그리드)과 밀도를 맞춘다.
-        const val COLUMN_COUNT = 6
+        // 휴대폰과 동일하게 4열 고정. 칸 자체는 item_calendar_cell.xml에서 비율 기반으로
+        // 커지므로, 태블릿의 넓은 4열 너비만큼 칸이 커진다.
+        const val COLUMN_COUNT = 4
     }
 }

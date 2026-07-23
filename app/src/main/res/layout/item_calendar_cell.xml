@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="1"
@@ -16,40 +17,51 @@
         android:layout_height="wrap_content"
         android:text="@string/badge_new"
         android:textColor="@color/accent_new"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         android:layout_marginBottom="3dp"
         android:visibility="invisible" />
 
-    <!-- NEW 배지 유무와 상관없이 바깥 프레임 자리는 항상 같은 크기로 예약해 둔다(태블릿 열 너비에
-         맞춰 확대된 크기, 원본 70x82 비율 유지). NEW가 아닐 때는 이 프레임의 배경을 비워 둬서,
-         상태가 바뀌어도 칸/레이아웃이 아래로 밀리지 않게 한다. -->
-    <FrameLayout
-        android:id="@+id/threadNewFrame"
-        android:layout_width="100dp"
-        android:layout_height="118dp"
-        android:padding="4dp">
+    <!-- NEW 배지 유무와 상관없이 바깥 프레임 자리는 항상 같은 크기로 예약해 둔다. 고정 dp 대신
+         ConstraintLayout의 dimensionRatio(원본 70:82 비율)로 이 칸(부모 LinearLayout의 weight=1
+         너비)을 그대로 채우게 해서, 휴대폰이든 태블릿의 넓은 4열이든 칸 너비만큼 자연스럽게
+         커진다. NEW가 아닐 때는 프레임 배경을 비워 둬서, 상태가 바뀌어도 칸이 밀리지 않게 한다. -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <FrameLayout
-            android:id="@+id/threadSquareFrame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="6dp">
-            <ImageView
-                android:id="@+id/threadSwatch"
+            android:id="@+id/threadNewFrame"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="4dp"
+            app:layout_constraintDimensionRatio="70:82"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:id="@+id/threadSquareFrame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:contentDescription="@null"
-                android:visibility="invisible" />
+                android:padding="6dp">
+                <ImageView
+                    android:id="@+id/threadSwatch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@null"
+                    android:visibility="invisible" />
+            </FrameLayout>
         </FrameLayout>
-    </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/tvDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textColor="@color/text_secondary"
         android:layout_marginTop="6dp" />
 
