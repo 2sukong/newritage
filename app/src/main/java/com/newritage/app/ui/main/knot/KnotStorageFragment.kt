@@ -10,16 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.newritage.app.R
 import com.newritage.app.data.AppDatabase
+import com.newritage.app.data.GeminiRepository
 import com.newritage.app.data.KnotType
 import com.newritage.app.data.Session
 import com.newritage.app.data.UserPreferences
 import com.newritage.app.databinding.FragmentKnotStorageBinding
-import com.newritage.app.ui.main.knot.recommend.DiaryEntry
-import com.newritage.app.ui.main.knot.recommend.RecommendationEngine
 import com.newritage.app.util.DevClock
 import com.newritage.app.util.ThreadColors
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import java.util.Calendar
 import java.util.Locale
 
@@ -30,6 +30,9 @@ class KnotStorageFragment : Fragment() {
     private var currentYear = Calendar.getInstance().get(Calendar.YEAR)
     private val entriesState = mutableStateOf<List<KnotGridEntry>>(emptyList())
     private val prefs by lazy { UserPreferences(requireContext()) }
+    private val geminiRepository by lazy {
+        GeminiRepository(AppDatabase.getInstance(requireContext()).sessionDao())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -106,18 +109,18 @@ class KnotStorageFragment : Fragment() {
             // NEW 배지는 시연용 가상 오늘 기준으로 표시한다.
             val todayStr = DevClock.todayString(requireContext())
             // 진행 중인 이번 달은 아직 "닫히지" 않았으므로 매듭을 주지 않는다 — 다음 달 1일로
-            // 날짜가 넘어가야(MainActivity.showMonthlyKnotPopup) 그 달의 매듭이 보관함에 추가된다.
+            // 날짜가 넘어가야(MainActivity의 개발자 날짜바) 그 달의 매듭이 보관함에 추가된다.
             val currentYearMonth = DevClock.yearMonthString(prefs)
 
             fun monthOf(session: Session) = session.date.substring(5, 7).toInt()
 
-            // 매듭은 월 단위로 지급되며, 그 달에 쓴 일기(emotion)들을 감정 분석해 "이달의 매듭"을
-            // 추천한다(일기가 하나도 없는 달은 칸 자체가 생기지 않는다). 아직 끝나지 않은 이번 달도
+            // 매듭은 월 단위로 지급되며, 그 달에 실을 받은 세션이 하나라도 있어야 칸이 생긴다
+            // (일기만 있고 실이 하나도 없으면 매듭을 만들지 않는다). 아직 끝나지 않은 이번 달도
             // 제외한다 — 첫 명상만으로 매듭이 바로 부여되면 안 되고, 달이 넘어가야 부여된다.
-            val emotionByMonth: Map<Int, List<Session>> = sessions
-                .filter { it.emotion.isNotBlank() }
+            val activeMonths: Map<Int, List<Session>> = sessions
                 .filter { String.format(Locale.getDefault(), "%04d-%02d", currentYear, monthOf(it)) != currentYearMonth }
                 .groupBy(::monthOf)
+                .filterValues { list -> list.any { it.threadColor.isNotBlank() } }
 
             // 틴트 색상은 그 달에 실을 받은(threadColor가 있는) 세션 전체에서 실제로 받은 색만 모아
             // 냉색→온색 순으로 정렬한 리스트다. 상세보기(KnotDetailBottomSheetDialog)의 3D 모델이 그 달
@@ -130,19 +133,29 @@ class KnotStorageFragment : Fragment() {
                 .groupBy(::monthOf)
                 .mapValues { (_, list) -> ThreadColors.spectrumSortedDistinct(list.map { it.threadColor }) }
 
-            entriesState.value = emotionByMonth.entries
-                .sortedBy { it.key }
-                .map { (month, monthSessions) ->
-                    val yearMonth = String.format(Locale.getDefault(), "%04d-%02d", currentYear, month)
-                    val diaryEntries = monthSessions.map {
-                        DiaryEntry(date = LocalDate.parse(it.date), content = it.emotion)
+            // 매듭은 그 달이 처음 닫힐 때 한 번만 정해져 DB(monthly_knots)에 고정 저장된다 — 상세보기와
+            // 같은 로직(GeminiRepository.resolveMonthlyKnot)을 써서 그리드와 상세가 항상 같은 매듭을
+            // 보여주고, 다시 열어도 매듭 종류가 바뀌지 않는다.
+            val monthlyKnotDao = db.monthlyKnotDao()
+            val resolvedByMonth = coroutineScope {
+                activeMonths.keys.associateWith { month ->
+                    async {
+                        val yearMonth = String.format(Locale.getDefault(), "%04d-%02d", currentYear, month)
+                        geminiRepository.resolveMonthlyKnot(monthlyKnotDao, yearMonth)
                     }
-                    val recommendedKnot = RecommendationEngine.recommendKnot(diaryEntries)
+                }.mapValues { it.value.await() }
+            }
+
+            entriesState.value = activeMonths.entries
+                .sortedBy { it.key }
+                .mapNotNull { (month, monthSessions) ->
+                    val resolved = resolvedByMonth[month] ?: return@mapNotNull null
+                    val yearMonth = String.format(Locale.getDefault(), "%04d-%02d", currentYear, month)
                     val latestSession = monthSessions.maxByOrNull { it.date }!!
                     KnotGridEntry(
                         key = yearMonth,
                         label = getString(R.string.month_number_format, month),
-                        knotType = KnotType.fromRecommendationId(recommendedKnot.id),
+                        knotType = resolved.knotType,
                         tintColorHexes = threadColorByMonth[month] ?: emptyList(),
                         isNew = latestSession.date == todayStr
                     )

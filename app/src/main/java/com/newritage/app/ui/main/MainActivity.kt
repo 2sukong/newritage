@@ -14,13 +14,11 @@ import androidx.lifecycle.lifecycleScope
 import com.newritage.app.R
 import com.newritage.app.ble.BleManager
 import com.newritage.app.data.AppDatabase
-import com.newritage.app.data.KnotType
+import com.newritage.app.data.GeminiRepository
 import com.newritage.app.data.UserPreferences
 import com.newritage.app.databinding.ActivityMainBinding
 import com.newritage.app.ui.main.analysis.AnalysisFragment
 import com.newritage.app.ui.main.knot.KnotStorageFragment
-import com.newritage.app.ui.main.knot.recommend.DiaryEntry
-import com.newritage.app.ui.main.knot.recommend.RecommendationEngine
 import com.newritage.app.ui.main.thread.ThreadStorageFragment
 import com.newritage.app.ui.measurement.KnotCreatedDialog
 import com.newritage.app.ui.measurement.MeasurementActivity
@@ -110,22 +108,30 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    /** [completedMonthDate]가 속한 달의 일기(emotion)를 분석해 그 달의 매듭을 팝업으로 보여준다. */
+    /**
+     * [completedMonthDate]가 속한 달의 매듭을 (다시) 정해서 팝업으로 보여준다. 이 달의 매듭은
+     * 지금 실 데이터를 기준으로 강제로 새로 계산하고(개발자 날짜바로 그 달을 여러 번 "닫을" 수도
+     * 있어 매번 최신 데이터를 반영해야 한다), 이보다 나중 달에 예전 타임라인에서 이미 정해져 있던
+     * 매듭은 전부 지운다 — 디버깅 중 날짜를 되돌렸다 다시 감으면, 그 뒤로 원래 있던 미래 달의
+     * 매듭은 더 이상 유효하지 않고 각자의 달로 다시 넘어갈 때 새로 정해져야 하기 때문이다. 실(스레드)
+     * 데이터는 전혀 건드리지 않는다 — 매듭 배정 기록만 지웠다 다시 계산한다.
+     * 그 달에 실을 하나도 안 받았으면(일기만 있어도) 매듭을 만들지 않고 팝업도 띄우지 않는다.
+     */
     private fun showMonthlyKnotPopup(completedMonthDate: LocalDate) {
         lifecycleScope.launch {
             val yearMonth = completedMonthDate.format(DEV_MONTH)
-            val dao = AppDatabase.getInstance(this@MainActivity).sessionDao()
-            val diaryEntries = dao.getSessionsByMonth(yearMonth)
-                .filter { it.emotion.isNotBlank() }
-                .map { DiaryEntry(LocalDate.parse(it.date), it.emotion) }
-            val knotType = if (diaryEntries.isNotEmpty()) {
-                KnotType.fromRecommendationId(RecommendationEngine.recommendKnot(diaryEntries).id)
-            } else {
-                KnotType.forDate("$yearMonth-01")
+            val db = AppDatabase.getInstance(this@MainActivity)
+            val monthlyKnotDao = db.monthlyKnotDao()
+            val geminiRepository = GeminiRepository(db.sessionDao())
+
+            monthlyKnotDao.deleteAfter(yearMonth)
+            val resolved = geminiRepository.reassignMonthlyKnot(monthlyKnotDao, yearMonth)
+
+            if (resolved != null) {
+                KnotCreatedDialog(this@MainActivity, resolved.knotType) {
+                    binding.bottomNav.selectedItemId = R.id.nav_knot
+                }.show()
             }
-            KnotCreatedDialog(this@MainActivity, knotType) {
-                binding.bottomNav.selectedItemId = R.id.nav_knot
-            }.show()
         }
     }
 

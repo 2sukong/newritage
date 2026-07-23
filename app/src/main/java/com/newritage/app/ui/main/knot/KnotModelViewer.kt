@@ -48,9 +48,17 @@ fun knotTintColorOrNull(hex: String): Color? {
  * 매듭별 3D 뷰어 초기 정렬 보정값.
  * @param rotationY 기본 회전(x=-90) 위에 더할 Y축 회전(도). 원본이 뒤를 보고 있는 매듭은 180을 줘 정면을 맞춘다.
  * @param scaleMul  scaleToUnits 기준 크기 배율. 1.0이 기본이고 살짝 키우고 싶은 매듭만 올린다.
+ * @param centerOffsetX/Y ModelNode의 centerOrigin에 더할 보정값(-1~1, 바운딩 박스 반폭 기준 비율).
+ *   메쉬의 기하학적 중심(bbox 중심)과 사람 눈에 보이는 "무게 중심"이 살짝 어긋나는 매듭만 채운다.
+ *   X는 +가 오른쪽/-가 왼쪽, Y는 +가 위/-가 아래로 이동한다.
  * 값들은 실기기에서 눈으로 보며 조정한다(3D SurfaceView는 캡처가 안 돼 자동 검증이 불가).
  */
-private data class KnotViewAdjust(val rotationY: Float = 0f, val scaleMul: Float = 1f)
+private data class KnotViewAdjust(
+    val rotationY: Float = 0f,
+    val scaleMul: Float = 1f,
+    val centerOffsetX: Float = 0f,
+    val centerOffsetY: Float = 0f
+)
 
 private fun knotViewAdjustFor(assetPath: String): KnotViewAdjust {
     return when (assetPath.substringAfterLast('/').removeSuffix(".glb")) {
@@ -62,7 +70,9 @@ private fun knotViewAdjustFor(assetPath: String): KnotViewAdjust {
         // 위치는 좋고 크기만 10%가량 키움
         "maehwa" -> KnotViewAdjust(scaleMul = 1.1f)
         "saengjjok" -> KnotViewAdjust(scaleMul = 1.1f)
-        // dorae, nabi, byeongari, gajibangseok: 기본값
+        // bbox 중심이 살짝 오른쪽 아래로 치우쳐 있어 왼쪽 위로 살짝 당겨 정중앙에 맞춘다.
+        "dorae" -> KnotViewAdjust(centerOffsetX = -0.08f, centerOffsetY = 0.08f)
+        // nabi, byeongari, gajibangseok: 기본값
         else -> KnotViewAdjust()
     }
 }
@@ -249,7 +259,7 @@ fun KnotModelViewer(
                     modelInstance = modelInstance,
                     autoAnimate = false,
                     scaleToUnits = adjust.scaleMul,
-                    centerOrigin = Position(0f, 0f, 0f)
+                    centerOrigin = Position(adjust.centerOffsetX, adjust.centerOffsetY, 0f)
                 ).apply {
                     rotation = Rotation(
                         x = modelRotation.x,

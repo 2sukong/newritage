@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.newritage.app.R
 import com.newritage.app.data.AppDatabase
+import com.newritage.app.data.Session
 import com.newritage.app.data.UserPreferences
 import com.newritage.app.databinding.FragmentThreadStorageBinding
 import com.newritage.app.ui.util.GradientBorderDrawable
@@ -76,12 +77,12 @@ class ThreadStorageFragment : Fragment() {
             val db = AppDatabase.getInstance(requireContext())
             val sessions = db.sessionDao().getSessionsByMonth(yearMonth)
             // 실은 하루 첫 세션(hasThread=true)에만 부여됨
-            val colorMap = sessions.filter { it.hasThread }.associate { it.date to it.threadColor }
+            val colorMap = sessions.filter { it.hasThread }.associateBy { it.date }
             renderCalendar(colorMap)
         }
     }
 
-    private fun renderCalendar(colorMap: Map<String, String>) {
+    private fun renderCalendar(colorMap: Map<String, Session>) {
         val grid = binding.calendarGrid
         grid.removeAllViews()
 
@@ -100,7 +101,7 @@ class ThreadStorageFragment : Fragment() {
 
         for (day in 1..daysInMonth) {
             val dateStr = "$yearMonthStr-${String.format("%02d", day)}"
-            val threadColor = colorMap[dateStr] ?: continue // 실을 얻지 못한 날은 칸 자체를 만들지 않는다.
+            val session = colorMap[dateStr] ?: continue // 실을 얻지 못한 날은 칸 자체를 만들지 않는다.
 
             if (columnInRow == 0) {
                 currentRow = newGridRow()
@@ -137,13 +138,18 @@ class ThreadStorageFragment : Fragment() {
             )
 
             // 실을 받을 때(SessionCompleteActivity)/상세보기(ThreadDetailBottomSheetDialog)와 완전히
-            // 같은 사진 리소스를 보여준다 — 예전엔 hex로 그린 단색 사각형을 썼는데, 실제로 받은
-            // 실 사진과 색감이 달라 보여서(매치가 안 됨) 같은 drawable로 통일한다.
-            val threadOption = ThreadColors.findByHex(threadColor)
+            // 같은 사진 리소스를 보여준다. hex가 아니라 색 이름(threadColorName)으로 찾는다 —
+            // ThreadColors 팔레트의 hex 값은 색상표 보정 등으로 나중에 바뀔 수 있지만(실제로 한 번
+            // 바뀌었었다), 이름("옥색" 등)은 바뀌지 않으므로 예전에 저장된 실도 항상 정확한 사진과
+            // 매칭된다. 혹시 이름이 비어 있는 아주 오래된 기록만 hex로 한 번 더 시도한다.
+            val threadOption = ThreadColors.findByColorName(session.threadColorName)
+                ?: ThreadColors.findByHex(session.threadColor)
+            threadSwatch.background = null
             if (threadOption != null) {
                 threadSwatch.setImageResource(threadOption.drawableRes)
                 threadSwatch.visibility = View.VISIBLE
             } else {
+                threadSwatch.setImageDrawable(null)
                 threadSwatch.visibility = View.INVISIBLE
             }
 

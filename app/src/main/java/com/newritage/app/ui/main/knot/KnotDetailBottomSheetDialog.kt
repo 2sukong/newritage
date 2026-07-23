@@ -14,18 +14,15 @@ import com.newritage.app.R
 import com.newritage.app.data.AppDatabase
 import com.newritage.app.data.GeminiRepository
 import com.newritage.app.data.KnotType
+import com.newritage.app.data.ResolvedKnot
 import com.newritage.app.databinding.BottomSheetKnotDetailBinding
-import com.newritage.app.ui.main.knot.model.KnotInfo
 import com.newritage.app.ui.main.knot.model.KnotRepository
-import com.newritage.app.ui.main.knot.recommend.DiaryEntry
-import com.newritage.app.ui.main.knot.recommend.RecommendationEngine
 import com.newritage.app.ui.util.configureFixedHeightSheet
 import com.newritage.app.ui.util.setNavArrowEnabled
 import com.newritage.app.util.DevClock
 import com.newritage.app.util.ThreadColors
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -53,6 +50,7 @@ class KnotDetailBottomSheetDialog(
 
     private lateinit var binding: BottomSheetKnotDetailBinding
     private val dao by lazy { AppDatabase.getInstance(hostActivity).sessionDao() }
+    private val monthlyKnotDao by lazy { AppDatabase.getInstance(hostActivity).monthlyKnotDao() }
     private val geminiRepository by lazy { GeminiRepository(dao) }
     private val yearMonthSdf = SimpleDateFormat("yyyy-MM", Locale.getDefault())
     private val displaySdf = SimpleDateFormat("yyyy년 M월", Locale.getDefault())
@@ -150,19 +148,20 @@ class KnotDetailBottomSheetDialog(
         val generation = ++loadGeneration
 
         hostActivity.lifecycleScope.launch {
-            // 그 달에 쓴 일기(emotion)들을 감정 분석해 "이달의 매듭"을 추천한다
-            // (KnotStorageFragment의 연도 그리드와 동일한 기준).
-            val allMonthSessions = dao.getSessionsByMonth(yearMonth)
-            val monthSessions = allMonthSessions.filter { it.emotion.isNotBlank() }
-            val latestSession = monthSessions.maxByOrNull { it.date }
-            // 진행 중인 이번 달은 아직 닫히지 않아 매듭이 없다(KnotStorageFragment 그리드와 동일한 기준) —
-            // 화살표로 넘어와도 다음 달 1일 전까지는 "아직 없음"으로 보여준다.
+            // 진행 중인 이번 달은 아직 닫히지 않아 매듭이 없다(KnotStorageFragment 그리드와 동일한
+            // 기준) — 화살표로 넘어와도 다음 달 1일 전까지는 "아직 없음"으로 보여준다.
             val isCurrentUnclosedMonth = yearMonth == DevClock.yearMonthString(hostActivity)
+            // 매듭은 그 달이 처음 닫힐 때 딱 한 번만 정해지고 DB(monthly_knots)에 고정 저장된다 —
+            // 다시 열어도 다시 계산하지 않으므로 매듭 종류가 바뀌지 않는다.
+            val resolved = if (isCurrentUnclosedMonth) {
+                null
+            } else {
+                geminiRepository.resolveMonthlyKnot(monthlyKnotDao, yearMonth)
+            }
+            if (generation != loadGeneration) return@launch
 
-            if (latestSession != null && !isCurrentUnclosedMonth) {
-                val diaryEntries = monthSessions.map {
-                    DiaryEntry(date = LocalDate.parse(it.date), content = it.emotion)
-                }
+            if (resolved != null) {
+                val allMonthSessions = dao.getSessionsByMonth(yearMonth)
                 // 그 달에 실을 받은(threadColor가 있는) 세션 전체 — 2순위(공간 클러스터링) 색 배열의
                 // 입력이다. 일기 유무와 무관하게 그 달 전체 세션을 보므로, 일기를 건너뛴 날에 받은 실
                 // 색도 반영된다.
@@ -171,18 +170,10 @@ class KnotDetailBottomSheetDialog(
                 // 3순위 폴백용 단색: 위 리스트가 비었을 때(그 달에 실 데이터가 아직 없을 때)만 쓰인다.
                 val latestThreadColorHex = monthThreadColorSessions.maxByOrNull { it.date }?.threadColor
 
-                // Gemini API로 바로 추천을 요청한다(로컬 추천을 먼저 보여줬다가 API 응답이 오면
-                // 다른 매듭으로 바뀌는 게 "매듭이 계속 바뀐다"는 혼란을 줘서, 화면에는 API 결과
-                // 하나만 보여준다). 실패했을 때만 로컬 추천(RecommendationEngine)으로 폴백한다.
-                val todayStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-                val aiResult = geminiRepository.recommendKnot(todayStr)
-                if (generation != loadGeneration) return@launch
+                renderKnot(resolved, monthlyThreadColorHexes, latestThreadColorHex)
 
-                val recommendedKnot = aiResult?.knot ?: RecommendationEngine.recommendKnot(diaryEntries)
-                renderKnot(recommendedKnot, monthlyThreadColorHexes, latestThreadColorHex)
-
-                if (aiResult != null) {
-                    binding.tvKnotReason.text = aiResult.reason
+                if (resolved.reason != null) {
+                    binding.tvKnotReason.text = resolved.reason
                     binding.tvKnotReason.visibility = View.VISIBLE
                 } else {
                     binding.tvKnotReason.visibility = View.GONE
@@ -198,17 +189,16 @@ class KnotDetailBottomSheetDialog(
 
     /** 매듭 이름·의미·3D 모델을 렌더링한다(추천 이유는 별도로 [loadKnotData]에서 채운다). */
     private fun renderKnot(
-        knot: KnotInfo,
+        resolved: ResolvedKnot,
         monthlyThreadColorHexes: List<String>,
-        latestThreadColorHex: String?,
-        knotType: KnotType = KnotType.fromRecommendationId(knot.id)
+        latestThreadColorHex: String?
     ) {
-        binding.tvKnotNameDisplay.text = knot.name
-        binding.tvDescriptionText.text = knot.meaning
+        binding.tvKnotNameDisplay.text = resolved.name
+        binding.tvDescriptionText.text = resolved.meaning
         // 상세보기: 위치 이동(pan)은 막고 회전(orbit)만 가능하게 한다.
         binding.knotComposeViewer.setContent {
             KnotModelViewer(
-                glbAssetPath = knotType.assetPath,
+                glbAssetPath = resolved.knotType.assetPath,
                 interactive = true,
                 tintColor = latestThreadColorHex?.let { knotTintColorOrNull(it) },
                 monthlyThreadColorHexes = monthlyThreadColorHexes,

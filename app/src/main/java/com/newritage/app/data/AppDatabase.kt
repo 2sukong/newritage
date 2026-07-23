@@ -6,13 +6,14 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
-    entities = [Session::class, SensorReading::class],
-    version = 4,
+    entities = [Session::class, SensorReading::class, MonthlyKnot::class],
+    version = 5,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun sessionDao(): SessionDao
+    abstract fun monthlyKnotDao(): MonthlyKnotDao
 
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null
@@ -65,10 +66,25 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `monthly_knots` (
+                        `yearMonth` TEXT NOT NULL,
+                        `knotTypeName` TEXT NOT NULL,
+                        `reason` TEXT NOT NULL,
+                        PRIMARY KEY(`yearMonth`)
+                    )
+                    """.trimIndent()
+                )
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "newritage_db")
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
                     .fallbackToDestructiveMigration()
                     .build().also { INSTANCE = it }
             }
