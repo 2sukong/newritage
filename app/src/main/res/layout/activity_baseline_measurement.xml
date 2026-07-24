@@ -91,11 +91,13 @@
 
         <!-- 측정 화면의 gaugeCircleContainer와 정확히 같은 위치가 되도록 parent 기준
              packed 체인(원+시작하기 버튼)으로 배치한다. 위쪽 안내 카드/도움말 텍스트는
-             이 체인에 관여하지 않고 원 위쪽 남는 공간에서 별도로 배치된다. -->
+             이 체인에 관여하지 않고 원 위쪽 남는 공간에서 별도로 배치된다.
+             다른 화면들(메인/측정/기록 완료)과 동일한 340dp로 맞춰 크기가 어긋나 보이지
+             않게 한다. -->
         <FrameLayout
             android:id="@+id/guideCircleReady"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
+            android:layout_width="340dp"
+            android:layout_height="340dp"
             android:background="@drawable/bg_circle_white_shadow"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/btnStartMeasure"
@@ -178,8 +180,8 @@
 
         <FrameLayout
             android:id="@+id/gaugeCircleContainer"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
+            android:layout_width="340dp"
+            android:layout_height="340dp"
             android:background="@drawable/bg_gauge_shadow_base"
             android:elevation="6dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -269,8 +271,8 @@
 
         <FrameLayout
             android:id="@+id/gaugeCircleComplete"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
+            android:layout_width="340dp"
+            android:layout_height="340dp"
             android:background="@drawable/bg_circle_white_shadow"
             android:elevation="6dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -311,10 +313,12 @@
             app:cornerRadius="16dp"
             android:stateListAnimator="@null"
             android:elevation="4dp"
+            android:layout_marginTop="44dp"
             android:layout_marginBottom="80dp"
 
             app:layout_constraintHorizontal_bias="0.5"
 
+            app:layout_constraintTop_toBottomOf="@id/gaugeCircleComplete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
