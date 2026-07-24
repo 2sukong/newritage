@@ -70,8 +70,12 @@ private fun knotViewAdjustFor(assetPath: String): KnotViewAdjust {
         // 위치는 좋고 크기만 10%가량 키움
         "maehwa" -> KnotViewAdjust(scaleMul = 1.1f)
         "saengjjok" -> KnotViewAdjust(scaleMul = 1.1f)
-        // bbox 중심이 살짝 오른쪽 아래로 치우쳐 있어 왼쪽 위로 살짝 당겨 정중앙에 맞춘다.
-        "dorae" -> KnotViewAdjust(centerOffsetX = -0.08f, centerOffsetY = 0.08f)
+        // bbox 중심(로컬 center=[0.0217, 0.0010, -0.0335], halfExtent=[0.0400, 0.0344, 0.0932],
+        // 실기기 로그로 측정)이 원점에서 크게 벗어나 있어, 회전축이 모델 왼쪽 가장자리 쪽으로
+        // 밀려 보였다. 이 매듭은 modelRotation.x=-90°가 걸려 있어 로컬 Y/Z가 화면 Y/(깊이)로
+        // 맞바뀐다 — 그래서 화면상 세로 보정(centerOffsetY)에는 bbox의 Y가 아니라 Z 성분을 쓴다.
+        // centerOffsetX = -center.x / (2*halfExtent.x), centerOffsetY = -center.z / (2*halfExtent.y).
+        "dorae" -> KnotViewAdjust(centerOffsetX = -0.2707f, centerOffsetY = 0.4875f)
         // nabi, byeongari, gajibangseok: 기본값
         else -> KnotViewAdjust()
     }
