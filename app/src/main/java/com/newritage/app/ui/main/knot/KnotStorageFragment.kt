@@ -17,6 +17,7 @@ import com.newritage.app.data.UserPreferences
 import com.newritage.app.databinding.FragmentKnotStorageBinding
 import com.newritage.app.util.DevClock
 import com.newritage.app.util.ThreadColors
+import com.newritage.app.util.applyCalendarFrameBorderPadding
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -43,6 +44,8 @@ class KnotStorageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.knotFrameContainer.applyCalendarFrameBorderPadding()
 
         binding.knotComposeGrid.setViewCompositionStrategy(
             ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed

@@ -51,21 +51,22 @@
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/threadFrameContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/calender_frame"
-        android:padding="16dp">
+        android:background="@drawable/calender_frame">
 
-        <!-- 매듭보관함(Compose)의 프레임 padding(16dp) 위에 한 겹 더 padding(16dp)을 두는
-             중첩 구조와 동일하게 맞춰, 프레임 테두리부터 첫 칸까지의 여백이 두 보관함에서 같다. -->
+        <!-- padding은 calender_frame 이미지의 실제 렌더링 크기에 비례해 코드에서
+             계산해 적용한다(FrameBorderPadding.kt) — 고정 dp로는 화면 폭에 따라
+             테두리 두께가 달라지는 이 배경 이미지에 맞출 수 없다. 매듭보관함과 반드시
+             동일한 비율을 써야 두 보관함의 테두리~첫 칸 여백이 같다. -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
             <ScrollView
                 android:layout_width="match_parent"

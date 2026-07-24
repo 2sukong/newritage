@@ -20,6 +20,7 @@ import com.newritage.app.databinding.FragmentThreadStorageBinding
 import com.newritage.app.ui.util.GradientBorderDrawable
 import com.newritage.app.util.DevClock
 import com.newritage.app.util.ThreadColors
+import com.newritage.app.util.applyCalendarFrameBorderPadding
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -42,6 +43,8 @@ class ThreadStorageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.threadFrameContainer.applyCalendarFrameBorderPadding()
 
         binding.btnPrevMonth.setOnClickListener {
             currentCalendar.add(Calendar.MONTH, -1)

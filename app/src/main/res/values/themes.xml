@@ -9,6 +9,23 @@
         <item name="android:statusBarColor">@color/background</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:fontFamily">@font/inter</item>
+        <item name="bottomSheetStyle">@style/Widget.NewRitage.BottomSheet.FullWidth</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.NewRitage.BottomSheetDialog</item>
+    </style>
+
+    <!-- Widget.MaterialComponents.BottomSheet가 android:maxWidth=640dp를 강제해서, 태블릿처럼
+         화면이 640dp보다 넓으면 시트가 중앙에 좁게 뜨고 양옆으로 블러 배경이 드러난다.
+         휴대폰과 동일하게 항상 화면 전체 폭을 채우도록 그 제한을 없앤다. -->
+    <style name="Widget.NewRitage.BottomSheet.FullWidth" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="android:maxWidth">10000dp</item>
+    </style>
+
+    <!-- BottomSheetDialog(context)는 앱 테마의 bottomSheetStyle이 아니라 이 bottomSheetDialogTheme
+         속성을 통해 스타일을 찾는다 — Theme.NewRitage에 bottomSheetStyle만 넣어서는 실/매듭 상세
+         바텀시트(ThreadDetailBottomSheetDialog, KnotDetailBottomSheetDialog)에 전혀 적용되지
+         않았다. 위 FullWidth 스타일을 여기서도 명시해 실제로 적용되게 한다. -->
+    <style name="ThemeOverlay.NewRitage.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.NewRitage.BottomSheet.FullWidth</item>
     </style>
 
     <style name="Theme.NewRitage.Splash" parent="Theme.MaterialComponents.Light.NoActionBar">

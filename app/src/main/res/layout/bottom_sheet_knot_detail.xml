@@ -100,8 +100,6 @@
             android:layout_width="340dp"
             android:layout_height="340dp"
             android:layout_marginTop="48dp"
-            android:background="@drawable/frame"
-            android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/clMonthSelection">
@@ -109,7 +107,20 @@
             <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/knotComposeViewer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_margin="16dp" />
+
+            <!-- frame을 배경이 아닌 최상단 레이어로 둔다: 매듭 렌더링(Scene)이 회전 중
+                 프레임 안쪽 가장자리까지 그려지면서 배경으로 깔린 frame의 테두리를
+                 가려 잘려 보이던 문제를 막는다. clickable/focusable을 켜지 않아 터치를
+                 소비하지 않으므로, 아래 knotComposeViewer의 회전 제스처는 그대로 통과된다. -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/frame"
+                android:clickable="false"
+                android:focusable="false"
+                android:importantForAccessibility="no" />
 
         </FrameLayout>
 

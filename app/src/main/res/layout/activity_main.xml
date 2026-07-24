@@ -91,7 +91,7 @@
                     android:textSize="17sp"
                     android:textColor="@color/text_add"
                     android:lineSpacingExtra="4dp"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
                     android:layout_marginTop="20dp"
