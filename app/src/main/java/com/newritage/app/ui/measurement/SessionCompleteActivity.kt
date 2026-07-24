@@ -107,6 +107,12 @@ class SessionCompleteActivity : AppCompatActivity() {
         binding.btnSaveRecord.isEnabled = false
         binding.btnSkipRecord.isEnabled = false
 
+        // Gemini API 응답을 기다리는 동안 RECORD 화면이 버튼만 비활성화된 채 몇 초간 멈춰
+        // 있는 것처럼 보였다 — 데이터 저장을 기다렸다가 SAVED 화면(원 채워지는 애니메이션)으로
+        // 넘어가는 대신, 애니메이션을 먼저 띄우고 그 위에서 저장 작업을 병렬로 진행한다.
+        startSavedScreenAnimation()
+        val savedScreenStartMillis = System.currentTimeMillis()
+
         val emotion = if (skipEmotion) "" else (binding.etEmotion.text?.toString()?.trim() ?: "")
         // 시연용 가상 날짜 기준으로 실 획득/세션 날짜를 정한다(날짜를 넘기면 그날 다시 실을 얻는다).
         val today = DevClock.todayString(prefs)
@@ -182,20 +188,25 @@ class SessionCompleteActivity : AppCompatActivity() {
             val emotionComment = generateAiFeedback(emotion, keywords)
 
             runOnUiThread {
-                showSavedScreen(isFirstSession, colorObj, emotionComment)
+                // 애니메이션이 너무 순식간에 지나가면 어색해 보이므로, 저장 작업이 이미 끝났더라도
+                // 애니메이션이 최소 노출 시간(SAVED_SCREEN_DURATION_MS)을 채울 때까지는 기다렸다가
+                // 다음 화면으로 넘어간다. 반대로 저장이 그보다 오래 걸렸다면 끝나는 즉시 넘어간다.
+                val elapsed = System.currentTimeMillis() - savedScreenStartMillis
+                val remaining = (SAVED_SCREEN_DURATION_MS - elapsed).coerceAtLeast(0L)
+                lifecycleScope.launch {
+                    delay(remaining)
+                    advanceAfterSave(isFirstSession, colorObj, emotionComment)
+                }
             }
         }
     }
 
     /**
-     * 저장 직후 몇 초간 보여주는 애니메이션 화면. 컵에 물이 차오르듯 WaveView를 0에서부터
-     * 채우고, 그 뒤로는 사용자 조작 없이 자동으로 다음 화면(실 제공 또는 메인)으로 넘어간다.
+     * 저장 작업을 시작함과 동시에 띄우는 애니메이션 화면. 컵에 물이 차오르듯 WaveView를
+     * 0에서부터 채운다 — 실제 저장(Gemini API 응답 등)이 끝나길 기다렸다가 보여주는 게 아니라,
+     * saveSession()이 시작되자마자 바로 띄워서 저장 작업과 병렬로 진행되게 한다.
      */
-    private fun showSavedScreen(
-        isFirstSession: Boolean,
-        colorObj: ThreadColors.ThreadColor,
-        emotionComment: String
-    ) {
+    private fun startSavedScreenAnimation() {
         showScreen(Screen.SAVED)
 
         binding.waveViewSaved.setWaveStyle(WaveStyle.COMPLETE)
@@ -213,16 +224,20 @@ class SessionCompleteActivity : AppCompatActivity() {
             val totalDays = dao.getTotalActiveDays()
             binding.tvStreakDays.text = getString(R.string.streak_record_format, totalDays)
         }
+    }
 
-        lifecycleScope.launch {
-            delay(SAVED_SCREEN_DURATION_MS)
-            if (isFirstSession) {
-                assignedColor = colorObj
-                showScreen(Screen.THREAD)
-                showThreadProvide(emotionComment)
-            } else {
-                goHome()
-            }
+    /** SAVED 애니메이션 노출이 끝난 뒤, 사용자 조작 없이 자동으로 다음 화면(실 제공 또는 메인)으로 넘어간다. */
+    private fun advanceAfterSave(
+        isFirstSession: Boolean,
+        colorObj: ThreadColors.ThreadColor,
+        emotionComment: String
+    ) {
+        if (isFirstSession) {
+            assignedColor = colorObj
+            showScreen(Screen.THREAD)
+            showThreadProvide(emotionComment)
+        } else {
+            goHome()
         }
     }
 
