@@ -67,6 +67,17 @@ private val NEW_FRAME_SHAPE = RoundedCornerShape(12.dp)
 private val NEW_FRAME_BORDER_WIDTH = 3.dp
 
 /**
+ * 상세보기(KnotModelViewer)는 이 4종 매듭의 원본 모델이 뒤를 보고 있어 rotationY=180°를 적용해
+ * 정면을 보이게 보정한다(KnotModelViewer.kt의 knotViewAdjustFor 참고). 하지만 그리드 썸네일
+ * (thumbnailRes)은 그 보정이 있기 전에 원본 방향으로 미리 렌더링해 둔 정적 이미지라, 상세보기와
+ * 180도 어긋나 보였다. Y축 180° 회전은 정면 카메라 기준으로 좌우가 뒤집힌 실루엣과 같으므로
+ * (x,y,z) -> (-x,y,-z), 이미지를 다시 렌더링하는 대신 좌우 반전(scaleX=-1)으로 맞춘다.
+ */
+private val HORIZONTALLY_FLIPPED_KNOT_TYPES = setOf(
+    KnotType.GARAKJI, KnotType.GUKHWA, KnotType.SAMJEONGJA, KnotType.ANGYEONG
+)
+
+/**
  * 매듭을 얻은 날짜만큼만 칸이 늘어나는 그리드. 각 칸은 회전/줌 없이 고정된 각도로만 보이므로,
  * 매번 라이브 3D를 렌더링하는 대신 흰색 재질로 미리 렌더링해 둔 정적 이미지(KnotType.thumbnailRes)에
  * 세션 실 색상을 곱연산(Modulate) 틴트해서 보여준다. 한 달치 칸이 전부 라이브 Filament 렌더러였을 때는
@@ -143,6 +154,7 @@ private fun KnotGridCell(
                     )
             ) {
                 val tintColors = entry.tintColorHexes.mapNotNull { knotTintColorOrNull(it) }
+                val flipScaleX = if (entry.knotType in HORIZONTALLY_FLIPPED_KNOT_TYPES) -1f else 1f
                 when (tintColors.size) {
                     // 실 색이 없는 달(실 데이터가 아직 없음): 원본 흰색 재질 그대로.
                     0 -> Image(
@@ -151,6 +163,7 @@ private fun KnotGridCell(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(4.dp)
+                            .graphicsLayer(scaleX = flipScaleX)
                     )
                     // 색이 하나면 단색 Modulate 틴트로 충분하다.
                     1 -> Image(
@@ -160,6 +173,7 @@ private fun KnotGridCell(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(4.dp)
+                            .graphicsLayer(scaleX = flipScaleX)
                     )
                     // 색이 여럿이면 실제로 받은 색들을 그라데이션으로 이어 붙여 "섞인" 인상을 준다.
                     // ColorFilter.tint는 단색만 받으므로, offscreen 레이어에 그린 뒤 그 위에
@@ -171,6 +185,7 @@ private fun KnotGridCell(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(4.dp)
+                            .graphicsLayer(scaleX = flipScaleX)
                             .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
                             .drawWithContent {
                                 drawContent()
