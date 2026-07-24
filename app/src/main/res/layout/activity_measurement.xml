@@ -88,12 +88,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- 원형 게이지 (메인 화면 gaugeContainer와 동일한 크기/위치) -->
+            <!-- 원형 게이지 (메인 화면 gaugeContainer와 동일한 크기/위치). 이 화면은 상단
+                 툴바(56dp)와 안내 텍스트 블록이 메인 화면(툴바 72dp + 안내문 2줄)보다 짧아,
+                 게이지 바로 위 marginTop만 40dp로 맞춰서는 화면 상단에서부터의 실제 y좌표가
+                 메인 화면보다 위로 올라가 화면 전환 시 게이지가 살짝 튀어 올라가 보였다.
+                 그 차이(~23dp)만큼 marginTop을 늘려 절대 y좌표를 메인 화면과 맞춘다. -->
             <FrameLayout
                 android:id="@+id/gaugeContainer"
                 android:layout_width="340dp"
                 android:layout_height="340dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="63dp"
                 android:background="@drawable/bg_gauge_shadow_base"
                 android:elevation="6dp"
                 android:outlineProvider="background"
