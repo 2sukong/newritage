@@ -108,7 +108,7 @@
                 android:id="@+id/knotComposeViewer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="16dp" />
+                android:layout_margin="24dp" />
 
             <!-- frame을 배경이 아닌 최상단 레이어로 둔다: 매듭 렌더링(Scene)이 회전 중
                  프레임 안쪽 가장자리까지 그려지면서 배경으로 깔린 frame의 테두리를
