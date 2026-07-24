@@ -45,7 +45,7 @@ class KnotStorageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.knotFrameContainer.applyCalendarFrameBorderPadding()
+        applyCalendarFrameBorderPadding(binding.knotFrameContainer, binding.knotFrameContent)
 
         binding.knotComposeGrid.setViewCompositionStrategy(
             ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed

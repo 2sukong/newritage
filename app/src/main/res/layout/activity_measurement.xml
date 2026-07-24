@@ -88,12 +88,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- 원형 게이지 -->
+            <!-- 원형 게이지 (메인 화면 gaugeContainer와 동일한 크기/위치) -->
             <FrameLayout
                 android:id="@+id/gaugeContainer"
-                android:layout_width="220dp"
-                android:layout_height="220dp"
-                android:layout_marginTop="28dp"
+                android:layout_width="340dp"
+                android:layout_height="340dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/bg_gauge_shadow_base"
                 android:elevation="6dp"
                 android:outlineProvider="background"

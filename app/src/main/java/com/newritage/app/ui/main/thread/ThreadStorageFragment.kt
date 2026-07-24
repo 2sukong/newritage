@@ -44,7 +44,7 @@ class ThreadStorageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.threadFrameContainer.applyCalendarFrameBorderPadding()
+        applyCalendarFrameBorderPadding(binding.threadFrameContainer, binding.threadFrameContent)
 
         binding.btnPrevMonth.setOnClickListener {
             currentCalendar.add(Calendar.MONTH, -1)
