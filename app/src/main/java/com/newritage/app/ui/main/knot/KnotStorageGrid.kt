@@ -67,27 +67,14 @@ private val NEW_FRAME_SHAPE = RoundedCornerShape(12.dp)
 private val NEW_FRAME_BORDER_WIDTH = 3.dp
 
 /**
- * 상세보기(KnotModelViewer)는 이 4종 매듭의 원본 모델이 뒤를 보고 있어 rotationY=180°를 적용해
- * 정면을 보이게 보정한다(KnotModelViewer.kt의 knotViewAdjustFor 참고). 그리드 썸네일
- * (thumbnailRes)은 그 보정이 있기 전에 뒷모습 기준으로 미리 렌더링해 둔 정적 이미지라 상세보기와
- * 어긋나 있었다 — 좌우 반전은 실루엣만 맞아 보일 뿐 매듭 특유의 겹침(위/아래로 지나가는 가닥)
- * 패턴까지는 재현하지 못해 잘못된 시도였다(뒷모습은 진짜로 다시 렌더링해야 하는 다른 그림이다).
- * 이 4종만은 정적 이미지 대신 상세보기와 동일한 라이브 3D 뷰어를 그대로 재사용해(항상 같은
- * rotationY=180 보정이 적용되므로 다시 어긋날 일이 없다) 확실하게 앞모습을 보여준다.
- */
-private val LIVE_RENDERED_KNOT_TYPES = setOf(
-    KnotType.GARAKJI, KnotType.GUKHWA, KnotType.SAMJEONGJA, KnotType.ANGYEONG
-)
-
-/**
  * 매듭을 얻은 날짜만큼만 칸이 늘어나는 그리드. 각 칸은 회전/줌 없이 고정된 각도로만 보이므로,
  * 매번 라이브 3D를 렌더링하는 대신 흰색 재질로 미리 렌더링해 둔 정적 이미지(KnotType.thumbnailRes)에
  * 세션 실 색상을 곱연산(Modulate) 틴트해서 보여준다. 한 달치 칸이 전부 라이브 Filament 렌더러였을 때는
  * 최대 31개의 SurfaceView/렌더 루프가 동시에 떠 렉이 심했는데, 정적 이미지로 바꾸면 그리드에는 3D
  * 렌더러가 전혀 없어져 그 렉이 사라진다(상세보기의 회전 가능한 3D 뷰는 그대로 유지).
- * 단, [LIVE_RENDERED_KNOT_TYPES]에 속한 4종은 정적 썸네일이 뒷모습으로 잘못 미리 렌더링돼 있어
- * 예외적으로 라이브 3D를 그대로 쓴다 — 한 해에 최대 12칸뿐이라 그 중 일부(최대 4종)가 라이브
- * 렌더러여도 예전에 문제였던 규모(31개)에는 한참 못 미친다.
+ * 가락지/국화/삼정자/안경 4종의 이미지 파일 자체가 뒷모습으로 잘못 구워져 있던 문제는
+ * knot_thumb_*.png 원본 이미지를 상세보기와 같은 rotationY=180 보정이 적용된 정면 기준으로
+ * 다시 구워서 고쳤다(코드가 아니라 이미지 파일을 교체).
  */
 @Composable
 fun KnotStorageGrid(
@@ -158,61 +145,41 @@ private fun KnotGridCell(
                         shape = FRAME_SHAPE
                     )
             ) {
-                if (entry.knotType in LIVE_RENDERED_KNOT_TYPES) {
-                    // 뒷모습 정적 이미지 대신, 상세보기와 완전히 같은 코드(같은 rotationY=180
-                    // 보정)로 라이브 렌더링해 앞모습을 확실하게 보여준다. interactive=false라
-                    // 회전/줌 제스처는 잠기고 고정된 각도의 "썸네일"로만 동작한다.
-                    KnotModelViewer(
-                        glbAssetPath = entry.knotType.assetPath,
-                        interactive = false,
-                        monthlyThreadColorHexes = entry.tintColorHexes,
-                        backgroundColor = Color.Transparent,
-                        // 이 4종은 실제 모델이 얇고 긴 가닥이 대부분이라(예: 가락지는 코인+긴 로프),
-                        // scaleToUnitCube가 가장 긴 축(로프 길이) 기준으로 맞춰져 정작 눈에 띄는
-                        // 매듭 본체는 작게 보인다. 상세보기(cameraDistance 기본값 3f)와 달리 그리드
-                        // 썸네일에서는 카메라를 더 가까이 당겨 다른 매듭들과 비슷한 크기로 보이게 한다.
-                        cameraDistance = 1.8f,
+                val tintColors = entry.tintColorHexes.mapNotNull { knotTintColorOrNull(it) }
+                when (tintColors.size) {
+                    // 실 색이 없는 달(실 데이터가 아직 없음): 원본 흰색 재질 그대로.
+                    0 -> Image(
+                        painter = painterResource(entry.knotType.thumbnailRes),
+                        contentDescription = null,
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(4.dp)
                     )
-                } else {
-                    val tintColors = entry.tintColorHexes.mapNotNull { knotTintColorOrNull(it) }
-                    when (tintColors.size) {
-                        // 실 색이 없는 달(실 데이터가 아직 없음): 원본 흰색 재질 그대로.
-                        0 -> Image(
-                            painter = painterResource(entry.knotType.thumbnailRes),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(4.dp)
-                        )
-                        // 색이 하나면 단색 Modulate 틴트로 충분하다.
-                        1 -> Image(
-                            painter = painterResource(entry.knotType.thumbnailRes),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(tintColors[0], BlendMode.Modulate),
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(4.dp)
-                        )
-                        // 색이 여럿이면 실제로 받은 색들을 그라데이션으로 이어 붙여 "섞인" 인상을 준다.
-                        // ColorFilter.tint는 단색만 받으므로, offscreen 레이어에 그린 뒤 그 위에
-                        // Modulate 블렌드로 그라데이션을 곱해 넣는다(그려진 실루엣 밖은 alpha가 0이라
-                        // 영향받지 않는다).
-                        else -> Image(
-                            painter = painterResource(entry.knotType.thumbnailRes),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(4.dp)
-                                .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
-                                .drawWithContent {
-                                    drawContent()
-                                    drawRect(brush = Brush.linearGradient(tintColors), blendMode = BlendMode.Modulate)
-                                }
-                        )
-                    }
+                    // 색이 하나면 단색 Modulate 틴트로 충분하다.
+                    1 -> Image(
+                        painter = painterResource(entry.knotType.thumbnailRes),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(tintColors[0], BlendMode.Modulate),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(4.dp)
+                    )
+                    // 색이 여럿이면 실제로 받은 색들을 그라데이션으로 이어 붙여 "섞인" 인상을 준다.
+                    // ColorFilter.tint는 단색만 받으므로, offscreen 레이어에 그린 뒤 그 위에
+                    // Modulate 블렌드로 그라데이션을 곱해 넣는다(그려진 실루엣 밖은 alpha가 0이라
+                    // 영향받지 않는다).
+                    else -> Image(
+                        painter = painterResource(entry.knotType.thumbnailRes),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(4.dp)
+                            .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
+                            .drawWithContent {
+                                drawContent()
+                                drawRect(brush = Brush.linearGradient(tintColors), blendMode = BlendMode.Modulate)
+                            }
+                    )
                 }
             }
         }
