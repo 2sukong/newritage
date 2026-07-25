@@ -22,7 +22,7 @@
     <!-- 로그인 -->
     <string name="login_title">로그인</string>
     <string name="hint_username">아이디</string>
-    <string name="hint_password">비밀번호(숫자,영문,특수문자 조합 8-12자리)</string>
+    <string name="hint_password">비밀번호</string>
     <string name="auto_login">자동로그인</string>
     <string name="btn_do_login">로그인</string>
     <string name="find_id">아이디 찾기</string>
