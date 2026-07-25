@@ -228,6 +228,10 @@
     <string name="settings_debug_date_bar">날짜 전환 바 표시</string>
     <string name="settings_debug_show_all">전체 실/매듭 목록 보기</string>
     <string name="settings_debug_require_ble">기기 미연결 시 측정 차단</string>
+    <string name="settings_debug_restart_onboarding">초기 측정 다시하기</string>
+    <string name="debug_restart_onboarding_confirm_title">초기 측정을 다시 할까요?</string>
+    <string name="debug_restart_onboarding_confirm_message">온보딩부터 로그인, 기준 압력 측정까지 처음부터 다시 진행해요. 지금까지 모은 실과 매듭 기록은 그대로 남아요.</string>
+    <string name="debug_restart_onboarding_confirm_action">다시 시작</string>
     <string name="feature_in_progress">준비 중인 기능입니다.</string>
     <string name="analysis_no_more_records">그 방향에는 측정 기록이 없어요.</string>
     <string name="analysis_empty_title">측정 기록이 없어요.</string>

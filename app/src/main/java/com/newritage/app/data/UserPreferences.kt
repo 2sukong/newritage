@@ -177,4 +177,17 @@ class UserPreferences(context: Context) {
             .putString(KEY_USERNAME, "")
             .apply()
     }
+
+    /**
+     * 디버그: 온보딩 → 로그인 → 기준 압력 측정을 처음부터 다시 거치도록 되돌린다.
+     * SplashActivity의 라우팅 조건(isOnboardingDone/isLoggedIn/isBaselineDone)만 초기화하며,
+     * 세션·실·매듭 기록(Room DB)은 건드리지 않으므로 그동안 모은 기록은 그대로 남는다.
+     */
+    fun resetOnboardingAndBaseline() {
+        prefs.edit()
+            .putBoolean(KEY_ONBOARDING_DONE, false)
+            .putBoolean(KEY_LOGGED_IN, false)
+            .putBoolean(KEY_BASELINE_DONE, false)
+            .apply()
+    }
 }
