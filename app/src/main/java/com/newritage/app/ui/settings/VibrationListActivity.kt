@@ -77,7 +77,7 @@ class VibrationListActivity : AppCompatActivity() {
         )
 
         val defaultId = if (isTimer) VibrationPatterns.TIMER_DEFAULT_ID else VibrationPatterns.TENSION_DEFAULT_ID
-        val items = VibrationPatterns.ALL.filter { it.type == type }
+        val items = buildListItems(VibrationPatterns.forScreen(type))
 
         adapter = VibrationAdapter(
             items = items,
@@ -121,6 +121,16 @@ class VibrationListActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    /** 카테고리 선언 순서를 유지하며 [Header, Row, Row, ...] 형태로 펼친다. */
+    private fun buildListItems(patterns: List<VibrationPattern>): List<VibrationListItem> {
+        val result = mutableListOf<VibrationListItem>()
+        patterns.groupBy { it.category }.forEach { (category, patternsInCategory) ->
+            result.add(VibrationListItem.Header(category))
+            patternsInCategory.forEach { result.add(VibrationListItem.Row(it)) }
+        }
+        return result
     }
 
     private fun setupTimeChips() {
