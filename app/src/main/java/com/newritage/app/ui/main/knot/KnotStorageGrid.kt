@@ -72,6 +72,9 @@ private val NEW_FRAME_BORDER_WIDTH = 3.dp
  * 세션 실 색상을 곱연산(Modulate) 틴트해서 보여준다. 한 달치 칸이 전부 라이브 Filament 렌더러였을 때는
  * 최대 31개의 SurfaceView/렌더 루프가 동시에 떠 렉이 심했는데, 정적 이미지로 바꾸면 그리드에는 3D
  * 렌더러가 전혀 없어져 그 렉이 사라진다(상세보기의 회전 가능한 3D 뷰는 그대로 유지).
+ * 가락지/국화/삼정자/안경 4종의 이미지 파일 자체가 뒷모습으로 잘못 구워져 있던 문제는
+ * knot_thumb_*.png 원본 이미지를 상세보기와 같은 rotationY=180 보정이 적용된 정면 기준으로
+ * 다시 구워서 고쳤다(코드가 아니라 이미지 파일을 교체).
  */
 @Composable
 fun KnotStorageGrid(

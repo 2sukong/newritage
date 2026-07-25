@@ -50,7 +50,7 @@ class BaselineGuideBottomSheetDialog(
                 source = hostActivity.window.decorView,
                 target = binding.ivBackdrop,
                 cropHeightPx = binding.sheetRoot.height,
-                blurRadiusPx = 10f
+                blurRadiusDp = 5f
             )
         }
     }
