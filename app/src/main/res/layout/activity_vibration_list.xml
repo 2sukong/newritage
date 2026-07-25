@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
+    <!-- 배경 1: 그라데이션 -->
+    <View
+        android:id="@+id/bgGradient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_settings_gradient" />
+
+    <!-- 배경 2: 반투명 사진 -->
+    <ImageView
+        android:id="@+id/bgImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background"
+        android:scaleType="centerCrop"
+        android:alpha="0.45" />
+
     <ImageButton
         android:id="@+id/btnBack"
         android:layout_width="48dp"
