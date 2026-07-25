@@ -97,6 +97,7 @@ class BaselineMeasurementActivity : AppCompatActivity() {
         // GradientDrawable(oval)의 outlineProvider="background"는 API에 따라 outline을
         // 못 만들어 elevation 그림자가 아예 안 보이는 경우가 있어, 원형 outline을 직접
         // 지정해 확실히 그림자가 그려지게 한다.
+        binding.guideCircleReady.applyOvalShadowOutline()
         binding.gaugeCircleContainer.applyOvalShadowOutline()
         binding.gaugeCircleComplete.applyOvalShadowOutline()
 
