@@ -99,6 +99,7 @@
             android:layout_width="340dp"
             android:layout_height="340dp"
             android:background="@drawable/bg_circle_white_shadow"
+            android:elevation="6dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/btnStartMeasure"
             app:layout_constraintStart_toStartOf="parent"
